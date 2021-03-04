@@ -1,2 +1,4 @@
 # graduation-project
-Graduation Project with Sefa Aydoğan
+Graduation Project
+Sefa Aydoğan
+Batuhan Akdeniz
