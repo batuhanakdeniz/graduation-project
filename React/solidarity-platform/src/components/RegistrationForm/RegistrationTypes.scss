@@ -1,0 +1,42 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+$cardsBackground:  rgba(46, 44, 156, 0.87);
+$cardColor: linear-gradient(to left top, 
+rgba(255,255,255,0.8),
+rgba(255,255,255,0.5)
+);
+.cards{
+    width: 80%;
+    border-radius: 1rem;
+    margin: 8.6rem auto ;
+    display: flex;
+    grid-gap: 10px;
+    background-color: $cardsBackground;
+    justify-content: space-around;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    background: $cardColor;
+    border-radius: 1rem;
+    margin: 2rem 2rem;
+    padding: 2rem;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.589);
+    justify-content: space-around;
+    align-items: center;
+    .card-header{
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .card-info{
+        margin-bottom: 1rem;
+    }
+    .card-button{
+        margin-top: 1rem;
+    }
+
+} 
