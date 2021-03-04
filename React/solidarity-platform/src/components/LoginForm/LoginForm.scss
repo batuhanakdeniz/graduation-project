@@ -7,23 +7,28 @@
 .loginForm{
     margin: 0 auto;
     margin-top: 5rem;
+    width: fit-content;
+    height: 50vh;
     margin-bottom: 23rem;    
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-color: rgba(16, 119, 85, 0.788);
+    border-color: rgba(14, 0, 77, 0.527);
     border-width: 0.3rem;
-    box-shadow: 0.5rem 0.5rem 1rem rgba(29, 145, 64, 0.699);
+    box-shadow: 0.5rem 0.5rem 1rem rgba(33, 114, 206, 0.699);
+    background: linear-gradient(to right top, #0a0b49, #1ebed6);
     border-radius: 2rem;
     padding: 3rem 3rem 3rem 3rem;
-    width: fit-content;
+    color: white;
     .loginHeader{
         margin: 0rem 1rem 2rem 1rem;
-
         h1{
             font-weight: bold;
             font-size: 3rem;
-        }
+        }        
+    }
+    button {
+        color: white;
     }
     
 }

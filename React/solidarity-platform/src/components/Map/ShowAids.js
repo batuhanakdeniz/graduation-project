@@ -6,10 +6,15 @@ import redMarker from './assets/free-map-marker-icon-red.png';
 import orangeMarker from './assets/free-map-marker-icon-orange.png';
 import darkMarker from './assets/free-map-marker-icon-dark.png';
 import pinkMarker from './assets/free-map-marker-icon-pink.png';
-import { Col, Row } from 'react-bootstrap';
+import { ButtonGroup, Button, Col, Row } from 'react-bootstrap';
+
+import { popupContent, popupHead, popupButtons, popupButton } from './PopupStyles'
+
 function ShowAids() {
     const aidData = [
         {
+            id: 1,
+            header: "Aid 1",
             lng: 36.919767118351025,
             lat: 31.088782114558335,
             message: 'number 1',
@@ -17,6 +22,8 @@ function ShowAids() {
             img: 'https://picsum.photos/200/200'
         },
         {
+            id: 2,
+            header: "Aid 2",
             lng: 36.918767118351025,
             lat: 31.088782114558335,
             message: 'number 2',
@@ -24,6 +31,8 @@ function ShowAids() {
             img: 'https://picsum.photos/200/200'
         },
         {
+            id: 3,
+            header: "Aid 2",
             lng: 36.917767118351025,
             lat: 31.088782114558335,
             message: 'number 3',
@@ -31,6 +40,8 @@ function ShowAids() {
             img: 'https://picsum.photos/200/200'
         },
         {
+            id: 4,
+            header: "Aid 2",
             lng: 36.920767118351025,
             lat: 31.088782114558335,
             message: 'number 4',
@@ -38,6 +49,8 @@ function ShowAids() {
             img: 'https://picsum.photos/200/200'
         },
         {
+            id: 5,
+            header: "Aid 2",
             lng: 36.916767118351025,
             lat: 31.088782114558335,
             message: 'number 5',
@@ -45,6 +58,8 @@ function ShowAids() {
             img: 'https://picsum.photos/200/200'
         },
         {
+            id: 6,
+            header: "Aid 2",
             lng: 36.921767118351025,
             lat: 31.088782114558335,
             message: 'number 6',
@@ -83,11 +98,17 @@ function ShowAids() {
         iconAnchor: [12.5, 41],
         popupAnchor: [0, -41]
     });
+
+
+
+
+
     return (
         <div>
             {
                 aidData.map(aid => (
                     <Marker
+                        key={aid.id}
                         position={[aid.lng, aid.lat]}
                         icon={
                             (aid.emergencyLevel > 5)
@@ -99,29 +120,35 @@ function ShowAids() {
                                 ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
                         }
                     >
-                        <Popup>
-                            <Row>
-                                <Col md={6}>
-                                    <h2> {aid.message} </h2>
-                                </Col>
-                                <Col md={6}>
-                                    <img src={aid.img} alt="" />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={6}>
-                                    <h2> {aid.message} </h2>
-                                </Col>
-                                <Col md={6}>
-                                    <h2> {aid.message} </h2>
-                                </Col>
-                            </Row>
+                        <Popup className="request-popup">
+                            <div style={popupContent}>
+                                <div style={popupHead}>
+                                    {aid.header}
+                                </div>
+                                <div style={popupContent}>
+                                    <img src={aid.img} witdh="300" height="300" alt="" />
+                                    <br />
+                                    {aid.message}
+                                </div>
+                                <div style={popupButtons}>
+                                    <Col md={4} xs={12}>
+                                        <Button variant="danger">Rapor Et</Button>
+                                    </Col>
+                                    <Col md={4} xs={12}>
+                                        <Button variant="outline-primary">Detayları Gör</Button>
+                                    </Col>
+                                    <Col md={4} xs={12}>
+                                        <Button variant="outline-primary">Yardım Et</Button>
+                                    </Col>
+                                </div>
+                                <br />
+                            </div>
                         </Popup>
                     </Marker>
                 ))
             }
 
-        </div>
+        </div >
     )
 }
 
