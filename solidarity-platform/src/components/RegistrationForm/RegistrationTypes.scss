@@ -1,0 +1,64 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.TypesBackground{
+    background-color: #050a01dc;
+    padding: 2rem 0rem 0rem 0rem;
+    background: url('hand-to-hand-1.jpg');
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.TypesBackground::after{
+    position: relative;
+    content: '';
+    top: 35;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);    
+}
+.types{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+.type{
+    z-index: 999;
+    padding: 60px 32px;
+    background: rgba(255,255,255,0.04);
+    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+    h1{
+        color: green;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        font-size: 24px;
+    }
+    Button{
+        margin-top: 1rem;
+    }
+    p{
+        color: yellow;
+    }
+
+}
+@media screen and (max-width:850px){
+    .TypesBackground{
+        height: 130vh;
+        p{
+            font-size: 12px;
+        }
+    }
+    .type{
+        margin-top: 1rem;
+    }
+
+}

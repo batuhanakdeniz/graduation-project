@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+.NavbarStyle{
+        background: #6DDB84;
+        min-height: 15vh;
+}
+.NavBrandStyle{
+        color: white;
+        margin-right: 4rem;
+        font-size: 48px;
+        font-family: 'Akaya Kanadaka', cursive;
+}
+#NavlinksStyle{
+        color: rgb(255, 255, 255);
+        margin-right: 3rem;
+        font-size: 24px;
+}
+
+@media screen and (max-width:850px){
+        .NavbarStyle{
+                background: #6DDB84;
+                min-height: 15vh;
+        }
+       .NavBrandStyle{
+                margin-right: 0px;
+                padding: 0; 
+                font-size: 18px;
+                margin: 0%;
+       }
+       #NavlinksStyle{
+                color: white;
+                margin-right: 0;
+                font-size: 18px;
+        }        
+
+}
