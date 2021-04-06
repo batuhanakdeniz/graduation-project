@@ -7,11 +7,10 @@ import orangeMarker from './assets/free-map-marker-icon-orange.png';
 import darkMarker from './assets/free-map-marker-icon-dark.png';
 import pinkMarker from './assets/free-map-marker-icon-pink.png';
 import { Button, Col, Row, Image } from 'react-bootstrap';
-import aidData from '../aidData'
 import { popupContent, popupHead, popupButtons, popupText } from './PopupStyles'
 import { Link } from 'react-router-dom';
 
-function ShowAids() {
+function ShowAids({ aidData }) {
 
 
     const greenIcon = L.icon({
@@ -44,8 +43,6 @@ function ShowAids() {
         iconAnchor: [12.5, 41],
         popupAnchor: [0, -41]
     });
-
-
 
     return (
         <div>

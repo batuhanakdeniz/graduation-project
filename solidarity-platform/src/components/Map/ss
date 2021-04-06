@@ -29,3 +29,13 @@ render(
     <LocationMarker />
   </MapContainer>,
 )
+
+
+
+{
+                        aidData.map((aid) => (
+                            (
+                                <AidCard aid={aid} />
+                            )
+                        ))
+                    }
