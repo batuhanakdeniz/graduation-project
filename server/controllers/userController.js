@@ -3,28 +3,28 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 //getUser returns just a string
-export const getUser = async (req, res) =>{
+export const getUser = async (req, res) => {
     try {
         //const users = await user.find();
         res.status(200).json("Batu yazıyore");
     }
-    catch (err){
+    catch (err) {
         res.status(404).json({
             message: err.message,
         });
-    }  
+    }
 };
 
 //createUser is used to Register
-export const createUser = async (req, res) =>{
+export const createUser = async (req, res) => {
     try {
-        const {email, password, passwordVerify, firstName, lastName, modeOfContact, phone} = req.body;
-        const userType= req.params.userType;
-        const existUser = await User.findOne({ email});
-        if(existUser){
-            return  res
-                    .status(400)
-                    .json({errorMsg: "Bu mail kayıtlıdır."});
+        const { email, password, passwordVerify, firstName, lastName, modeOfContact, phone } = req.body;
+        const userType = req.params.userType;
+        const existUser = await User.findOne({ email });
+        if (existUser) {
+            return res
+                .status(400)
+                .json({ errorMsg: "Bu mail kayıtlıdır." });
         }
 
         //Hashing password
@@ -40,8 +40,8 @@ export const createUser = async (req, res) =>{
 
         const token = jwt.sign({
             User: savedUser._id,
-        }, 
-        process.env.JWT_SECRET);
+        },
+            process.env.JWT_SECRET);
         //Cookie http-only send the token
 
         res.cookie("token", token, {
@@ -52,19 +52,19 @@ export const createUser = async (req, res) =>{
 
         //res.status(200).json("Kayıt basarıyla gerceklesti.");
     }
-    catch (err){
+    catch (err) {
         res.status(409).json({
             message: err.message,
         });
-    }  
+    }
 };
 //Login 
 export const loginUser = async (req, res) => {
     try {
-        const { email, password} = req.body;
+        const { email, password } = req.body;
 
         const existingUser = await User.findOne({ email });
-        if(!existingUser){
+        if (!existingUser) {
             return res.status(401).json({  // todo error messagelarla alakalı bir geliştirme yapılmalı
                 message: "Wrong Email or password",
             });
@@ -74,16 +74,16 @@ export const loginUser = async (req, res) => {
             password,
             existingUser.passwordHash
         )
-        if(!passwordCorrect){
+        if (!passwordCorrect) {
             return res.status(401).json({
                 message: "Wrong Email or password",
             });
         }
-        
+
         const token = jwt.sign({
             User: existingUser._id,
-        }, 
-        process.env.JWT_SECRET);
+        },
+            process.env.JWT_SECRET);
         //Cookie http-only send the token
 
         res.cookie("token", token, {
@@ -92,23 +92,41 @@ export const loginUser = async (req, res) => {
             sameSite: "none",
         }).send();
     }
-    catch (err){
+    catch (err) {
         res.status(500).json({
             message: err.message,
         });
-    }  
+    }
 };
 //LoggedIn and Logut will be here...
 
 export const getloggedIn = async (req, res) => {
     try {
-      const token = req.cookies.token;
-      if (!token) return res.json(false);
-  
-      jwt.verify(token, process.env.JWT_SECRET);
-  
-      res.send(true);
+        const token = req.cookies.token;
+        if (!token) return res.json(false);
+
+        jwt.verify(token, process.env.JWT_SECRET);
+        res.send(true);
     } catch (err) {
-      res.json(false);
+        res.json(false);
     }
 };
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.json(false);
+        console.log("user type", user.userType)
+        const sendInfos = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phone: user.phone,
+            userType: user.userType
+        }
+
+
+        res.send(sendInfos)
+    } catch (err) {
+        res.status(400).json({ msg: err.message });
+    }
+}

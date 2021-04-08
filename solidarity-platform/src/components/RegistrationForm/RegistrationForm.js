@@ -38,17 +38,16 @@ function RegistrationForm({ match }) {
         })
     })
     const dropdownOptions = [
-        { key: `Option ${match.params.id}`, value: match.params.id }
+        { key: `Option ${match.params.userType}`, value: match.params.userType }
     ]
     const [isSubmitting, setIsSubmitting] = useState(false)
     async function onSubmit(values) {
         try {
             setIsSubmitting(true);
-            
-            await axios.post("http://localhost:5000/signup/:userType", values);
-            
+
+            await axios.post(`http://localhost:5000/signup/${match.params.userType}`, values);
             await getLoggedIn();
-            
+
             history.push("/");
         } catch (values) {
             alert(values.message);

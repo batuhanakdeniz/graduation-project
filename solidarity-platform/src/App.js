@@ -16,7 +16,7 @@ import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import NasilIsler from './components/NasilIsler/NasilIsler';
 import styled from 'styled-components';
 import axios from 'axios';
-import AuthContext, { AuthContextProvider} from "./context/AuthContext";
+import AuthContext, { AuthContextProvider } from "./context/AuthContext";
 
 
 axios.defaults.withCredentials = true; // ? always set true cookielere izin verir her zaman
@@ -46,12 +46,12 @@ const theme = extendTheme({ colors })
 
 
 function App() {
-    
+
     const loggedIn = useContext(AuthContext);
     return (
         <ChakraProvider theme={theme}>
             <AuthContextProvider>
-                <Router>        
+                <Router>
                     <div className="App">
                         <NavbarComponent loggedIn={loggedIn} />
                         <DIVM>
@@ -64,14 +64,15 @@ function App() {
                                 </Route>
                                 <Route path="/map" exact component={MapComponent} />
                                 <Route path="/about" exact component={AboutPage} />
-                                { loggedIn === true&&((
-                                <Route path="/signup" exact component={RegistrationTypesPage} />) ||
-                                (<Route path="/signup/:userType" component={RegistrationForm} />))
+                                {!loggedIn && (
+                                    <Route path="/signup" exact component={RegistrationTypesPage} />)
+                                }
+                                {!loggedIn &&
+                                    (<Route path="/signup/:userType" component={RegistrationForm} />)
                                 }
                                 <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
-                                { loggedIn === true && (
+
                                 <Route path="/profile/:id" exact component={ProfilePage} />
-                                )}
                                 <Route path="/map" exact component={MapComponent} />
                             </Switch>
                         </DIVM>
