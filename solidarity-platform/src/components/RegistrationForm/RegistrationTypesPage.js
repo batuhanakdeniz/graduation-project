@@ -71,7 +71,7 @@ function RegistrationTypesPage() {
                                 </div>
                                 <div className="typeButton">
                                     <Link to={`/signup/${4}`}>
-                                        <Button variant="outline-success" textColor="black" type="submit" >
+                                        <Button variant="outline-success" type="submit" >
                                             Üye Ol
                                 </Button>
                                     </Link>
@@ -79,10 +79,6 @@ function RegistrationTypesPage() {
                             </div>
                         </Col>
                     </Row>
-
-
-
-
                 </div>
             </Container>
         </div>
