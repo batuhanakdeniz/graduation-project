@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 //import { Link } from 'react-router-dom'
-import { Nav, Navbar } from 'react-bootstrap'
+import { Button, Nav, Navbar } from 'react-bootstrap'
 //import { useHistory } from 'react-router-dom'
 import './Navbar.scss'
 import AuthContext from "../../context/AuthContext";
@@ -9,14 +9,18 @@ import AuthContext from "../../context/AuthContext";
 function NavbarComponent() {
     /*
     const history = useHistory();
-    
+    */
     const handleLoggedOut = () => {
-        setIsLoggedIn(false)
-        setLoggedUser('')
-        history.push('/login')
-    }*/
+        /*
+        !!!!! Buraya Çıkış yaparken ne olacağı yazılacak 
+        ? setIsLoggedIn(false)
+        ? setLoggedUser('')
+        ? history.push('/login')
+         */
+    }
 
     const loggedInfos = useContext(AuthContext);
+
     return (
         <Navbar className="NavbarStyle" collapseOnSelect expand="lg" variant="dark" >
             <Navbar.Brand className="NavBrandStyle" href="/">Social Aid and Solidarity Platform</Navbar.Brand>
@@ -37,7 +41,7 @@ function NavbarComponent() {
                         // todo avatarlı profil işleri yapılacak
                         <>
                             <Nav.Link id="NavlinksStyle" > Giriş Yapıldı: {loggedInfos.loggedUser} </Nav.Link>
-                            <Nav.Link id="NavlinksStyle" href="/signup">Çıkış Yap</Nav.Link>
+                            <Button type="submit" onSubmit={handleLoggedOut} id="NavlinksStyle">Çıkış Yap</Button>
                         </>
                     )}
 
