@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Carousel } from 'react-bootstrap'
 import styled from 'styled-components'
 import aidData from '../aidData'
-import Comment from './Comment'
-
+import './DetailPage.scss'
+import ImageGallery from 'react-image-gallery';
+import { Feed } from 'semantic-ui-react'
 
 const ImageSection = styled.div`
     min-height : 10rem;
@@ -37,7 +38,7 @@ const CommentSection = styled.div`
     min-height : 10rem;
     border-radius: 1rem;
     background-color: #6DF2B0;
-    padding : 1rem;
+    padding : 2rem;
     h1{
         font-size: 1.5rem;
         text-align: center;
@@ -78,23 +79,7 @@ function Detail({ match }) {
                                     <h1>Images</h1>
                                 </Col>
                                 <Col md={12}>
-                                    <Carousel fade activeIndex={index} onSelect={handleSelect}>
-                                        {
-                                            thisAidData.img.map((image, index) => (
-                                                <Carousel.Item key={index}>
-                                                    <img
-                                                        className="d-block w-100"
-                                                        src={image}
-                                                        alt="First slide"
-                                                    />
-                                                    <Carousel.Caption>
-                                                        <h3>First slide label</h3>
-                                                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                                    </Carousel.Caption>
-                                                </Carousel.Item>
-                                            ))
-                                        }
-                                    </Carousel>
+                                    <ImageGallery items={thisAidData.img} />;
                                 </Col>
                             </Row>
                         </ImageSection>
@@ -116,13 +101,7 @@ function Detail({ match }) {
                                 <Col md={12}>
                                     <h1>Comments</h1>
                                 </Col>
-                                <Col md={12}>
-                                    {
-                                        thisAidData.comments.map((comment, index) => (
-                                            <Comment key={index} comment={comment} />
-                                        ))
-                                    }
-                                </Col>
+                                <Feed events={thisAidData.comments} />
                             </Row>
                         </CommentSection>
                     </Col>
