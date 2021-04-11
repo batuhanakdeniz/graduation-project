@@ -61,10 +61,19 @@ function AidCard({ aid }) {
                             <Col>
                                 Emergency Level : {aid.emergencyLevel}
                             </Col>
+
                         </div>
                     </Col>
                     <Col md={4}>
-                        <Button>Git</Button>
+                        <Row>
+                            <Col>
+                                <Button>Git</Button>
+                            </Col>
+                            <Col>
+                                <Button>Yorumlar</Button>
+                            </Col>
+                        </Row>
+
                     </Col>
                 </Row>
             </MyCard>

@@ -8,7 +8,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 8,
-        img: 'https://picsum.photos/200/200.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     },
     {
         id: 1,
@@ -19,7 +30,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 2,
-        img: 'https://picsum.photos/400/400.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     },
     {
         id: 2,
@@ -30,7 +52,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 5,
-        img: 'https://picsum.photos/200/200.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     },
     {
         id: 3,
@@ -41,7 +74,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 1,
-        img: 'https://picsum.photos/200/200.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     },
     {
         id: 4,
@@ -52,7 +96,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 10,
-        img: 'https://picsum.photos/200/200.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     },
     {
         id: 5,
@@ -63,7 +118,18 @@ const aidData = [
         personName: 'ahmet',
         personLastName: 'yıldız',
         emergencyLevel: 6,
-        img: 'https://picsum.photos/200/200.jpg'
+        img: [
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg',
+            'https://picsum.photos/400/400.jpg'
+        ],
+        comments: [
+            ['user1', 'loremIpsum1'],
+            ['user2', 'loremIpsum2'],
+            ['user3', 'loremIpsum3'],
+            ['user4', 'loremIpsum4'],
+        ]
     }
 ]
 export default aidData
