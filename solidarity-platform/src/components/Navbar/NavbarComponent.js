@@ -1,24 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 //import { Link } from 'react-router-dom'
-import { Button, Nav, Navbar } from 'react-bootstrap'
+import { Image, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 //import { useHistory } from 'react-router-dom'
 import './Navbar.scss'
 import AuthContext from "../../context/AuthContext";
-
+import axios from 'axios';
+import { useHistory } from 'react-router';
+import navbarPP from '../Details/joe.jpg'
 
 function NavbarComponent() {
-    /*
-    const history = useHistory();
-    */
-    const handleLoggedOut = () => {
-        /*
-        !!!!! Buraya Çıkış yaparken ne olacağı yazılacak 
-        ? setIsLoggedIn(false)
-        ? setLoggedUser('')
-        ? history.push('/login')
-         */
-    }
 
+    const history = useHistory();
+    const { getLoggedIn } = useContext(AuthContext);
+    const handleLoggedOut = async () => {
+        await axios.get("http://localhost:5000/loggedOut");
+        await getLoggedIn();
+        history.push('/');
+    }
     const loggedInfos = useContext(AuthContext);
 
     return (
@@ -39,9 +37,31 @@ function NavbarComponent() {
                     )}
                     {loggedInfos.loggedIn && (
                         // todo avatarlı profil işleri yapılacak
+                        // ! avatar olacak dropdown olacak çıkış yap içinde olacak
                         <>
-                            <Nav.Link id="NavlinksStyle" > Giriş Yapıldı: {loggedInfos.loggedUser} </Nav.Link>
-                            <Button type="submit" onSubmit={handleLoggedOut} id="NavlinksStyle">Çıkış Yap</Button>
+                            <NavDropdown title={
+                                <Image
+                                    src={navbarPP}
+                                    width="30"
+                                    height="30"
+                                    className="d-inline-block align-top"
+                                    alt=" "
+                                    fluid
+                                    roundedCircle
+                                />
+                            }
+                                id="NavlinksStyle">
+                                <NavDropdown.Item href="/profile/60662c02967c4181cd2f6cf7" id="NavDropdownStyle">
+                                    <i className="fa fa-user fa-fw"></i> User Profile
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2" id="NavDropdownStyle">
+                                    <i class="fas fa-user-cog"></i> Settings
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={handleLoggedOut} id="NavDropdownStyle">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </NavDropdown.Item>
+                            </NavDropdown>
                         </>
                     )}
 

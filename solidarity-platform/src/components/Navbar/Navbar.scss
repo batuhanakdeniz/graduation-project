@@ -2,7 +2,21 @@
 .NavbarStyle{
         background: #6DDB84;
         min-height: 15vh;
+        padding-right: 1rem;
 }
+.nav .dropdown{
+        cursor: pointer;
+        position: absolute;
+        left: 88%;
+        top: 30%;
+      }
+      
+      .dropdown-menu{
+        cursor: pointer;
+        position: absolute !important;
+        left: -8em;
+        top: 3em;
+      }
 .NavBrandStyle{
         color: white;
         margin-right: 4rem;
@@ -12,6 +26,10 @@
 #NavlinksStyle{
         color: rgb(255, 255, 255);
         margin-right: 3rem;
+        font-size: 24px;
+}
+#NavDropdownStyle{
+        color: rgb(0, 0, 0);
         font-size: 24px;
 }
 

@@ -1,3 +1,5 @@
+import joe from './Details/joe.jpg'
+
 const aidData = [
     {
         id: 0,
@@ -9,16 +11,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 8,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     },
     {
@@ -31,16 +73,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 2,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     },
     {
@@ -53,16 +135,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 5,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     },
     {
@@ -75,16 +197,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 1,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     },
     {
@@ -97,16 +259,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 10,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     },
     {
@@ -119,16 +321,56 @@ const aidData = [
         personLastName: 'yıldız',
         emergencyLevel: 6,
         img: [
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg',
-            'https://picsum.photos/400/400.jpg'
+            {
+                original: 'https://picsum.photos/id/1018/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1015/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            },
+            {
+                original: 'https://picsum.photos/id/1019/1000/600/',
+                thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            }
         ],
         comments: [
-            ['user1', 'loremIpsum1'],
-            ['user2', 'loremIpsum2'],
-            ['user3', 'loremIpsum3'],
-            ['user4', 'loremIpsum4'],
+            {
+                date: '1 Hour Ago',
+                image: joe,
+                meta: '4 Likes',
+                summary: 'Elliot Fu',
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '1 Like',
+                summary: 'Helen Troy',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
+            {
+                date: '3 days ago',
+                image: joe,
+                meta: '8 Likes',
+                summary: 'Joe Henderson',
+                extraText:
+                    "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
+            },
+            {
+                date: '4 days ago',
+                image: joe,
+                meta: '41 Likes',
+                summary: 'Justen Kitsune',
+                extraText:
+                    'Look at these fun pics I found from a few years ago. Good times.',
+                extraImages: [
+                    'https://picsum.photos/id/1015/250/150/',
+                    'https://picsum.photos/id/1015/250/150/',
+                ],
+            },
         ]
     }
 ]
