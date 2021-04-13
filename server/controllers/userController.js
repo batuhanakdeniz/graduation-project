@@ -18,13 +18,19 @@ export const getUser = async (req, res) => {
 //createUser is used to Register
 export const createUser = async (req, res) => {
     try {
-        const { email, password, passwordVerify, firstName, lastName, modeOfContact, phone } = req.body;
+        const { userName, email, password, passwordVerify, firstName, lastName, modeOfContact, phone } = req.body;
         const userType = req.params.userType;
-        const existUser = await User.findOne({ email });
-        if (existUser) {
+        const existUserMail = await User.findOne({ email });
+        if (existUserMail) {
             return res
                 .status(400)
                 .json({ errorMsg: "Bu mail kayıtlıdır." });
+        }
+        const existUserName = await User.findOne({ userName});
+        if (existUserName){
+            return res
+                    .status(400)
+                    .json({errorMsg: "Bu User Name kayıtlıdır."});
         }
 
         //Hashing password
@@ -32,7 +38,7 @@ export const createUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            email, passwordHash, firstName, lastName, modeOfContact, phone, userType
+            userName, email, passwordHash, firstName, lastName, modeOfContact, phone, userType
         })
 
         const savedUser = await newUser.save();
@@ -112,20 +118,18 @@ export const getloggedIn = async (req, res) => {
     }
 };
 
-export const getUserProfile = async (req, res) => {
+export const getloggedUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.User);
         if (!user) return res.json(false);
-        console.log("user type", user.userType)
         const sendInfos = {
+            userName: user.userName,
             firstName: user.firstName,
             lastName: user.lastName,
             phone: user.phone,
             userType: user.userType
         }
-
-
-        res.send(sendInfos)
+        res.json(sendInfos)
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }

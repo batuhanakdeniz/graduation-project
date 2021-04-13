@@ -29,8 +29,12 @@ function LoginForm() {
             await axios.post("http://localhost:5000/login", values);
 
             await getLoggedIn();
+<<<<<<< Updated upstream
 
             history.push("/profile/60662c02967c4181cd2f6cf7");
+=======
+            history.push("/");
+>>>>>>> Stashed changes
 
         } catch (values) {
             alert(values.message);

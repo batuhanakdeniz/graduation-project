@@ -1,15 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-function ProfilePage({ match }) {
+function ProfileEditPage() {
 
     const [userInfo, setUserInfo] = useState([])
     const getUser = async () => {
 
-        const loggedInRes = await axios.get(`http://localhost:5000/profile/${match.params.id}`);
-        console.log("profil data : ", loggedInRes);
+        const loggedInRes = await axios.get(`http://localhost:5000/api/loggedUser`);
         setUserInfo(loggedInRes.data);
-        console.log("sefaasdasdasd")
     }
 
     useEffect(() => {
@@ -23,9 +21,10 @@ function ProfilePage({ match }) {
 
             <h1>{userInfo.firstName}</h1>
             <h1>{userInfo.lastName}</h1>
+            <h1>Edit yapılacak alan</h1>
 
         </div>
     )
 }
 
-export default ProfilePage;
+export default ProfileEditPage;

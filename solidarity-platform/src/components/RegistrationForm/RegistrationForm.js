@@ -16,6 +16,7 @@ function RegistrationForm({ match }) {
         { key: 'Telephone', value: 'telephonemoc' }
     ]
     const initialValues = {
+        userName: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -26,6 +27,7 @@ function RegistrationForm({ match }) {
         phone: ''
     }
     const validationSchema = Yup.object({
+        userName: Yup.string().required('Required'),
         email: Yup.string().email('Invalid Email Format').required('Required'),
         password: Yup.string().required('Required'),
         firstName: Yup.string().required('Required'),
@@ -72,6 +74,12 @@ function RegistrationForm({ match }) {
                                     name='selectOption'
                                     options={dropdownOptions}
                                     disabled={true}
+                                />
+                                <FormikControl
+                                    control='chakrainput'
+                                    type='text'
+                                    label='User Name'
+                                    name='userName'
                                 />
                                 <FormikControl
                                     control='chakrainput'
