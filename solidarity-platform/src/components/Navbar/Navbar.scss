@@ -1,14 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
 .NavbarStyle{
-<<<<<<< Updated upstream
-        background: #6DDB84;
-        min-height: 15vh;
-=======
         background: #9ccc65;
         min-height: 10vh;
         padding-right: 1rem;
->>>>>>> Stashed changes
 }
+.nav .dropdown{
+        cursor: pointer;
+        position: absolute;
+        left: 88%;
+        top: 30%;
+      }
+      
+      .dropdown-menu{
+        cursor: pointer;
+        position: absolute !important;
+        left: -8em;
+        top: 3em;
+      }
 .NavBrandStyle{
         color: white;
         margin-right: 4rem;
@@ -20,13 +28,10 @@
         margin-right: 3rem;
         font-size: 24px;
 }
-<<<<<<< Updated upstream
-=======
 #NavDropdownStyle{
         color: rgb(0, 0, 0);
         font-size: 18px;
 }
->>>>>>> Stashed changes
 
 @media screen and (max-width:850px){
         .NavbarStyle{

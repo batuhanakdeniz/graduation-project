@@ -117,6 +117,17 @@ export const getloggedIn = async (req, res) => {
         res.json(false);
     }
 };
+export const getloggedOut = async (req, res) => {
+    res
+        .cookie("token", "", {
+            httpOnly: true,
+            expires: new Date(0),
+            secure: true,
+            sameSite: "none",
+        })
+        .send();
+};
+
 
 export const getloggedUser = async (req, res) => {
     try {
