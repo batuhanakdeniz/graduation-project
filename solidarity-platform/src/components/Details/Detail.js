@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Container, Row, Col, Carousel } from 'react-bootstrap'
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import styled from 'styled-components'
 import aidData from '../aidData'
 import './DetailPage.scss'
@@ -60,12 +60,12 @@ function Detail({ match }) {
         comments: aidData[aidId].comments
     }
 
-    const [index, setIndex] = useState(0);
+    /*const [index, setIndex] = useState(0);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
-
+    */
 
     return (
         <div>

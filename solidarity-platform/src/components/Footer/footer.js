@@ -4,8 +4,8 @@ import './Footer.scss'
 import styled from 'styled-components'
 
 const Container = styled.div`
-    padding: 80px 60px;
-    background : radial-gradient(circle, #6DDB84 , #6DF2B1);
+    padding: 30px 60px;
+    background : radial-gradient(circle, #8bc34a , #8bc34a);
     justify-content:center;
 `
 const Wrapper = styled.div`
