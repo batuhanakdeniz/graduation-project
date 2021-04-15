@@ -27,11 +27,13 @@ function MapComponent({ match }) {
     return (
         <div style={{ marginLeft: "1rem" }}>
             <Row>
-                <Col md={12}>
-                    <TabComponent setMapmod={setMapmod} />
-                </Col>
                 <Col md={3}>
-                    <AidCards aidData={aidData} />
+                    <Row>
+                        <TabComponent setMapmod={setMapmod} />
+                    </Row>
+                    <Row>
+                        <AidCards aidData={aidData} />
+                    </Row>
                 </Col>
                 <Col md={9}>
                     <MapContainer

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     padding: 30px 60px;
-    background : radial-gradient(circle, #8bc34a , #8bc34a);
+    background : radial-gradient(circle, #9ccc65 , #8bc34a);
     justify-content:center;
 `
 const Wrapper = styled.div`

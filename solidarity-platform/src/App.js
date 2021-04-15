@@ -11,7 +11,7 @@ import MapComponent from './components/Map/MapComponent';
 import DetailPage from './components/Details/Detail';
 import AboutPage from './components/About/about';
 import ProfilePage from './components/Profile/ProfilePageComponent';
-import ProfileEditPage from './components/Profile/ProfilePageComponent';
+import ProfileEditPage from './components/Profile/ProfileEditPage';
 import RegistrationTypesPage from './components/RegistrationForm/RegistrationTypesPage';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import NasilIsler from './components/NasilIsler/NasilIsler';
@@ -73,7 +73,7 @@ function App() {
                                     {!loggedIn &&
                                         (<Route path="/signup/:userType" component={RegistrationForm} />)
                                     }
-                                    <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
+                                    <Route path="/yardimekle/" exact component={YardimEkle} />
 
                                     <Route path="/profile" exact component={ProfilePage} />
                                     <Route path="/profile/edit" exact component={ProfileEditPage} />

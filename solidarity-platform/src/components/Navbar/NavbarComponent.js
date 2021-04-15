@@ -51,8 +51,8 @@ function NavbarComponent() {
                             <NavDropdown title={
                                 <Image
                                     src={navbarPP}
-                                    width="30"
-                                    height="30"
+                                    width="35"
+                                    height="35"
                                     className="d-inline-block align-top"
                                     alt=" "
                                     fluid

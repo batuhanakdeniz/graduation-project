@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import {Container, Row, Col, Image} from 'react-bootstrap'
+import {Container, Row, Col, Card, Button, Image, Nav} from 'react-bootstrap'
 import styled from 'styled-components'
-import './profileImage.jpeg'
 const ImageSection = styled.div`
     min-height : 10rem;
     border-radius: 1rem;
@@ -38,7 +37,6 @@ const InfoSection = styled.div`
 
 
 function ProfilePage() {
-    
     const [userInfo, setUserInfo] = useState([])
     const getUser = async () => {
 
@@ -52,11 +50,84 @@ function ProfilePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+    const [navlink, setNavLink] = useState([])
+    const handleSelect = (eventKey) => {
+        if(eventKey === "Profile"){
+            setNavLink("Profile");
+            console.log("navLink: ",navlink);
+        }
+        else{
+            setNavLink("Posts");
+            console.log("navLink: ",navlink);
+
+        }
+    };
+
+
     return (
-        <div>
-            <Container>
+        <div style={{ marginLeft: "1rem" }}>
+            <Container fluid>
                 <br />
-                <Row xs={1} md={2}>
+                <Row>
+                    <Col md={{ span:6, offset:4 }}>
+                        <Nav justify variant="tabs" defaultActiveKey="Profile" onSelect={handleSelect}>
+                            <Nav.Item>
+                                <Nav.Link eventKey="Profile">Profil</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="Posts">Oluşturulan Yardımlar</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={4} md={{ span:2, offset:1 }}>
+                        <Card border="light" style={{ width: '18rem' }}>
+                            <Card.Header>Profil</Card.Header>
+                            <Image variant="top" src="https://picsum.photos/200/200" roundedCircle/>
+                                <Card.Body>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                    </Card.Text>
+                                </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col sm={8} md={{ offset:1}}>
+                        {navlink === "Profile" &&(
+                        <h1>profile</h1>
+                        )}
+                        {navlink === "Posts" &&
+                        (
+                            <Card border="light" style={{ width: '36rem' }}>
+                                <Card.Header>Yardım</Card.Header>
+                                <Image variant="top" src="https://picsum.photos/100/100" thumbnail/>
+                                <Card.Body>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        )}
+                    </Col>
+                </Row>
+
+            </Container>
+        </div>
+    )
+}
+
+export default ProfilePage;
+/**
+ * 
+ * 
+ * 
+ * 
+ * <Row xs={1} md={2}>
                     <Col>
                         <ImageSection>
                             <Row>
@@ -66,7 +137,7 @@ function ProfilePage() {
                             </Row>
                             <Row>
                                 <Col></Col>
-                                <Col>                                
+                                <Col xs="auto">                                
                                     <Image src="https://picsum.photos/300/300" roundedCircle />
                                 </Col>
                                 <Col></Col>
@@ -92,10 +163,4 @@ function ProfilePage() {
                     </Col>
                 </Row>
 
-
-            </Container>
-        </div>
-    )
-}
-
-export default ProfilePage;
+ */

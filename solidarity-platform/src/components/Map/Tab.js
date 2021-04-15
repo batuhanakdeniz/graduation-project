@@ -16,10 +16,8 @@ function TabComponent({ setMapmod }) {
             }}
         >
             <Tab eventKey="show" title="Show Aids">
-                These are the aids
             </Tab>
             <Tab eventKey="add" title="Add Aid">
-                To add aid on your current location, click on the map.
             </Tab>
         </Tabs>
     );
