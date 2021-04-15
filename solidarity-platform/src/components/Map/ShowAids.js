@@ -10,7 +10,7 @@ import { Button, Col, Row, Image } from 'react-bootstrap';
 import { popupContent, popupHead, popupButtons, popupText } from './PopupStyles'
 import { Link } from 'react-router-dom';
 
-function ShowAids({ aidData }) {
+function ShowAids({aidData}) {
 
 
     const greenIcon = L.icon({
@@ -43,42 +43,41 @@ function ShowAids({ aidData }) {
         iconAnchor: [12.5, 41],
         popupAnchor: [0, -41]
     });
-
+    
     return (
         <div>
-            {
-                aidData.map(aid => (
+            
                     <Marker
-                        key={aid.id}
-                        position={[aid.lng, aid.lat]}
+                        key={aidData[0].id}
+                        position={[aidData[0].lng, aidData[0].lat]}
                         icon={
-                            (aid.emergencyLevel > 5)
+                            (aidData[0].emergencyLevel > 5)
                                 ?
-                                ((aid.emergencyLevel > 9)
+                                ((aidData[0].emergencyLevel > 9)
                                     ? darkIcon
-                                    : (aid.emergencyLevel <= 7) ? pinkIcon : redIcon)
+                                    : (aidData[0].emergencyLevel <= 7) ? pinkIcon : redIcon)
                                 :
-                                ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
+                                ((aidData[0].emergencyLevel < 4) ? greenIcon : orangeIcon)
                         }
                     >
                         <Popup className="request-popup">
                             <div style={popupContent}>
                                 <div style={popupHead}>
-                                    {aid.header}
+                                    {aidData[0].header}
                                 </div>
                                 <div style={popupText}>
                                     <Row>
                                         <Col md={4} xs={12}>
-                                            <Image src={aid.img} fluid rounded />
+                                            <Image src="https://picsum.photos/300/300" fluid rounded />
                                         </Col>
                                         <Col md={8} xs={12}>
-                                            Aid No: {aid.aidNo}
+                                            Aid No: {aidData.aidNo}
                                             <br />
-                                            Aid Name: {aid.personName}
+                                            Aid Name: {aidData.personName}
                                             <br />
-                                            Aid LastName: {aid.personLastName}
+                                            Aid LastName: {aidData.personLastName}
                                             <br />
-                                            Aid EmercenyLevel: {aid.emergencyLevel}
+                                            Aid EmercenyLevel: {aidData.emergencyLevel}
                                         </Col>
                                     </Row>
                                     <br />
@@ -88,12 +87,12 @@ function ShowAids({ aidData }) {
                                         <Button variant="danger">Rapor Et</Button>
                                     </Col>
                                     <Col md={4} xs={12}>
-                                        <Link to={`/detail/${aid.id}`} >
+                                        <Link to={`/detail/${aidData[0].id}`} >
                                             <Button variant="outline-primary">Detayları Gör</Button>
                                         </Link>
                                     </Col>
                                     <Col md={4} xs={12}>
-                                        <Link to={`/detail/${aid.id}`} >
+                                        <Link to={`/detail/${aidData[0].helps.id}`} >
                                             <Button variant="outline-primary">Yardım Et</Button>
                                         </Link>
                                     </Col>
@@ -102,9 +101,6 @@ function ShowAids({ aidData }) {
                             </div>
                         </Popup>
                     </Marker>
-                ))
-            }
-
         </div >
     )
 }

@@ -18,6 +18,7 @@ import NasilIsler from './components/NasilIsler/NasilIsler';
 import styled from 'styled-components';
 import axios from 'axios';
 import AuthContext, { AuthContextProvider } from "./context/AuthContext";
+import  {HelpContextConsumer} from "./context/HelpContext";
 
 
 
@@ -51,6 +52,7 @@ const theme = extendTheme({ colors })
 function App() {
 
     const loggedIn = useContext(AuthContext);
+
     return (
         <ChakraProvider theme={theme}>
             <AuthContextProvider>
@@ -60,12 +62,15 @@ function App() {
                             <DIVM>
                                 <Switch>
                                     <Route path="/" exact component={HomePage} />
-                                    <Route path="/detail/:id" exact component={DetailPage} />
                                     <Route path="/NasilIsler" exact component={NasilIsler} />
                                     <Route exact path="/login" >
                                         <LoginPage />
                                     </Route>
-                                    <Route path="/map" exact component={MapComponent} />
+                                    <HelpContextConsumer>
+                                        <Route path="/detail/:id" exact component={DetailPage} />
+                                        <Route path="/yardimekle" exact component={YardimEkle} />
+                                        <Route path="/map" exact component={MapComponent} />
+                                    </HelpContextConsumer>
                                     <Route path="/about" exact component={AboutPage} />
                                     {!loggedIn && (
                                         <Route path="/signup" exact component={RegistrationTypesPage} />)
@@ -73,11 +78,13 @@ function App() {
                                     {!loggedIn &&
                                         (<Route path="/signup/:userType" component={RegistrationForm} />)
                                     }
+<<<<<<< Updated upstream
                                     <Route path="/yardimekle/" exact component={YardimEkle} />
+=======
+>>>>>>> Stashed changes
 
                                     <Route path="/profile" exact component={ProfilePage} />
                                     <Route path="/profile/edit" exact component={ProfileEditPage} />
-                                    <Route path="/map" exact component={MapComponent} />
                                 </Switch>
                             </DIVM>
                             <Footer />
