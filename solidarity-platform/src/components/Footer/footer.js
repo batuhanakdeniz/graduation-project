@@ -1,11 +1,11 @@
 import React from 'react'
 import './Footer.scss'
-
+import {Row, Col} from 'react-bootstrap'
 import styled from 'styled-components'
-
+import {Text} from '@chakra-ui/react'
 const Container = styled.div`
     padding: 30px 60px;
-    background : radial-gradient(circle, #8bc34a , #8bc34a);
+    background : radial-gradient(circle, #9ccc65 , #8bc34a);
     justify-content:center;
 `
 const Wrapper = styled.div`
@@ -18,18 +18,18 @@ const Wrapper = styled.div`
 const MyRow = styled.div`
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 40px;
+    grid-gap: 20px;
 
     @media (max-width: 1000px){
         grid-template-columns : repeat(auto-fill, minmax(200px,1fr));
-        grid-gap : 20px;
+        grid-gap : 10px;
     }
 `
 const MyColumn = styled.div`
     text-align: center;
     display:flex;
-    flex-direction : column;
-    max-width : 200px;
+    flex-direction : row;
+    max-width : 600px;
     margin: 0 auto;
 
 `
@@ -67,25 +67,13 @@ function footer() {
         <Container>
             <Wrapper>
                 <MyRow>
-                    <MyColumn>
-                        <Title>About</Title>
-                        <Link href="#">About Us</Link>
-                        <Link href="#">xxxx</Link>
-                        <Link href="#">yyyy</Link>
-                        <Link href="#">zzzz</Link>
+                    <MyColumn >
+                       <Text>© 2020 Chakra Templates. All rights reserved</Text>          
                     </MyColumn>
-                    <MyColumn>
-                        <Title>Services</Title>
-                        <Link href="#">aaaa</Link>
-                        <Link href="#">bbbb</Link>
-                        <Link href="#">cccc</Link>
-                        <Link href="#">dddd</Link>
-                    </MyColumn>
-                    <MyColumn>
-                        <Title>Social</Title>
+                    <MyColumn >
+                         <Title>Social</Title>
                         <Link href="#"><MyIcons className="fab fa-youtube" />Youtube</Link>
                         <Link href="#"><MyIcons className="fab fa-twitter" />Twitter</Link>
-                        <Link href="#"><MyIcons className="fab fa-instagram" />Instagram</Link>
                         <Link href="#"> <MyIcons className="fab fa-facebook" />Facebook</Link>
                     </MyColumn>
                 </MyRow>

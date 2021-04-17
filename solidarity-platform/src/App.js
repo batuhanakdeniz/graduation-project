@@ -11,7 +11,7 @@ import MapComponent from './components/Map/MapComponent';
 import DetailPage from './components/Details/Detail';
 import AboutPage from './components/About/about';
 import ProfilePage from './components/Profile/ProfilePageComponent';
-import ProfileEditPage from './components/Profile/ProfilePageComponent';
+import ProfileEditPage from './components/Profile/ProfileEditPage';
 import RegistrationTypesPage from './components/RegistrationForm/RegistrationTypesPage';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import NasilIsler from './components/NasilIsler/NasilIsler';

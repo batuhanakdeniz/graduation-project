@@ -15,7 +15,6 @@ function AidCards({ aidData }) {
     return (
         <div>
             <br />
-            <br />
             <Row md={1}>
                 <Col>
                     <Form inline>
