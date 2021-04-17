@@ -14,7 +14,6 @@ function LocationMarker(props) {
             map.flyTo(e.latlng, map.getZoom())
         },
     })
-
     return position === null ? null : (
         <Marker position={position} icon={props.icon}>
             <Popup>

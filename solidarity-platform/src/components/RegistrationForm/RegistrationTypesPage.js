@@ -22,7 +22,7 @@ function RegistrationTypesPage() {
                                     <Link to={`/signup/${1}`}>
                                         <Button variant="outline-success" type="submit" >
                                             Üye Ol
-                                </Button>
+                                        </Button>
                                     </Link>
                                 </div>
                             </div>

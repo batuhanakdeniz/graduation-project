@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
 .NavbarStyle{
         background: #9ccc65;
-        min-height: 10vh;
+        min-height: 4vh;
         padding-right: 1rem;
 }
 .nav .dropdown{
@@ -18,7 +18,7 @@
         top: 3em;
       }
 .NavBrandStyle{
-        color: white;
+        color: rgb(36, 59, 66);
         margin-right: 4rem;
         font-size: 36px;
         font-family: 'Akaya Kanadaka', cursive;
@@ -35,7 +35,7 @@
 
 @media screen and (max-width:850px){
         .NavbarStyle{
-                background: #8bc34a;
+                background: #9ccc65;
                 min-height: 15vh;
         }
        .NavBrandStyle{
