@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react'
-//import { Link } from 'react-router-dom'
+import React, { useContext, useState, useEffect } from 'react'
 import { Image, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-//import { useHistory } from 'react-router-dom'
 import './Navbar.scss'
 import AuthContext from "../../context/AuthContext";
 import axios from 'axios';
@@ -13,15 +11,26 @@ function NavbarComponent() {
     const history = useHistory();
     const { getLoggedIn } = useContext(AuthContext);
     const handleLoggedOut = async () => {
-        await axios.get("http://localhost:5000/loggedOut");
+        await axios.get("http://localhost:5000/api/loggedOut");
         await getLoggedIn();
         history.push('/');
     }
     const loggedInfos = useContext(AuthContext);
+    const [userInfo, setUserInfo] = useState([])
+    const getUser = async () => {
 
+        const loggedInRes = await axios.get(`http://localhost:5000/api/loggedUser`);
+        setUserInfo(loggedInRes.data);
+    }
+
+    useEffect(() => {
+        getUser();
+        // ! Alt satır kalacak silme
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <Navbar className="NavbarStyle" collapseOnSelect expand="lg" variant="dark" >
-            <Navbar.Brand className="NavBrandStyle" href="/">Social Aid and Solidarity Platform</Navbar.Brand>
+            <Navbar.Brand className="NavBrandStyle" href="/">Social Aid and Solidarity</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                 <Nav>
@@ -42,8 +51,8 @@ function NavbarComponent() {
                             <NavDropdown title={
                                 <Image
                                     src={navbarPP}
-                                    width="30"
-                                    height="30"
+                                    width="35"
+                                    height="35"
                                     className="d-inline-block align-top"
                                     alt=" "
                                     fluid
@@ -51,15 +60,16 @@ function NavbarComponent() {
                                 />
                             }
                                 id="NavlinksStyle">
-                                <NavDropdown.Item href="/profile/60662c02967c4181cd2f6cf7" id="NavDropdownStyle">
-                                    <i className="fa fa-user fa-fw"></i> User Profile
+                                <NavDropdown.Item href='/profile/' id="NavDropdownStyle">
+                                    <i className="fa fa-user fa-fw"></i> Profile Page
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2" id="NavDropdownStyle">
-                                    <i class="fas fa-user-cog"></i> Settings
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="/profile/edit" id="NavDropdownStyle">
+                                    <i className="fas fa-user-cog"></i> Settings
                                 </NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item onClick={handleLoggedOut} id="NavDropdownStyle">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                    <i className="fas fa-sign-out-alt"></i> Logout
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </>

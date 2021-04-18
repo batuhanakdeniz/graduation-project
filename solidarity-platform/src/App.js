@@ -10,13 +10,15 @@ import YardimEkle from './components/YardimEkle/YardimEkle';
 import MapComponent from './components/Map/MapComponent';
 import DetailPage from './components/Details/Detail';
 import AboutPage from './components/About/about';
-import ProfilePage from './components/Profile/profile';
+import ProfilePage from './components/Profile/ProfilePageComponent';
+import ProfileEditPage from './components/Profile/ProfileEditPage';
 import RegistrationTypesPage from './components/RegistrationForm/RegistrationTypesPage';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import NasilIsler from './components/NasilIsler/NasilIsler';
 import styled from 'styled-components';
 import axios from 'axios';
 import AuthContext, { AuthContextProvider } from "./context/AuthContext";
+
 
 
 axios.defaults.withCredentials = true; // ? always set true cookielere izin verir her zaman
@@ -52,34 +54,35 @@ function App() {
     return (
         <ChakraProvider theme={theme}>
             <AuthContextProvider>
-                <Router>
-                    <div className="App">
-                        <NavbarComponent loggedIn={loggedIn} />
-                        <DIVM>
-                            <Switch>
-                                <Route path="/" exact component={HomePage} />
-                                <Route path="/detail/:id" exact component={DetailPage} />
-                                <Route path="/NasilIsler" exact component={NasilIsler} />
-                                <Route exact path="/login" >
-                                    <LoginPage />
-                                </Route>
-                                <Route path="/map" exact component={MapComponent} />
-                                <Route path="/about" exact component={AboutPage} />
-                                {!loggedIn && (
-                                    <Route path="/signup" exact component={RegistrationTypesPage} />)
-                                }
-                                {!loggedIn &&
-                                    (<Route path="/signup/:userType" component={RegistrationForm} />)
-                                }
-                                <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
+                    <Router>
+                        <div className="App">
+                            <NavbarComponent />
+                            <DIVM>
+                                <Switch>
+                                    <Route path="/" exact component={HomePage} />
+                                    <Route path="/detail/:id" exact component={DetailPage} />
+                                    <Route path="/NasilIsler" exact component={NasilIsler} />
+                                    <Route exact path="/login" >
+                                        <LoginPage />
+                                    </Route>
+                                    <Route path="/map" exact component={MapComponent} />
+                                    <Route path="/about" exact component={AboutPage} />
+                                    {!loggedIn && (
+                                        <Route path="/signup" exact component={RegistrationTypesPage} />)
+                                    }
+                                    {!loggedIn &&
+                                        (<Route path="/signup/:userType" component={RegistrationForm} />)
+                                    }
+                                    <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
 
-                                <Route path="/profile/:id" exact component={ProfilePage} />
-                                <Route path="/map" exact component={MapComponent} />
-                            </Switch>
-                        </DIVM>
-                        <Footer />
-                    </div>
-                </Router>
+                                    <Route path="/profile" exact component={ProfilePage} />
+                                    <Route path="/profile/edit" exact component={ProfileEditPage} />
+                                    <Route path="/map" exact component={MapComponent} />
+                                </Switch>
+                            </DIVM>
+                            <Footer />
+                        </div>
+                    </Router>
             </AuthContextProvider>
         </ChakraProvider>
     );

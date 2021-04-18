@@ -5,20 +5,17 @@ const AuthContext = createContext();
 // todo BİRAZ DEĞİŞMESİ LAZIM BURANIN
 function AuthContextProvider(props) {
     const [loggedIn, setLoggedIn] = useState(undefined);
-    const [loggedUser, setLoggedUser] = useState(undefined);
 
     async function getLoggedIn() {
-        const loggedInRes = await axios.get("http://localhost:5000/loggedIn");
+        const loggedInRes = await axios.get("http://localhost:5000/api/loggedIn");
         setLoggedIn(loggedInRes.data);
-        setLoggedUser(loggedInRes.data);
     }
-
     useEffect(() => {
-        getLoggedIn();
+        getLoggedIn()
     }, []);
 
     return (
-        <AuthContext.Provider value={{ loggedIn, getLoggedIn, loggedUser }}>
+        <AuthContext.Provider value={{ loggedIn, getLoggedIn }}>
             {props.children}
         </AuthContext.Provider>
     );
