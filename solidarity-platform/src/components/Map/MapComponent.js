@@ -4,26 +4,46 @@ import { MapContainer, TileLayer, LayersControl,LayerGroup,Marker, Popup, useMap
 import './mapStyle.scss'
 import addAidMarker from './assets/free-map-marker-icon-blue-darker.png';
 import TabComponent from './Tab';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Form,FormControl,Button } from 'react-bootstrap';
 import LocationMarker from './LocationMarker';
 import ShowAids from './ShowAids';
 import aidData from '../aidData'
 import DrawerExample from './Drawer'
 import AidCards from './AidCards';
 import { Link } from 'react-router-dom'
-import { Button } from '@chakra-ui/react'
+//import { Button } from '@chakra-ui/react'
 
 const POSITION_CLASSES = {
     bottomleft: 'leaflet-bottom leaflet-left',
     bottomright: 'leaflet-bottom leaflet-right',
     topleft: 'leaflet-top leaflet-left',
     topright: 'leaflet-top leaflet-right',
-  }
+}
+
+
+function Search({position, zoom}) {
+    const parentMap = useMap()
+    const button = useMemo(
+        () =>(
+                    <Form inline>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                        <Button variant="outline-success"><i class="fas fa-search-location"/></Button>
+                        
+                    </Form>        )
+    )
+    const positionClass =
+    (position && POSITION_CLASSES[position]) || POSITION_CLASSES.bottomleft
+    return (
+        <div style={{ marginLeft: "5rem"}} className={positionClass}>
+            <div className="leaflet-control leaflet-bar">{button}</div>
+        </div>
+    )
+}
 function Addbutton({position, zoom}) {
     const parentMap = useMap()
     const button = useMemo(
         () =>(
-            <Button colorScheme="teal" size="lg">Yardım Ekle</Button>
+            <Button variant="outline-success">Yardım Ekle</Button>
         )
     )
     const positionClass =
@@ -34,6 +54,9 @@ function Addbutton({position, zoom}) {
         </div>
     )
 }
+
+
+
 
 function MapComponent({ match }) {
     const [zoom, setZoom] = useState('17');
@@ -78,7 +101,8 @@ function MapComponent({ match }) {
                                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                        <Addbutton position="bottomleft"/>              
+                        <Search position="topleft"/> 
+                        <Addbutton position="bottomleft"/>               
                         {
                             mapmod ?
                             <LayersControl position="topright">
