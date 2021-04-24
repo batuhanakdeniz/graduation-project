@@ -18,7 +18,7 @@ function LocationMarker(props) {
                     <h2>Buraya yardım ekle</h2>
                     <br />
                 </span>
-                <Link to={`/yardımekle/${position.lng}/${position.lat}`} >
+                <Link to={`/yardimekle/${position.lng}/${position.lat}`} >
                     <Button type='submit' >Buraya Yardım Ekle</Button>
                 </Link>
             </Popup >

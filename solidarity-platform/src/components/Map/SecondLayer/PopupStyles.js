@@ -1,4 +1,4 @@
-const popupContent = {
+const popupInnerContent = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
@@ -30,4 +30,4 @@ const popupButton = {
 
 
 
-export { popupContent, popupHead, popupText, popupButtons, popupButton };
+export { popupInnerContent, popupHead, popupText, popupButtons, popupButton };

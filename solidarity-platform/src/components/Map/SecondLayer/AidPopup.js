@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import L from 'leaflet'
 import { Marker, Popup } from 'react-leaflet'
 import greenMarker from '../assets/free-map-marker-icon-green.png';
@@ -7,33 +7,44 @@ import orangeMarker from '../assets/free-map-marker-icon-orange.png';
 import darkMarker from '../assets/free-map-marker-icon-dark.png';
 import pinkMarker from '../assets/free-map-marker-icon-pink.png';
 import { Button, Col, Row, Image } from 'react-bootstrap';
-import { popupContent, popupHead, popupButtons, popupText } from './PopupStyles'
+import { popupInnerContent, popupHead, popupButtons, popupText } from './PopupStyles'
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPopupContent } from '../../../redux'
 
 
+function AidPopUp({ aidId }) {
 
-function AidPopUp({ aid }) {
+    const popupContent = useSelector(state => state.popupContent)
+
+    const dispatch = useDispatch();
+
+    const popUpHandler = () => {
+        dispatch(fetchPopupContent(aidId));
+        console.log("aidID", aidId);
+    }
+
 
     return (
         <div>
-            <Popup className="request-popup">
-                <div style={popupContent}>
+            <Popup onOpen={popUpHandler} className="request-popup">
+                <div style={popupInnerContent}>
                     <div style={popupHead}>
-                        {aid.header}
+                        {popupContent.aidHeader}
                     </div>
                     <div style={popupText}>
                         <Row>
                             <Col md={4} xs={12}>
-                                <Image src={aid.img} fluid rounded />
+                                <Image src={popupContent.aidImgSrc} fluid rounded />
                             </Col>
                             <Col md={8} xs={12}>
-                                Aid No: {aid.aidNo}
+                                Aid No: {popupContent.aidId}
                                 <br />
-                                            Aid Name: {aid.personName}
+                                            Aid Name: {popupContent.aidName}
                                 <br />
-                                            Aid LastName: {aid.personLastName}
+                                            Aid LastName: {popupContent.aidSurname}
                                 <br />
-                                            Aid EmercenyLevel: {aid.emergencyLevel}
+                                            Aid EmercenyLevel: {popupContent.aidEmercenyLevel}
                             </Col>
                         </Row>
                         <br />
@@ -43,12 +54,12 @@ function AidPopUp({ aid }) {
                             <Button variant="danger">Rapor Et</Button>
                         </Col>
                         <Col md={4} xs={12}>
-                            <Link to={`/detail/${aid.id}`} >
+                            <Link to={`/detail/${popupContent.aidId}`} >
                                 <Button variant="outline-primary">Detayları Gör</Button>
                             </Link>
                         </Col>
                         <Col md={4} xs={12}>
-                            <Link to={`/detail/${aid.id}`} >
+                            <Link to={`/detail/${popupContent.aidId}`} >
                                 <Button variant="outline-primary">Yardım Et</Button>
                             </Link>
                         </Col>

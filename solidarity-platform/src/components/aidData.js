@@ -2,7 +2,7 @@ import joe from './Details/joe.jpg'
 
 const aidData = [
     {
-        id: 0,
+        id: 1,
         header: "Aid 1",
         lng: 36.919767118351025,
         lat: 31.088782114558335,
@@ -64,7 +64,7 @@ const aidData = [
         ]
     },
     {
-        id: 1,
+        id: 2,
         header: "Aid 2",
         lng: 36.918767118351025,
         lat: 31.088782114558335,
@@ -126,7 +126,7 @@ const aidData = [
         ]
     },
     {
-        id: 2,
+        id: 3,
         header: "Aid 3",
         lng: 36.917767118351025,
         lat: 31.088782114558335,
@@ -188,7 +188,7 @@ const aidData = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         header: "Aid 4",
         lng: 36.920767118351025,
         lat: 31.088782114558335,
@@ -250,7 +250,7 @@ const aidData = [
         ]
     },
     {
-        id: 4,
+        id: 5,
         header: "Aid 5",
         lng: 36.916767118351025,
         lat: 31.088782114558335,
@@ -312,7 +312,7 @@ const aidData = [
         ]
     },
     {
-        id: 5,
+        id: 6,
         header: "Aid 6",
         lng: 36.921767118351025,
         lat: 31.088782114558335,
