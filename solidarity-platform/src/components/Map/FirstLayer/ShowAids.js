@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import L from 'leaflet'
 import { Marker } from 'react-leaflet'
 import greenMarker from '../assets/free-map-marker-icon-green.png';
@@ -7,6 +7,9 @@ import orangeMarker from '../assets/free-map-marker-icon-orange.png';
 import darkMarker from '../assets/free-map-marker-icon-dark.png';
 import pinkMarker from '../assets/free-map-marker-icon-pink.png';
 import AidPopUp from '../SecondLayer/AidPopup'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAidLocations } from '../../../redux'
+
 function ShowAids({ aidData }) {
     const greenIcon = L.icon({
         iconUrl: greenMarker,
@@ -39,24 +42,33 @@ function ShowAids({ aidData }) {
         popupAnchor: [0, -41]
     });
 
+    const aidLocations = useSelector(state => state.aidLocations)
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchAidLocations());
+    }, [])
+
+
     return (
         <div>
             {
-                aidData.map(aid => (
+                aidLocations.locations.map(aid => (
                     <Marker
                         key={aid.id}
-                        position={[aid.lng, aid.lat]}
-                        icon={
-                            (aid.emergencyLevel > 5)
-                                ?
-                                ((aid.emergencyLevel > 9)
-                                    ? darkIcon
-                                    : (aid.emergencyLevel <= 7) ? pinkIcon : redIcon)
-                                :
-                                ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
+                        position={[aid.address.geo.lng, aid.address.geo.lat]}
+                        icon={redIcon
+                            // (aid.emergencyLevel > 5)
+                            //     ?
+                            //     ((aid.emergencyLevel > 9)
+                            //         ? darkIcon
+                            //         : (aid.emergencyLevel <= 7) ? pinkIcon : redIcon)
+                            //     :
+                            //     ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
                         }
                     >
-                        <AidPopUp aid={aid} />
+                        <AidPopUp aidId={aid.id} />
                     </Marker>
                 ))
             }
