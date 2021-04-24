@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json());    //anlamadım tam olarak ama endpoint içinde json formatında 
                             //cevap dönderebilmemizi sağlıyor sanırsam 
 app.use(cookieParser());
-app.use("/help", helpRouter);
+app.use("/map", helpRouter);
 app.use("/", userRouter);
 
 const PORT = process.env.PORT;

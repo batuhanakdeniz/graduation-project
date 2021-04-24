@@ -178,11 +178,4 @@ function HomePage() {
 
 export default HomePage
 
-/**
- * <Col md={6}>
-                    
-            </Col>
-            <Col md={6}>
-              
-            </Col>
- */
+

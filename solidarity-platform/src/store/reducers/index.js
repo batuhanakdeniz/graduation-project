@@ -1,5 +1,5 @@
 import helpBasicReducer from './helpBasic';
-import helpDetailReducer from './helpBasic';
+import helpDetailReducer from './helpDetail';
 import {combineReducers} from 'redux';
 
 const helpReducers = combineReducers({
