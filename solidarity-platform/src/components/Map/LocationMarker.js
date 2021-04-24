@@ -6,23 +6,16 @@ import { Link } from 'react-router-dom'
 function LocationMarker(props) {
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
-        click() {
-            map.locate()
-        },
-        locationfound(e) {
+        click(e) {
             setPosition(e.latlng)
-            map.flyTo(e.latlng, map.getZoom())
-        },
+            map.locate(e)
+        }
     })
     return position === null ? null : (
         <Marker position={position} icon={props.icon}>
             <Popup>
                 <span>
-                    You are here
-                    <br />
-                    Langitude : {position.lng}
-                    <br />
-                    Latitude : {position.lat}
+                    <h2>Buraya yardım ekle</h2>
                     <br />
                 </span>
                 <Link to={`/yardımekle/${position.lng}/${position.lat}`} >

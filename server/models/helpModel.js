@@ -2,6 +2,8 @@ import mongoose from "mongoose"
 
 const helpSchema = mongoose.Schema({
     name: String,
+    lng: String,
+    lat: String,
     surname: String,
     typeofhelp: String,
     image: String,

@@ -27,7 +27,7 @@ function Search({position, zoom}) {
         () =>(
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-success"><i class="fas fa-search-location"/></Button>
+                        <Button variant="success"><i class="fas fa-search-location"/></Button>
                         
                     </Form>        )
     )
@@ -39,11 +39,11 @@ function Search({position, zoom}) {
         </div>
     )
 }
-function Addbutton({position, zoom}) {
+function Addbutton({position, zoom, setMapmod}) {
     const parentMap = useMap()
     const button = useMemo(
         () =>(
-            <Button variant="outline-success">Yardım Ekle</Button>
+            <Button variant="success">Yardım Ekle</Button>  //todo onClick ekle ve yardım eklenir hale gelsin
         )
     )
     const positionClass =
@@ -102,7 +102,7 @@ function MapComponent({ match }) {
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
                         <Search position="topleft"/> 
-                        <Addbutton position="bottomleft"/>               
+                        <Addbutton position="bottomleft" eventKey={mapmod}/>               
                         {
                             mapmod ?
                             <LayersControl position="topright">
