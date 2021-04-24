@@ -7,7 +7,7 @@ import Footer from './components/Footer/footer';
 import HomePage from './components/Home Page/HomePage';
 import LoginPage from './components/LoginForm/LoginForm';
 import YardimEkle from './components/YardimEkle/YardimEkle';
-import MapComponent from './components/Map/MapComponent';
+import MapComponent from './components/Map/Parent/MapComponent';
 import DetailPage from './components/Details/Detail';
 import AboutPage from './components/About/about';
 import ProfilePage from './components/Profile/ProfilePageComponent';
@@ -54,35 +54,35 @@ function App() {
     return (
         <ChakraProvider theme={theme}>
             <AuthContextProvider>
-                    <Router>
-                        <div className="App">
-                            <NavbarComponent />
-                            <DIVM>
-                                <Switch>
-                                    <Route path="/" exact component={HomePage} />
-                                    <Route path="/detail/:id" exact component={DetailPage} />
-                                    <Route path="/NasilIsler" exact component={NasilIsler} />
-                                    <Route exact path="/login" >
-                                        <LoginPage />
-                                    </Route>
-                                    <Route path="/map" exact component={MapComponent} />
-                                    <Route path="/about" exact component={AboutPage} />
-                                    {!loggedIn && (
-                                        <Route path="/signup" exact component={RegistrationTypesPage} />)
-                                    }
-                                    {!loggedIn &&
-                                        (<Route path="/signup/:userType" component={RegistrationForm} />)
-                                    }
-                                    <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
+                <Router>
+                    <div className="App">
+                        <NavbarComponent />
+                        <DIVM>
+                            <Switch>
+                                <Route path="/" exact component={HomePage} />
+                                <Route path="/detail/:id" exact component={DetailPage} />
+                                <Route path="/NasilIsler" exact component={NasilIsler} />
+                                <Route exact path="/login" >
+                                    <LoginPage />
+                                </Route>
+                                <Route path="/map" exact component={MapComponent} />
+                                <Route path="/about" exact component={AboutPage} />
+                                {!loggedIn && (
+                                    <Route path="/signup" exact component={RegistrationTypesPage} />)
+                                }
+                                {!loggedIn &&
+                                    (<Route path="/signup/:userType" component={RegistrationForm} />)
+                                }
+                                <Route path="/yardimekle/:lng/:lat" exact component={YardimEkle} />
 
-                                    <Route path="/profile" exact component={ProfilePage} />
-                                    <Route path="/profile/edit" exact component={ProfileEditPage} />
-                                    <Route path="/map" exact component={MapComponent} />
-                                </Switch>
-                            </DIVM>
-                            <Footer />
-                        </div>
-                    </Router>
+                                <Route path="/profile" exact component={ProfilePage} />
+                                <Route path="/profile/edit" exact component={ProfileEditPage} />
+                                <Route path="/map" exact component={MapComponent} />
+                            </Switch>
+                        </DIVM>
+                        <Footer />
+                    </div>
+                </Router>
             </AuthContextProvider>
         </ChakraProvider>
     );

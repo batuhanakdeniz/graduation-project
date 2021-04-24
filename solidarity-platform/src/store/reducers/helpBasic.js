@@ -1,4 +1,7 @@
-const helpBasicReducer = (state,action) => {
+const initialState = {
+
+}
+const helpBasicReducer = (state, action) => {
     return state;
 };
 
