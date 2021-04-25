@@ -47,7 +47,7 @@ function AidPopUp({ aidId }) {
                                 <Image src={popupContent.aidImgSrc} fluid rounded />
                             </Col>
                             <Col md={8} xs={12}>
-                                Aid No: {popupContent.aidId}
+                                Aid No: {popupContent.aidNo}
                                 <br />
                                             Aid Name: {popupContent.aidName}
                                 <br />

@@ -51,7 +51,7 @@ function MapComponent({ match }) {
                                 <LayersControl position="topright">
                                     <LayersControl.Overlay checked name="Layer group with Marker">
                                         <LayerGroup>
-                                            <ShowAids aidData={aidData} />
+                                            <ShowAids />
                                         </LayerGroup>
                                     </LayersControl.Overlay>
                                 </LayersControl>

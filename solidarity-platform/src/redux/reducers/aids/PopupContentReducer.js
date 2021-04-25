@@ -2,12 +2,15 @@ import { FETCH_POPUP_CONTENT_REQUEST, FETCH_POPUP_CONTENT_SUCCESS, FETCH_POPUP_C
 
 const initialState = {
     loading: false,
-    aidId: undefined,
+    aidId: "",
     aidHeader: "",
-    aidImgSrc: "https://picsum.photos/200/300.jpg",
+    aidLng: "",
+    aidLat: "",
+    aidNo: "",
     aidName: "",
     aidSurname: "",
-    aidEmercenyLevel: 3,
+    aidEmercenyLevel: "",
+    aidImgSrc: "",
     error: ""
 }
 
@@ -22,10 +25,15 @@ const popupContentReducer = (state = initialState, action) => {
             return {
                 loading: false,
                 ...state,
-                aidId: action.payload.id,
-                aidHeader: action.payload.email,
-                aidName: action.payload.name,
-                aidSurname: action.payload.username,
+                aidId: action.payload._id,
+                aidHeader: action.payload.header,
+                aidLng: action.payload.lng,
+                aidLat: action.payload.lat,
+                aidNo: action.payload.aidNo,
+                aidName: action.payload.personName,
+                aidSurname: action.payload.personLastName,
+                aidEmergencyLevel: action.payload.EmergencyLevel,
+                aidImgSrc: action.payload.img,
                 error: ''
             }
         case FETCH_POPUP_CONTENT_FAILURE:

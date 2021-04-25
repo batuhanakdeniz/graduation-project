@@ -26,15 +26,18 @@ export const createHelp = async (req, res) =>{
 
 export const getHelpLocations = async (req, res) =>{
     try {
-        const helps = Help.find();
-        const HelpLocations = {
-            id: helps.id,
-            lng: helps.lng,
-            lat: helps.lat,
+        Help.find({},{
+                _id: 1,
+                lat: 1,
+                lng: 1,
+                emergencyLevel: 1,
+            },(err, helps)=>{
+                    if(err) throw err;
+                    console.log(helps);
+                    res.send(helps);
+                }
+            );
         }
-        console.log(helps);
-        res.status(200).json(HelpLocations);
-    }
     catch (err){
         console.log("fena hata var heee");
         res.status(409).json({
@@ -46,13 +49,17 @@ export const getHelpLocations = async (req, res) =>{
 export const getHelpLocation = async (req, res) =>{
     
     try {
-        const help = await Help.findById(req.body.id);
-        const HelpLocation = {
-            id: help.id,
-            lng: help.lng,
-            lat: help.lat,
-        }
-        res.status(200).json(HelpLocation);
+        console.log(req.params);
+        Help.findById(req.params.id,{
+            _id: 1,
+            lat: 1,
+            lng: 1,
+            emergencyLevel: 1,
+        },(err, help)=>{
+            if(err) throw err;
+            console.log(help);
+            res.send(help);
+        });
     }
     catch (err){
         res.status(409).json({
@@ -63,7 +70,21 @@ export const getHelpLocation = async (req, res) =>{
 
 export const getHelpBasics = async (req, res) =>{
     try {
-        res.status(200);
+        Help.find({},{
+            _id: 1,
+            header: 1,
+            lat: 1,
+            lng: 1,
+            emergencyLevel: 1,
+            aidNo: 1,
+            personName: 1,
+            personLastName: 1,
+        },(err, helps)=>{
+                if(err) throw err;
+                console.log(helps);
+                res.send(helps);
+            }
+        );
     }
     catch (err){
         res.status(409).json({
@@ -74,7 +95,21 @@ export const getHelpBasics = async (req, res) =>{
 
 export const getHelpBasic = async (req, res) =>{
     try {
-        res.status(200);
+        Help.findById(req.params.id,{
+            _id: 1,
+            header: 1,
+            lat: 1,
+            lng: 1,
+            emergencyLevel: 1,
+            aidNo: 1,
+            personName: 1,
+            personLastName: 1,
+            img: 1,
+        },(err, help)=>{
+            if(err) throw err;
+            console.log(help);
+            res.send(help);
+        });
     }
     catch (err){
         res.status(409).json({
@@ -100,7 +135,20 @@ export const getHelpDetails = async (req, res) =>{
 
 export const getHelpDetail = async (req, res) =>{
     try {
-        res.status(200);
+        Help.findById(req.params.id,{
+            _id: 1,
+            header: 1,
+            lat: 1,
+            lng: 1,
+            emergencyLevel: 1,
+            aidNo: 1,
+            personName: 1,
+            personLastName: 1,
+        },(err, help)=>{
+            if(err) throw err;
+            console.log(help);
+            res.send(help);
+        });
     }
     catch (err){
         res.status(409).json({

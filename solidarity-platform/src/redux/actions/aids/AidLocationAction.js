@@ -24,6 +24,7 @@ export const fetchAidLocations = () => {
         axios.get('http://localhost:5000/map/api/helps/locations')
             .then(response => {
                 const locations = response.data
+                console.log(locations);
                 dispatch(fetchAidLocationsSuccess(locations))
             })
             .catch(error => {

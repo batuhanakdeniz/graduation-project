@@ -19,12 +19,13 @@ export const fetchPopupContentFailure = (error) => {
     }
 }
 
-export const fetchPopupContent = (id = 1) => {
+export const fetchPopupContent = (aidId) => {
     return (dispatch) => {
         dispatch(fetchPopupContentRequest);
-        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        axios.get(`http://localhost:5000/map/api/helps/basics/${aidId}`)
             .then(response => {
                 const popupContent = response.data
+                console.log(popupContent);
                 dispatch(fetchPopupContentSuccess(popupContent))
             })
             .catch(error => {
