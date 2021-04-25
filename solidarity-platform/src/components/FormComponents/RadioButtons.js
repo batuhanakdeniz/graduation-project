@@ -12,7 +12,7 @@ export default function RadioButtons(props) {
                     ({ field }) => {
                         return options.map(option => {
                             return (
-                                <React.Fragment key={option.key}>
+                                <React.Fragment key={option.key} >
                                     <input
                                         type='radio'
                                         id={option.value}

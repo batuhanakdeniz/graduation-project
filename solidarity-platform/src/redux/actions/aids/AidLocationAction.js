@@ -1,7 +1,6 @@
 import { FETCH_AID_LOCATION_REQUEST, FETCH_AID_LOCATION_SUCCESS, FETCH_AID_LOCATION_FAILURE } from '../../types/aids/AidLocationTypes'
 import axios from 'axios'
-import useState from 'react'
-export const fetchAidLocationsRequest = (locations) => {
+export const fetchAidLocationsRequest = () => {
     return {
         type: FETCH_AID_LOCATION_REQUEST
     }

@@ -2,19 +2,27 @@
     height: 90vh;
     margin: 0rem 0rem 0rem 0rem;
 }
-
 .List {
-    border: 1px solid #d9dddd;
-  }
+  border: 1px solid #d9dddd;
+}
   
-  .ListItemEven,
-  .ListItemOdd {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.ListItemEven,
+.ListItemOdd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   
-  .ListItemEven {
-    background-color: #f8f8f0;
-  }
+.ListItemEven {
+  background-color: #f8f8f0;
+}
 
+.addAidForm{
+  
+  label{
+    margin: 1rem 1rem 0rem 0rem;
+  }
+  button{
+    margin-top: 0.5rem;
+  }
+}
