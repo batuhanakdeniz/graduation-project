@@ -1,7 +1,7 @@
 import { FETCH_POPUP_CONTENT_REQUEST, FETCH_POPUP_CONTENT_SUCCESS, FETCH_POPUP_CONTENT_FAILURE } from '../../types/aids/PopupContentTypes'
 import axios from 'axios'
 
-export const fetchPopupContentRequest = (locations) => {
+export const fetchPopupContentRequest = () => {
     return {
         type: FETCH_POPUP_CONTENT_REQUEST
     }

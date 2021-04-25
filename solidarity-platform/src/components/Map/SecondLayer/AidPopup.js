@@ -10,7 +10,9 @@ import { Button, Col, Row, Image } from 'react-bootstrap';
 import { popupInnerContent, popupHead, popupButtons, popupText } from './PopupStyles'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPopupContent } from '../../../redux'
+import { fetchDetailContent, fetchPopupContent } from '../../../redux'
+import { useDisclosure } from '@chakra-ui/hooks';
+import DetailModal from '../ThirdLayer/DetailModal';
 
 
 function AidPopUp({ aidId }) {
@@ -23,7 +25,14 @@ function AidPopUp({ aidId }) {
         dispatch(fetchPopupContent(aidId));
         console.log("aidID", aidId);
     }
-
+    const detailModalHandler = () => {
+        dispatch(fetchDetailContent(aidId));
+        console.log("aidID", aidId);
+    }
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const handleModalClick = () => {
+        onOpen()
+    }
 
     return (
         <div>
@@ -54,9 +63,12 @@ function AidPopUp({ aidId }) {
                             <Button variant="danger">Rapor Et</Button>
                         </Col>
                         <Col md={4} xs={12}>
-                            <Link to={`/detail/${popupContent.aidId}`} >
-                                <Button variant="outline-primary">Detayları Gör</Button>
-                            </Link>
+                            <Button
+                                onClick={() => { handleModalClick(); detailModalHandler(); }}
+                                key={"full"}
+                                m={4}
+                            >Detayları Gör</Button>
+                            <DetailModal onClose={onClose} isOpen={isOpen} />
                         </Col>
                         <Col md={4} xs={12}>
                             <Link to={`/detail/${popupContent.aidId}`} >

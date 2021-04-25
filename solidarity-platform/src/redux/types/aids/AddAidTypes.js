@@ -1,0 +1,1 @@
+export const SET_AID_LOCATION = 'SET_AID_LOCATION'
