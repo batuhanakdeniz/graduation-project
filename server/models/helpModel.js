@@ -1,17 +1,21 @@
 import mongoose from "mongoose"
 
 const helpSchema = mongoose.Schema({
-    name: String,
+    header: String,
     lng: String,
     lat: String,
-    surname: String,
+    aidNo: String,
+    personName: String,
+    personLastName: String,
+    emergencyLevel: String,
     typeofhelp: String,
-    image: String,
+    img: String,
     createdAt:{
         type: Date,
         default: Date(),
     }
 });
+
 
 const Help = mongoose.model("Help", helpSchema);
 

@@ -21,7 +21,7 @@ export const fetchAidLocationsFailure = (error) => {
 export const fetchAidLocations = () => {
     return (dispatch) => {
         dispatch(fetchAidLocationsRequest);
-        axios.get('https://jsonplaceholder.typicode.com/users')
+        axios.get('http://localhost:5000/map/api/helps/locations')
             .then(response => {
                 const locations = response.data
                 dispatch(fetchAidLocationsSuccess(locations))
