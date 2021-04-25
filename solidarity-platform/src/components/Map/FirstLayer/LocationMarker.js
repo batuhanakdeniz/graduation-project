@@ -25,7 +25,7 @@ function LocationMarker(props) {
             <Marker position={position} icon={props.icon}>
                 <Popup>
                     <span>
-                        <h2>Buraya yardım ekle</h2>
+                        <h2>Buraya yardım ekleyebilirsin</h2>
                         <br />
                     </span>
                     <Button

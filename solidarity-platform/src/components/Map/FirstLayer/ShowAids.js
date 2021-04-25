@@ -10,7 +10,7 @@ import AidPopUp from '../SecondLayer/AidPopup'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAidLocations } from '../../../redux'
 
-function ShowAids({ aidData }) {
+function ShowAids() {
     const greenIcon = L.icon({
         iconUrl: greenMarker,
         iconSize: [50, 50],
@@ -50,25 +50,25 @@ function ShowAids({ aidData }) {
         dispatch(fetchAidLocations());
     }, [])
 
-
+    
     return (
         <div>
             {
                 aidLocations.locations.map(aid => (
                     <Marker
-                        key={aid.id}
-                        position={[aid.address.geo.lng, aid.address.geo.lat]}
-                        icon={redIcon
-                            // (aid.emergencyLevel > 5)
-                            //     ?
-                            //     ((aid.emergencyLevel > 9)
-                            //         ? darkIcon
-                            //         : (aid.emergencyLevel <= 7) ? pinkIcon : redIcon)
-                            //     :
-                            //     ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
+                        key={aid._id}
+                        position={[aid.lng, aid.lat]}
+                        icon={
+                             (aid.emergencyLevel > 5)
+                                 ?
+                                 ((aid.emergencyLevel > 9)
+                                     ? darkIcon
+                                     : (aid.emergencyLevel <= 7) ? pinkIcon : redIcon)
+                                 :
+                                 ((aid.emergencyLevel < 4) ? greenIcon : orangeIcon)
                         }
                     >
-                        <AidPopUp aidId={aid.id} />
+                        <AidPopUp aidId={aid._id} />
                     </Marker>
                 ))
             }
