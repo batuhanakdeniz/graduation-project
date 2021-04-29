@@ -23,7 +23,6 @@ function AidPopUp({ aidId }) {
 
     const popUpHandler = () => {
         dispatch(fetchPopupContent(aidId));
-        console.log("aidID", aidId);
     }
     const detailModalHandler = () => {
         dispatch(fetchDetailContent(aidId));
@@ -44,7 +43,7 @@ function AidPopUp({ aidId }) {
                     <div style={popupText}>
                         <Row>
                             <Col md={4} xs={12}>
-                                <Image src={popupContent.aidImgSrc} fluid rounded />
+                                <Image src="https://picsum.photos/200/300" fluid rounded />
                             </Col>
                             <Col md={8} xs={12}>
                                 Aid No: {popupContent.aidNo}

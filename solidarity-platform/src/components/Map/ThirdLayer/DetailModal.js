@@ -6,7 +6,7 @@ import ImageGallery from 'react-image-gallery';
 import { Feed } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchDetailContent } from '../../../redux'
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Divider } from '@chakra-ui/react'
 const ImageSection = styled.div`
     min-height : 10rem;
     border-radius: 1rem;
@@ -70,17 +70,22 @@ function DetailModal({ isOpen, onOpen, onClose }) {
                                             </Col>
                                             <Col md={12}>
                                                 <ImageGallery items={detailContent.aidImgSrc} />;
-                                </Col>
+                                            </Col>
                                         </Row>
                                     </ImageSection>
                                 </Col>
                                 <Col>
                                     <InfoSection>
-                                        <h1> Aid No : {detailContent.aidId} </h1>
+                                        <h1> Aid Header : {detailContent.aidHeader} </h1>
+                                        <p> Aid No :  {detailContent.aidNo} </p>
                                         <p> Person Name :  {detailContent.aidName} </p>
                                         <p> Person Surname :  {detailContent.aidSurname} </p>
                                         <p> Person EmergencyLevel :  {detailContent.aidEmercenyLevel} </p>
+                                        <Divider />
+                                        <h1> Aid detail :</h1> 
+                                        <p>{detailContent.aidDetail} </p>
                                     </InfoSection>
+                                    
                                 </Col>
                             </Row>
                             <br />

@@ -9,7 +9,8 @@ const helpSchema = mongoose.Schema({
     personLastName: String,
     emergencyLevel: String,
     typeofhelp: String,
-    img: String,
+    img: [],
+    detail: String,
     createdAt:{
         type: Date,
         default: Date(),

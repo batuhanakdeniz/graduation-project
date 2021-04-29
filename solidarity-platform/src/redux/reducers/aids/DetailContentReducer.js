@@ -4,23 +4,7 @@ const initialState = {
     loading: false,
     aidId: undefined,
     aidHeader: "",
-    aidImgSrc: [
-        {
-            id: 1,
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            id: 2,
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            id: 3,
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        }
-    ],
+    aidImgSrc: [],
     comments: [
         {
             date: '1 Hour Ago',
@@ -61,7 +45,8 @@ const initialState = {
     ],
     aidName: "",
     aidSurname: "",
-    aidEmercenyLevel: 3,
+    aidEmercenyLevel: "",
+    aidDetail: "",
     error: ""
 }
 
@@ -76,10 +61,16 @@ const detailContentReducer = (state = initialState, action) => {
             return {
                 loading: false,
                 ...state,
-                aidId: action.payload.id,
-                aidHeader: action.payload.email,
-                aidName: action.payload.name,
-                aidSurname: action.payload.username,
+                aidId: action.payload._id,
+                aidHeader: action.payload.header,
+                aidLng: action.payload.lng,
+                aidLat: action.payload.lat,
+                aidNo: action.payload.aidNo,
+                aidName: action.payload.personName,
+                aidSurname: action.payload.personLastName,
+                aidEmergencyLevel: action.payload.EmergencyLevel,
+                aidImgSrc: action.payload.img,
+                aidDetail: action.payload.detail,
                 error: ''
             }
         case FETCH_DETAIL_CONTENT_FAILURE:
@@ -96,3 +87,22 @@ const detailContentReducer = (state = initialState, action) => {
 
 
 export default detailContentReducer
+
+
+/**
+ * {
+            id: 1,
+            original: 'https://picsum.photos/id/1018/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            id: 2,
+            original: 'https://picsum.photos/id/1015/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+            id: 3,
+            original: 'https://picsum.photos/id/1019/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        }
+ */

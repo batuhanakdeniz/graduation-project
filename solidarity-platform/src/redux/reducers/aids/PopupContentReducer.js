@@ -10,7 +10,6 @@ const initialState = {
     aidName: "",
     aidSurname: "",
     aidEmercenyLevel: "",
-    aidImgSrc: "",
     error: ""
 }
 
