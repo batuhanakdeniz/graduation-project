@@ -1,4 +1,6 @@
 import Help from "../models/helpModel.js";
+
+import multer from "multer";
 export const getHelp = async (req, res) =>{
     try {
         const helps = await Help.find();
@@ -104,7 +106,6 @@ export const getHelpBasic = async (req, res) =>{
             aidNo: 1,
             personName: 1,
             personLastName: 1,
-            img: 1,
         },(err, help)=>{
             if(err) throw err;
             console.log(help);
@@ -144,6 +145,8 @@ export const getHelpDetail = async (req, res) =>{
             aidNo: 1,
             personName: 1,
             personLastName: 1,
+            img: 1,
+            detail: 1,
         },(err, help)=>{
             if(err) throw err;
             console.log(help);
@@ -157,3 +160,41 @@ export const getHelpDetail = async (req, res) =>{
     }  
 };
 
+
+export const postHelpImage = async (req, res) =>{
+    try {
+        Help.findById(req.params.id,{
+            _id: 1,
+            header: 1,
+            lat: 1,
+            lng: 1,
+            emergencyLevel: 1,
+            aidNo: 1,
+            personName: 1,
+            personLastName: 1,
+            img: 1,
+            detail: 1,
+        },(err, help)=>{
+            if(err) throw err;
+            console.log(help);
+            res.send(help);
+        });
+    }
+    catch (err){
+        res.status(409).json({
+            message: err.message,
+        });
+    }  
+};
+
+
+export const postHelpImageDENEME = async (err, req, res) =>{
+    try {
+        res.status(200).send();
+    }
+    catch{
+        res.status(409).send({
+            error: err.message,
+        });
+    }  
+};

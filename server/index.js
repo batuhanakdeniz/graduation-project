@@ -5,8 +5,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser"
 import helpRouter from "./routers/helpRouter.js";
 import userRouter from "./routers/userRouter.js";
-
-
 const app = express();  //express server yaratıldı
 dotenv.config();        //process.env içine .env içindeki değerleri atar
 
@@ -19,6 +17,11 @@ app.use(cors({
 app.use(express.json());    //anlamadım tam olarak ama endpoint içinde json formatında 
                             //cevap dönderebilmemizi sağlıyor sanırsam 
 app.use(cookieParser());
+
+
+
+
+
 app.use("/map", helpRouter);
 app.use("/", userRouter);
 

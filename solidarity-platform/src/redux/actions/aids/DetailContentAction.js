@@ -20,10 +20,10 @@ export const fetchDetailContentFailure = (error) => {
     }
 }
 
-export const fetchDetailContent = (id = 1) => {
+export const fetchDetailContent = (aidId) => {
     return (dispatch) => {
         dispatch(fetchDetailContentRequest);
-        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        axios.get(`http://localhost:5000/map/api/helps/details/${aidId}`)
             .then(response => {
                 const detailContent = response.data
                 dispatch(fetchDetailContentSuccess(detailContent))

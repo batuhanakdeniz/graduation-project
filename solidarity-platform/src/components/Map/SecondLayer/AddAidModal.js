@@ -12,30 +12,24 @@ import axios from 'axios'
 
 function AddAidModal({ onClose, isOpen, isSuccesfullySubmitted, setIsSuccesfullySubmitted }) {
     const position = useSelector(state => state.addAidLocation);
-    const options = [
-        { key: 'Email', value: 'emailoc' },
-        { key: 'Telephone', value: 'telephonemoc' }
-    ]
+    
     const initialValues = {
         langitude: position.lng,
         latitude: position.lat,
         firstName: '',
         lastName: '',
         address: '',
-        modeOfContact: '',
-        phone: ''
+        phone: '',
+        detail: ''
     }
     const validationSchema = Yup.object({
         langitude: Yup.string().required('Required'),
         latitude: Yup.string().required('Required'),
         firstName: Yup.string().required('Required'),
         lastName: Yup.string().required('Required'),
-        modeOfContact: Yup.string().required('Required'),
-        phone: Yup.string().when('modeOfContact', {
-            is: 'telephonemoc',
-            then: Yup.string().required('Required')
-        }),
-        address: Yup.string().required('Required')
+        phone: Yup.string().required('Required'),
+        address: Yup.string().required('Required'),
+        detail: Yup.string().required('Required')
     })
 
     async function onSubmit(values) {
@@ -106,12 +100,6 @@ function AddAidModal({ onClose, isOpen, isSuccesfullySubmitted, setIsSuccesfully
                                                         </Col>
                                                     </Row>
                                                     <FormikControl
-                                                        control='chakraradio'
-                                                        label='Mode of Contact'
-                                                        name='modeOfContact'
-                                                        options={options}
-                                                    />
-                                                    <FormikControl
                                                         control='chakrainput'
                                                         type='text'
                                                         label='Phone Number'
@@ -121,6 +109,11 @@ function AddAidModal({ onClose, isOpen, isSuccesfullySubmitted, setIsSuccesfully
                                                         control='chakratextarea'
                                                         label='Address'
                                                         name='address'
+                                                    />
+                                                    <FormikControl
+                                                    control='chakratextarea'
+                                                    label='Detail'
+                                                    name='detail'
                                                     />
                                                     <Button
                                                         variant="outline"

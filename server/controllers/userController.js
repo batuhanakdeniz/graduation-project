@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import multer from "multer";
 
 //getUser returns just a string
 export const getUser = async (req, res) => {

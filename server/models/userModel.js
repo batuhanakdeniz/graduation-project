@@ -9,6 +9,8 @@ const userSchema = mongoose.Schema({
     modeOfContact: {type: String, required: true},
     phone: {type: String, required: true},
     userType: { type: String, required:true}
+},{
+    timestamp: true
 });
 
 const User = mongoose.model('User', userSchema);
