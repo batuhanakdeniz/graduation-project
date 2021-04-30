@@ -55,12 +55,12 @@ function AddAidModal({
 		data.append("phone", values.phone);
 		data.append("address", values.address);
 		data.append("detail", values.detail);
-		data.append("image", file);
+		data.append("file", file);
 		try {
-			//await axios.post("http://localhost:5000/yardımeklemeilealakalıurl", values);
+			//await axios.post("http://localhost:5000/map/api/helps/details/upload/image", values);
 			//console.log("Yardım Ekle Object", data);
 			axios
-				.post("https://httpbin.org/anything", data)
+				.post("http://localhost:5000/map/api/helps/details/upload/image", data)
 				.then((res) => console.log(res))
 				.catch((err) => console.log(err));
 			setIsSuccesfullySubmitted(true);
