@@ -1,6 +1,7 @@
 import Help from "../models/helpModel.js";
-
+import Image from "../models/imageModel.js";
 import multer from "multer";
+import fs from "fs";
 export const getHelp = async (req, res) =>{
     try {
         const helps = await Help.find();
@@ -163,22 +164,6 @@ export const getHelpDetail = async (req, res) =>{
 
 export const postHelpImage = async (req, res) =>{
     try {
-        Help.findById(req.params.id,{
-            _id: 1,
-            header: 1,
-            lat: 1,
-            lng: 1,
-            emergencyLevel: 1,
-            aidNo: 1,
-            personName: 1,
-            personLastName: 1,
-            img: 1,
-            detail: 1,
-        },(err, help)=>{
-            if(err) throw err;
-            console.log(help);
-            res.send(help);
-        });
     }
     catch (err){
         res.status(409).json({
@@ -188,13 +173,17 @@ export const postHelpImage = async (req, res) =>{
 };
 
 
-export const postHelpImageDENEME = async (err, req, res) =>{
+export const postHelpImageDENEME = async (req, res, next) =>{
     try {
-        res.status(200).send();
+        
+        console.log(req.file);
+        res.status(200).json("Fotograf basarıyla yuklendi");
+        //DB İşlemleri
+
     }
-    catch{
-        res.status(409).send({
-            error: err.message,
+    catch (err){
+        res.status(409).json({
+            message: err.message,
         });
     }  
 };
