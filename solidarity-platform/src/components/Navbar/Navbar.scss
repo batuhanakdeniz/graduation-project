@@ -1,53 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
-.NavbarStyle{
-        background: #9ccc65;
-        min-height: 4vh;
-        padding-right: 1rem;
+@import url("https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap");
+.NavbarStyle {
+	// background: #9ccc65;
+	background: linear-gradient(
+		268.54deg,
+		#77a066 0.55%,
+		rgba(69, 147, 86, 0.743636) 100%
+	);
+	box-shadow: inset 0px 0px 109px 18px rgba(0, 0, 0, 0.25);
+	min-height: 5vh;
+	padding-right: 1rem;
 }
-.nav .dropdown{
-        cursor: pointer;
-        position: absolute;
-        left: 88%;
-        top: 30%;
-      }
-      
-      .dropdown-menu{
-        cursor: pointer;
-        position: absolute !important;
-        left: -8em;
-        top: 3em;
-      }
-.NavBrandStyle{
-        color: rgb(36, 59, 66);
-        margin-right: 4rem;
-        font-size: 36px;
-        font-family: 'Akaya Kanadaka', cursive;
-}
-#NavlinksStyle{
-        color: rgb(255, 255, 255);
-        margin-right: 3rem;
-        font-size: 24px;
-}
-#NavDropdownStyle{
-        color: rgb(0, 0, 0);
-        font-size: 18px;
+.nav .dropdown {
+	cursor: pointer;
+	position: absolute;
+	left: 88%;
+	top: 30%;
 }
 
-@media screen and (max-width:850px){
-        .NavbarStyle{
-                background: #9ccc65;
-                min-height: 15vh;
-        }
-       .NavBrandStyle{
-                margin-right: 0px;
-                padding: 0; 
-                font-size: 18px;
-                margin: 0%;
-       }
-       #NavlinksStyle{
-                color: white;
-                margin-right: 0;
-                font-size: 18px;
-        }        
+.dropdown-menu {
+	cursor: pointer;
+	position: absolute !important;
+	left: -8em;
+	top: 3em;
+}
+.NavBrandStyle {
+	color: rgb(36, 59, 66);
+	margin-right: 4rem;
+	font-size: 36px;
+	font-family: "Akaya Kanadaka", cursive;
+}
+#NavlinksStyle {
+	color: rgb(255, 255, 255);
+	margin-right: 3rem;
+	font-size: 24px;
+}
+#NavDropdownStyle {
+	color: rgb(0, 0, 0);
+	font-size: 18px;
+}
 
+@media screen and (max-width: 850px) {
+	.NavbarStyle {
+		background: #9ccc65;
+		min-height: 15vh;
+	}
+	.NavBrandStyle {
+		margin-right: 0px;
+		padding: 0;
+		font-size: 18px;
+		margin: 0%;
+	}
+	#NavlinksStyle {
+		color: white;
+		margin-right: 0;
+		font-size: 18px;
+	}
 }

@@ -1,64 +1,38 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
-.TypesBackground{
-    background-color: #050a01dc;
-    padding: 2rem 0rem 0rem 0rem;
-    background: url('hand-to-hand-1.jpg');
-    height: 80vh;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+.typesContainer {
+	margin: 3rem 4rem 0rem 4rem;
+	min-height: 65vh;
 }
-.TypesBackground::after{
-    position: relative;
-    content: '';
-    top: 35;
-    left: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.7);    
-}
-.types{
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
-.type{
-    z-index: 999;
-    padding: 60px 32px;
-    background: rgba(255,255,255,0.04);
-    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 2rem;
-    margin-top: 5rem;
-    h1{
-        color: green;
-        margin-bottom: 1rem;
-        font-weight: bold;
-        font-size: 24px;
-    }
-    Button{
-        margin-top: 1rem;
-    }
-    p{
-        color: yellow;
-    }
 
-}
-@media screen and (max-width:850px){
-    .TypesBackground{
-        height: 130vh;
-        p{
-            font-size: 12px;
-        }
-    }
-    .type{
-        margin-top: 1rem;
-    }
+.registrationCard {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 3rem;
+	padding: 1rem;
+	min-height: 70vh;
+	border-radius: 1rem;
+	border-width: 2px;
+	* {
+		margin-top: 0.5rem;
+		padding: 2rem 1rem;
+	}
+	h1 {
+		font-weight: 800;
+		font-size: 24px;
+		text-align: center;
+	}
 
+	background: linear-gradient(
+		164.17deg,
+		#41d56a 0%,
+		rgba(196, 196, 196, 0) 100%
+	);
+	box-shadow: inset 0px 0px 26px 24px rgba(4, 75, 41, 0.41),
+		inset 0px 0px 17px 59px rgba(255, 252, 252, 0.25);
 }

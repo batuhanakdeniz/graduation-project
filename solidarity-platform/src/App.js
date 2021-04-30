@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
@@ -17,10 +17,9 @@ import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import NasilIsler from "./components/NasilIsler/NasilIsler";
 import styled from "styled-components";
 import axios from "axios";
-import AuthContext, { AuthContextProvider } from "./context/AuthContext";
-import store from "./redux/store";
-import { Provider } from "react-redux";
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getLoggedIn } from "./redux";
 axios.defaults.withCredentials = true; // ? always set true cookielere izin verir her zaman
 
 const DIVM = styled.div`
@@ -48,57 +47,45 @@ const colors = {
 const theme = extendTheme({ colors });
 
 function App() {
-	const loggedIn = useContext(AuthContext);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getLoggedIn());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<ChakraProvider theme={theme}>
-			<Provider store={store}>
-				<AuthContextProvider>
-					<Router>
-						<div className="App">
-							<NavbarComponent />
-							<DIVM>
-								<Switch>
-									<Route path="/" exact component={HomePage} />
-									<Route path="/detail/:id" exact component={DetailPage} />
-									<Route path="/NasilIsler" exact component={NasilIsler} />
-									<Route exact path="/login">
-										<LoginPage />
-									</Route>
-									<Route path="/map" exact component={MapComponent} />
-									<Route path="/about" exact component={AboutPage} />
-									{!loggedIn && (
-										<Route
-											path="/signup"
-											exact
-											component={RegistrationTypesPage}
-										/>
-									)}
-									{!loggedIn && (
-										<Route
-											path="/signup/:userType"
-											component={RegistrationForm}
-										/>
-									)}
-									<Route
-										path="/yardimekle/:lng/:lat"
-										exact
-										component={YardimEkle}
-									/>
+			<Router>
+				<div className="App">
+					<NavbarComponent />
+					<DIVM>
+						<Switch>
+							<Route path="/" exact component={HomePage} />
+							<Route path="/detail/:id" exact component={DetailPage} />
+							<Route path="/NasilIsler" exact component={NasilIsler} />
+							<Route exact path="/login">
+								<LoginPage />
+							</Route>
+							<Route path="/map" exact component={MapComponent} />
+							<Route path="/about" exact component={AboutPage} />
 
-									<Route path="/profile" exact component={ProfilePage} />
-									<Route
-										path="/profile/edit"
-										exact
-										component={ProfileEditPage}
-									/>
-									<Route path="/map" exact component={MapComponent} />
-								</Switch>
-							</DIVM>
-							<Footer />
-						</div>
-					</Router>
-				</AuthContextProvider>
-			</Provider>
+							<Route path="/signup" exact component={RegistrationTypesPage} />
+
+							<Route path="/signup/form" component={RegistrationForm} />
+
+							<Route
+								path="/yardimekle/:lng/:lat"
+								exact
+								component={YardimEkle}
+							/>
+
+							<Route path="/profile" exact component={ProfilePage} />
+							<Route path="/profile/edit" exact component={ProfileEditPage} />
+							<Route path="/map" exact component={MapComponent} />
+						</Switch>
+					</DIVM>
+					<Footer />
+				</div>
+			</Router>
 		</ChakraProvider>
 	);
 }
