@@ -1,87 +1,87 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
-.loginPage{
-    background-color: #050a01dc;
-    padding: 2rem 0rem 0rem 0rem;
-    background: url('hand-to-hand-1.jpg');
-    height: 80vh;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+.loginPage {
+	background-color: rgba(69, 147, 86, 0.253);
+	padding: 2rem;
+	//background: url("hand-to-hand-1.jpg");
+	height: 80vh;
+	background-size: cover;
+	background-position: center;
+	position: relative;
 }
-.loginForm{
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    z-index: 999;
-    padding: 60px 32px;
-    transform: translate(-50%,-30%);
-    background: rgba(255,255,255,0.04);
-    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.loginForm {
+	position: absolute;
+	top: 35%;
+	left: 50%;
+	z-index: 999;
+	padding: 60px 32px;
+	transform: translate(-50%, -30%);
+	background: rgba(69, 147, 86, 0.253);
+	box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
-.loginPage::after{
-    position: relative;
-    content: '';
-    top: 35;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(0,0,0,0.7);    
+.loginPage::after {
+	position: relative;
+	content: "";
+	top: 35;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.219);
 }
-.leftPanel{
-    flex: 1;
-    align-self: left;
-    img{
-        width: 500px;
-    } 
+.leftPanel {
+	flex: 1;
+	align-self: left;
+	img {
+		width: 500px;
+	}
 }
-.rightPanel{
-    flex:1;
-    margin: 0 0 0 2rem;
-    h1{
-        color:rgba(0, 0, 0, 0.747);
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: 48px;
-        font-weight: bold;
-    }
-    .loginHeader{
-        color:black;
-        text-align: center;
-    }
-    label{
-        color: rgb(255, 255, 255);
-    }
-    input{
-        color:rgb(255, 255, 255)
-    }
-    button{
-        margin-top: 1rem;
-    }
+.rightPanel {
+	flex: 1;
+	margin: 0 0 0 2rem;
+	h1 {
+		color: rgba(0, 0, 0, 0.747);
+		margin-bottom: 2rem;
+		text-align: center;
+		font-size: 48px;
+		font-weight: bold;
+	}
+	.loginHeader {
+		color: black;
+		text-align: center;
+	}
+	label {
+		color: rgb(255, 255, 255);
+	}
+	input {
+		color: rgb(255, 255, 255);
+	}
+	button {
+		margin-top: 1rem;
+	}
 }
 
-@media screen and (max-width:768px) {
-    .loginPage{
-        padding: 0%;
-        margin: 0;
-    }
-    .loginForm{
-        top: 30%;
-        width: 90%;
-        flex-direction: column;
-    }
-    
-    /* on small screen we don't display the image */
-    .leftPanel {
-        display: none;
-    }
-    .rightPanel{
-        margin: 0;
-    }
+@media screen and (max-width: 768px) {
+	.loginPage {
+		padding: 0%;
+		margin: 0;
+	}
+	.loginForm {
+		top: 30%;
+		width: 90%;
+		flex-direction: column;
+	}
+
+	/* on small screen we don't display the image */
+	.leftPanel {
+		display: none;
+	}
+	.rightPanel {
+		margin: 0;
+	}
 }
