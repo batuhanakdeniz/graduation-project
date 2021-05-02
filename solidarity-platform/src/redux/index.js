@@ -5,3 +5,4 @@ export { fetchDetailContent } from "./actions/aids/DetailContentAction";
 export { getLoggedIn } from "./actions/user/LoginActions";
 export { getLoggedUserData } from "./actions/user/LoggedUserActions";
 export { setRegistrationType } from "./actions/registration/registrationTypeActions";
+export { setUserLocation } from "./actions/user/UserLocationActions";

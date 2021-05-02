@@ -28,9 +28,10 @@ const DIVM = styled.div`
 
 const colors = {
 	brand: {
-		900: "#1a365d",
-		800: "#153e75",
-		700: "#2a69ac",
+      500: "#2d9659",
+	},
+	addAidWarning: {
+      500: "#db9704",
 	},
 	components: {
 		Button: {
@@ -38,7 +39,7 @@ const colors = {
 				"with-shadow": {
 					bg: "red.400",
 					boxShadow: "0 0 2px 2px #efdfde",
-				},
+				},				
 			},
 		},
 	},

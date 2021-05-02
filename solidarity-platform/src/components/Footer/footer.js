@@ -1,8 +1,7 @@
 import React from "react";
 import "./Footer.scss";
-import { Row, Col } from "react-bootstrap";
 import styled from "styled-components";
-import { background, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 const Container = styled.div`
 	padding: 30px 60px;
 	background: linear-gradient(
@@ -20,18 +19,18 @@ const Wrapper = styled.div`
 	max-width: 1000px;
 	margin: 0 auto;
 `;
-const MyRow = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-gap: 20px;
-	p {
-		text-align: ${(props) => props.textAlign || ""};
-	}
-	@media (max-width: 1000px) {
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		grid-gap: 10px;
-	}
-`;
+// const MyRow = styled.div`
+// 	display: grid;
+// 	grid-template-columns: 1fr 1fr 1fr;
+// 	grid-gap: 20px;
+// 	p {
+// 		text-align: ${(props) => props.textAlign || ""};
+// 	}
+// 	@media (max-width: 1000px) {
+// 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+// 		grid-gap: 10px;
+// 	}
+// `;
 const MyColumn = styled.div`
 	text-align: center;
 	display: flex;
@@ -67,12 +66,6 @@ const MyIcons = styled.i`
 	margin-right: 12px;
 	font-size: 20px;
 `;
-const CopyRightSection = styled.div`
-	color: whitesmoke;
-	text-align: center;
-	padding: 0.5rem;
-	background: linear-gradient(#6d6e6e 10%, #4c4d4d 30%, #252626 100%);
-`;
 
 function footer() {
 	return (
@@ -97,11 +90,11 @@ function footer() {
 							Facebook
 						</Link>
 					</MyColumn>
+					<MyColumn>
+						<Text>© Social Aid and Solidarity Platform</Text>
+					</MyColumn>
 				</Wrapper>
 			</Container>
-			<CopyRightSection>
-				<Text>© Social Aid and Solidarity Platform</Text>
-			</CopyRightSection>
 		</>
 	);
 }

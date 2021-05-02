@@ -1,29 +1,54 @@
-import React, { useMemo, useState } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap'
-import AidCard from '../ThirdLayer/AidCard';
-import aidData from '../../aidData';
-import { FixedSizeList as List } from 'react-window';
+import React, { useMemo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import AidCard from "../ThirdLayer/AidCard";
+import { FixedSizeList as List } from "react-window";
 
-export const AidCards = () => {
-    const memo = useMemo(
-        () => (
+export const AidCards = ({ seachContent }) => {
+	const aidData = useSelector((state) => state.aidLocations.locations);
+	const [filteredData, setFilteredData] = useState([]);
+	const [listHeightCounter, setListHeightCounter] = useState(0);
+	useEffect(() => {
+		setFilteredData(
+			(prev) =>
+				(prev = aidData.filter((aid) => aid.emergencyLevel == seachContent))
+		);
 
-            <List
-                className="List"
-                height={700}
-                itemCount={aidData.length}
-                itemSize={200}
-                width={400}
-            >
-                {
-                    ({ index, style }) => (
-                        <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
-                            {<AidCard aid={aidData[index]} />}
-                        </div>
-                    )
-                }
-            </List>
-        )
-    )
-    return memo
-}
+		setListHeightCounter((prev) => prev + 1);
+
+		if (seachContent == 10) {
+			setListHeightCounter((prev) => (prev /= 2));
+		}
+		if (seachContent.length === 0 || !seachContent.trim()) {
+			setListHeightCounter((prev) => (prev = 0));
+		}
+	}, [seachContent]);
+	// eslint-disable-next-line
+
+	const memo = useMemo(() => (
+		<List
+			className="List"
+			height={
+				filteredData && listHeightCounter * 200 <= 700 && aidData.length <= 4
+					? listHeightCounter * 200
+					: 700
+			}
+			itemCount={filteredData ? filteredData.length : aidData.length}
+			itemSize={200}
+			width={400}
+		>
+			{({ index, style }) => (
+				<div
+					className={index % 2 ? "ListItemOdd" : "ListItemEven"}
+					style={style}
+				>
+					{!filteredData ? (
+						<AidCard aid={aidData[index]} />
+					) : (
+						<AidCard aid={filteredData[index]} />
+					)}
+				</div>
+			)}
+		</List>
+	));
+	return memo;
+};

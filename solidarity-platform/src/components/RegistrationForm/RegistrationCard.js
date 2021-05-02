@@ -1,14 +1,13 @@
 import React from "react";
-import {useDispatch} from "react-redux";
-import { Col, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import {setRegistrationType} from "../../redux"
+import { setRegistrationType } from "../../redux";
 
 function RegistrationCard({ typeInfo }) {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const typeSelectorHandler = () => {
-		dispatch(setRegistrationType(typeInfo.membershipType))
+		dispatch(setRegistrationType(typeInfo.membershipType));
 	};
 	return (
 		<div className="registrationCard">

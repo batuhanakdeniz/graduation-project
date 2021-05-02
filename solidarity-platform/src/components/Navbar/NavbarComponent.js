@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "./Navbar.scss";
 import axios from "axios";
@@ -17,6 +17,8 @@ function NavbarComponent() {
 		history.push("/");
 	};
 	const isLoggedIn = useSelector((state) => state.userData.isLoggedIn);
+
+	// eslint-disable-next-line
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
 
 	const getUser = () => {
