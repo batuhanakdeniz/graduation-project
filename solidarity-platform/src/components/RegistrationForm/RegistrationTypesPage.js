@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import RegistrationCard from "./RegistrationCard";
 import "./RegistrationTypes.scss";
 
