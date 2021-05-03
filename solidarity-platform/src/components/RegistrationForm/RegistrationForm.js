@@ -1,22 +1,29 @@
-import React, {useState} from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { Row, Col } from "react-bootstrap";
 import FormikControl from "../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/react";
-import "./Registration.scss";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { getLoggedIn } from "../../redux";
+
 function RegistrationForm() {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const registrationType = useSelector(state => state.registrationType.type);
 
 	const options = [
 		{ key: "Email", value: "emailoc" },
 		{ key: "Telephone", value: "telephonemoc" },
 	];
+	const dropdownOptions = [
+		{ key: "Onaylanmamış Üye", value: "0" },
+		{ key: "Onaylanmış Üye", value: "1" },
+		{ key: "Yönetici Üye", value: "2" },
+		{ key: "Kuruma bağlı Üye", value: "3" },
+	];
+
 	const initialValues = {
 		userName: "",
 		firstName: "",
@@ -29,6 +36,7 @@ function RegistrationForm() {
 		phone: "",
 	};
 	const validationSchema = Yup.object({
+		registrationType: Yup.string().required("Required"),
 		userName: Yup.string().required("Required"),
 		email: Yup.string().email("Invalid Email Format").required("Required"),
 		password: Yup.string().required("Required"),
@@ -43,16 +51,14 @@ function RegistrationForm() {
 			then: Yup.string().required("Required"),
 		}),
 	});
-	const dropdownOptions = [
-		{ key: `Option ${registrationType}`, value: registrationType },
-	];
+
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	async function onSubmit(values) {
 		try {
 			setIsSubmitting(true);
 
 			await axios.post(
-				`http://localhost:5000/signup/${registrationType}`,
+				`http://localhost:5000/signup/${values.registrationType}`,
 				values
 			);
 			dispatch(getLoggedIn());
@@ -62,7 +68,7 @@ function RegistrationForm() {
 		}
 	}
 	return (
-		<div className="registrationFrom">
+		<div className="registrationForm">
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
@@ -71,72 +77,111 @@ function RegistrationForm() {
 				{(formik) => {
 					return (
 						<Form>
-							<FormikControl
-								control="chakraselect"
-								type="text"
-								label="Registration Type"
-								name="selectOption"
-								options={dropdownOptions}
-								disabled={true}
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="text"
-								label="User Name"
-								name="userName"
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="text"
-								label="First Name"
-								name="firstName"
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="text"
-								label="Lastname"
-								name="lastName"
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="email"
-								label=" Email"
-								name="email"
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="password"
-								label="Password"
-								name="password"
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="password"
-								label="Confirm Password"
-								name="confirmPassword"
-							/>
-							<FormikControl
-								control="chakraradio"
-								label="Mode of Contact"
-								name="modeOfContact"
-								options={options}
-							/>
-							<FormikControl
-								control="chakrainput"
-								type="text"
-								label="Phone Number"
-								name="phone"
-							/>
-							<Button
-								variant="outline"
-								isLoading={isSubmitting}
-								loadingText="Submitting"
-								colorScheme="teal"
-								type="submit"
-								disabled={!formik.isValid}
-							>
-								Submit
-							</Button>
+							<Row>
+								<Col md={12}>
+									<span className="registrationHeader">
+										Bize katılmak ister misiniz?
+									</span>
+								</Col>
+								<Col md={12}>
+									<FormikControl
+										placeholder="Select One"
+										control="chakraselect"
+										label="Select a Type"
+										name="registrationType"
+										options={dropdownOptions}
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="text"
+										label="First Name"
+										name="firstName"
+									/>
+								</Col>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="text"
+										label="Lastname"
+										name="lastName"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="text"
+										label="User Name"
+										name="userName"
+									/>
+								</Col>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="email"
+										label=" Email"
+										name="email"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="password"
+										label="Password"
+										name="password"
+									/>
+								</Col>
+								<Col md={6}>
+									<FormikControl
+										control="chakrainput"
+										type="password"
+										label="Confirm Password"
+										name="confirmPassword"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={12} className="modeOfContact">
+									<FormikControl
+										control="chakraradio"
+										label="Mode of Contact"
+										name="modeOfContact"
+										options={options}
+									/>
+								</Col>
+								<Col md={12}>
+									<FormikControl
+										control="chakrainput"
+										type="text"
+										label="Phone Number"
+										name="phone"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={12} style={{ textAlign: "center" }}>
+									<Button
+										variant="solid"
+										isLoading={isSubmitting}
+										loadingText="Submitting"
+										colorScheme="teal"
+										size="lg"
+										isFullWidth
+										mt="1rem"
+										type="submit"
+										disabled={!formik.isValid}
+									>
+										Üye Ol
+									</Button>
+								</Col>
+							</Row>
 						</Form>
 					);
 				}}

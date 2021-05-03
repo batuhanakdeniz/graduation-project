@@ -3,24 +3,28 @@
 	padding: 0;
 	margin: 0;
 }
-.typesContainer {
-	margin: 3rem 4rem 0rem 4rem;
+.registrationContainer {
+	margin: 4rem 2rem;
 	min-height: 65vh;
 }
-
+.noPadding {
+	padding: 0px;
+}
+.noMargin {
+	margin: 0px;
+}
 .registrationCard {
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-bottom: 3rem;
-	padding: 1rem;
-	min-height: 70vh;
+	padding: 1rem 2rem;
 	border-radius: 1rem;
 	border-width: 2px;
 	* {
 		margin-top: 0.5rem;
-		padding: 2rem 1rem;
+		padding: 1rem 1rem;
 	}
 	h1 {
 		font-weight: 800;
@@ -35,4 +39,43 @@
 	);
 	box-shadow: inset 0px 0px 26px 24px rgba(4, 75, 41, 0.41),
 		inset 0px 0px 17px 59px rgba(255, 252, 252, 0.25);
+}
+
+.registrationForm {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: fit-content;
+	margin: 0rem auto;
+	padding: 3rem 3rem 3rem 3rem;
+	background: #cbe1cf;
+	border: 1px solid #04502b;
+	box-sizing: border-box;
+	box-shadow: inset 0px 0px 31px 21px rgba(0, 0, 0, 0.25);
+	border-radius: 10px;
+	.registrationHeader {
+		font-size: 24px;
+		text-align: center;
+		margin-bottom: 2rem;
+		font-weight: 700;
+	}
+	input {
+		border-color: black;
+	}
+	select {
+		border-color: black;
+	}
+	label {
+		margin-top: 1rem;
+	}
+	button {
+		margin-top: 2rem;
+	}
+}
+
+.modeOfContact {
+	* {
+		margin-right: 0.5rem;
+	}
+	margin-bottom: 0px;
 }
