@@ -28,10 +28,10 @@ const DIVM = styled.div`
 
 const colors = {
 	brand: {
-      500: "#2d9659",
+		500: "#2d9659",
 	},
 	addAidWarning: {
-      500: "#db9704",
+		500: "#db9704",
 	},
 	components: {
 		Button: {
@@ -39,7 +39,7 @@ const colors = {
 				"with-shadow": {
 					bg: "red.400",
 					boxShadow: "0 0 2px 2px #efdfde",
-				},				
+				},
 			},
 		},
 	},
@@ -70,9 +70,6 @@ function App() {
 							<Route path="/about" exact component={AboutPage} />
 
 							<Route path="/signup" exact component={RegistrationTypesPage} />
-
-							<Route path="/signup/form" component={RegistrationForm} />
-
 							<Route
 								path="/yardimekle/:lng/:lat"
 								exact

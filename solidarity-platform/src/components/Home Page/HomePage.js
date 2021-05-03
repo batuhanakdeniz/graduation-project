@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Box, Heading, Text, Button, Image } from "@chakra-ui/react";
 import İllisturation1 from "./undraw_map_1r69.svg";
 import İllisturation2 from "./undraw_Location_tracking_re_n3ok.svg";
 import İllisturation3 from "./undraw_Map_dark_re_36sy.svg";
 import "./HomePage.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAidLocations } from "../../redux";
+import BasicStatistics from "./BasicStatistics";
 
 function HomePage() {
+	const locationLength = useSelector((state) => state.aidLocations.locations);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(fetchAidLocations());
+		// eslint-disable-next-line
+	}, []);
 	return (
 		<div className="myHomePage">
 			<div className="myRow1">
 				<Row>
-					<Col md={7}>
+					<Col md={8}>
 						<Row>
 							<Col md={12}>
 								<Heading>
-									Meeting scheduling{" "}
-									<Text as={"span"} color={"green.400"}>
-										made easy
-									</Text>
+									<BasicStatistics aidLength={locationLength.length} />
 								</Heading>
 							</Col>
 							<Col md={12}>
-								<Text color={"gray.500"} maxW={"3xl"}>
-									Never miss a meeting. Never be late for one too. Keep track of
-									your meetings and receive smart reminders in appropriate
-									times. Read your smart “Daily Agenda” every morning.
-								</Text>
+								<Text color={"gray.500"} maxW={"3xl"}></Text>
 							</Col>
-							<Col md={12}>
+							<Col md={12} style={{ marginTop: "2rem", textAlign: "center" }}>
 								<Button
 									rounded={"full"}
 									px={6}
@@ -36,16 +38,16 @@ function HomePage() {
 									bg={"green.400"}
 									_hover={{ bg: "green.500" }}
 								>
-									Get started
+									Yardım eklemek ister misiniz?
 								</Button>
 								<Button rounded={"full"} px={6}>
-									Learn more
+									Üye değil misiniz?
 								</Button>
 							</Col>
 						</Row>
 					</Col>
-					<Col md={5}>
-						<Box boxSize="xl">
+					<Col md={4}>
+						<Box boxSize="md">
 							<Image src={İllisturation1} alt="Login Page" />
 						</Box>
 					</Col>

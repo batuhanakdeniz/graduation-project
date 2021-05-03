@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DetailModal.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
@@ -16,10 +16,11 @@ import {
 	ModalOverlay,
 	Divider,
 } from "@chakra-ui/react";
+import AddComment from "../FourthLayer/AddComment";
 const ImageSection = styled.div`
 	min-height: 10rem;
 	border-radius: 1rem;
-	background-color: #6df2b0;
+	background-color: rgba(69, 147, 86, 0.743636);
 	padding: 1rem;
 	img {
 		margin-bottom: 1rem;
@@ -35,7 +36,7 @@ const ImageSection = styled.div`
 const InfoSection = styled.div`
 	min-height: 10rem;
 	border-radius: 1rem;
-	background-color: #6df2b0;
+	background-color: rgba(69, 147, 86, 0.743636);
 	padding: 1rem;
 	h1 {
 		font-size: 1.5rem;
@@ -47,7 +48,7 @@ const InfoSection = styled.div`
 const CommentSection = styled.div`
 	min-height: 10rem;
 	border-radius: 1rem;
-	background-color: #6df2b0;
+	background-color: rgba(69, 147, 86, 0.743636);
 	padding: 2rem;
 	h1 {
 		font-size: 1.5rem;
@@ -60,12 +61,13 @@ const CommentSection = styled.div`
 
 function DetailModal({ isOpen, onOpen, onClose }) {
 	const detailContent = useSelector((state) => state.detailContent);
+	const [displayAddComment, setDisplayAddComment] = useState(false);
 	return (
 		<div>
 			<Modal
 				scrollBehavior="inside"
 				onClose={onClose}
-				size={"full"}
+				size={"5xl"}
 				isOpen={isOpen}
 			>
 				<ModalOverlay />
@@ -114,7 +116,24 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 											<Col md={12}>
 												<h1>Comments</h1>
 											</Col>
-											<Feed events={detailContent.comments} />
+											<Col md={12}>
+												<Feed events={detailContent.comments} />
+											</Col>
+											<Col md={12}>
+												{
+													!displayAddComment
+													?<Button 
+														onClick={()=>setDisplayAddComment(!displayAddComment)}
+														ml="3rem"
+														mt="0.5rem"
+														variant="ghost"
+														textColor="blue"
+														textDecoration="underline"
+														_hover={{background:"green.700"}}
+													>Yorum Ekle</Button>
+													:<AddComment setDisplayAddComment={setDisplayAddComment} displayAddComment={displayAddComment} />
+												}												
+											</Col>
 										</Row>
 									</CommentSection>
 								</Col>
