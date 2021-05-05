@@ -175,11 +175,44 @@ export const postHelpImage = async (req, res) =>{
 
 export const postHelpImageDENEME = async (req, res, next) =>{
     try {
-        
-        console.log(req.file);
-        res.status(200).json("Fotograf basarıyla yuklendi");
+        console.log(req.body);
+        const {header ,langitude, latitude, firstName, lastName, 
+            phone, address, detail
+        } = req.body;
         //DB İşlemleri
+        //Check is there any help near to 5m or 10m
+        const existingHelp = await Help.findOne({
+            lng: langitude,
+            lat: latitude,
+            createdAt:{
+                $lte: Date.now()
+            }
+        })
+        if(existingHelp){
+            return res.status(401).json({
+                message: "Bu bolgede bir yardim var!"
+            })
+        }
+        //Base64 işlemleri yapılması gerekiyor
+        const newHelpImagePath = req.file.path;
+        const newHelp = new Help({
+            header: header,
+            lng: langitude,
+            lat: latitude,
+            aidNo: "default",
+            personName: firstName,
+            personLastName: lastName,
+            phone: phone,
+            address: address,
+            emergencyLevel: "2",
+            typeofhelp: "default",
+            img: newHelpImagePath,
+            detail: detail, 
+        })
 
+        const savedHelp = await newHelp.save();
+        console.log(savedHelp);
+        res.status(200).json("Yardım basarıyla yuklendi");
     }
     catch (err){
         res.status(409).json({

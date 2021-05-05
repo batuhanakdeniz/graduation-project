@@ -56,7 +56,7 @@ function ShowAids() {
 			{aidLocations.locations.map((aid) => (
 				<Marker
 					key={aid._id}
-					position={[aid.lng, aid.lat]}
+					position={[aid.lat, aid.lng]}
 					icon={
 						aid.emergencyLevel > 5
 							? aid.emergencyLevel > 9
