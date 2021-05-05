@@ -1,8 +1,8 @@
 import { SET_USER_LOCATION } from '../../types/user/UserLocationTypes'
 
 const initialState = {
-    lng:36.919767118351025,
-    lat:31.088782114558335
+    lng:29.004871845245365,
+    lat:41.08494660884534
 }
 
 const userLocationReducer = (state = initialState, action) => {

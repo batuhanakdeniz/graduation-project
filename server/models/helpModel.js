@@ -9,11 +9,13 @@ const helpSchema = mongoose.Schema({
     personLastName: String,
     emergencyLevel: String,
     typeofhelp: String,
-    img: [],
+    address: String,
+    img: String,
     detail: String,
+    phone: String,
     createdAt:{
         type: Date,
-        default: Date(),
+        default: Date.now(),
     }
 });
 

@@ -27,6 +27,7 @@ function AddAidModal({
 	const position = useSelector((state) => state.addAidLocation);
 
 	const initialValues = {
+		header: "",
 		langitude: position.lng,
 		latitude: position.lat,
 		firstName: "",
@@ -37,6 +38,7 @@ function AddAidModal({
 	};
 	const [file, setFile] = useState();
 	const validationSchema = Yup.object({
+		header: Yup.string().required("Required"),
 		langitude: Yup.string().required("Required"),
 		latitude: Yup.string().required("Required"),
 		firstName: Yup.string().required("Required"),
@@ -48,6 +50,7 @@ function AddAidModal({
 
 	async function onSubmit(values) {
 		const data = new FormData();
+		data.append("header", values.header);
 		data.append("langitude", values.langitude);
 		data.append("latitude", values.latitude);
 		data.append("firstName", values.firstName);
@@ -57,11 +60,9 @@ function AddAidModal({
 		data.append("detail", values.detail);
 		data.append("file", file);
 		try {
-			//await axios.post("http://localhost:5000/map/api/helps/details/upload/image", values);
-			//console.log("Yardım Ekle Object", data);
 			axios
 				.post("http://localhost:5000/map/api/helps/details/upload/image", data)
-				.then((res) => console.log(res))
+				.then((res) => console.log("res: ", res))
 				.catch((err) => console.log(err));
 			setIsSuccesfullySubmitted(true);
 		} catch (data) {
@@ -106,6 +107,14 @@ function AddAidModal({
 												</Col>
 											</Row>
 											<Row>
+												<Col md={12}>
+													<FormikControl
+														control="chakrainput"
+														type="text"
+														label="Yardım başlığı"
+														name="header"
+													/>
+												</Col>
 												<Col md={6}>
 													<FormikControl
 														control="chakrainput"
