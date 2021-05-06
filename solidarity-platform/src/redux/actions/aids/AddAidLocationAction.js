@@ -1,9 +1,8 @@
+import { SET_AID_LOCATION_LATLNG } from "../../types/aids/AddAidTypes";
 
-import { SET_AID_LOCATION } from '../../types/aids/AddAidTypes'
-
-export const setAidLocation = (location) => {
-    return {
-        type: SET_AID_LOCATION,
-        payload: location
-    }
-}
+export const setAidLocationLatLng = (location) => {
+	return {
+		type: SET_AID_LOCATION_LATLNG,
+		payload: location,
+	};
+};

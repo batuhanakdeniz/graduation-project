@@ -8,10 +8,14 @@ import {
 	StatNumber,
 	useColorModeValue,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FaRegUser } from "react-icons/fa";
-import { FiServer } from "react-icons/fi";
+import { FaHandsHelping } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import { fetchNumberOfAids } from "../../redux/actions/homepage/numberOfAidsActions";
+import { fetchNumberOfUsers } from "../../redux/actions/homepage/numberOfUsersActions";
+import { fetchNumberOfHelpedAids } from "../../redux/actions/homepage/numberOfHelpedAidsActions";
 
 function StatsCard(props) {
 	const { title, stat, icon } = props;
@@ -45,7 +49,19 @@ function StatsCard(props) {
 	);
 }
 
-export default function BasicStatistics({ aidLength }) {
+export default function BasicStatistics() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(fetchNumberOfAids());
+		dispatch(fetchNumberOfUsers());
+		dispatch(fetchNumberOfHelpedAids());
+		// eslint-disable-next-line
+	}, []);
+
+	const numberOfAids = useSelector((state) => state.numberOfAids);
+	const numberOfHelpedAids = useSelector((state) => state.numberOfHelpedAids);
+	const numberOfUsers = useSelector((state) => state.numberOfUsers);
+
 	return (
 		<Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
 			<chakra.h1
@@ -58,18 +74,36 @@ export default function BasicStatistics({ aidLength }) {
 			</chakra.h1>
 			<SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
 				<StatsCard
-					title={"Users"}
-					stat={"5,000"}
+					title={"Kullanıcı Sayısı"}
+					stat={
+						!numberOfUsers.loading
+							? numberOfUsers.error !== ""
+								? numberOfUsers.error
+								: numberOfUsers.numberOfUsers
+							: "Yükleniyor.."
+					}
 					icon={<FaRegUser size={"3em"} />}
 				/>
 				<StatsCard
-					title={"Servers"}
-					stat={"1,000"}
-					icon={<FiServer size={"3em"} />}
+					title={"Yardım edilen lokasyon sayısı"}
+					stat={
+						!numberOfHelpedAids.loading
+							? numberOfHelpedAids.error !== ""
+								? numberOfHelpedAids.error
+								: numberOfHelpedAids.numberOfHelpedAids
+							: "Yükleniyor.."
+					}
+					icon={<FaHandsHelping size={"3em"} />}
 				/>
 				<StatsCard
 					title={"Yardım Sayısı"}
-					stat={aidLength}
+					stat={
+						!numberOfAids.loading
+							? numberOfAids.error !== ""
+								? numberOfAids.error
+								: numberOfAids.numberOfAids
+							: "Yükleniyor.."
+					}
 					icon={<GoLocation size={"3em"} />}
 				/>
 			</SimpleGrid>

@@ -1,7 +1,11 @@
 export { fetchAidLocations } from "./actions/aids/AidLocationAction";
 export { fetchPopupContent } from "./actions/aids/PopupContentAction";
-export { setAidLocation } from "./actions/aids/AddAidLocationAction";
+export { setAidLocationLatLng } from "./actions/aids/AddAidLocationAction";
+export { setAidLocationProperties } from "./actions/aids/AddAidPropertiesAction";
 export { fetchDetailContent } from "./actions/aids/DetailContentAction";
 export { getLoggedIn } from "./actions/user/LoginActions";
 export { getLoggedUserData } from "./actions/user/LoggedUserActions";
 export { setUserLocation } from "./actions/user/UserLocationActions";
+export { fetchNumberOfAids } from "./actions/homepage/numberOfAidsActions";
+export { fetchNumberOfHelpedAids } from "./actions/homepage/numberOfHelpedAidsActions";
+export { fetchNumberOfUsers } from "./actions/homepage/numberOfUsersActions";

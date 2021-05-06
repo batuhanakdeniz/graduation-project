@@ -46,6 +46,7 @@
 	justify-content: center;
 	align-items: center;
 	width: fit-content;
+	height: 100%;
 	margin: 0rem auto;
 	padding: 3rem 3rem 3rem 3rem;
 	background: #cbe1cf;
@@ -78,4 +79,14 @@
 		margin-right: 0.5rem;
 	}
 	margin-bottom: 0px;
+}
+
+.addImageSection {
+	label {
+		font-weight: 500;
+		margin: 1rem 1rem 0rem 0rem;
+	}
+	#file {
+		margin-top: 2rem;
+	}
 }

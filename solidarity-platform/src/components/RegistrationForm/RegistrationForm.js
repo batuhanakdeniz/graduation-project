@@ -13,10 +13,6 @@ function RegistrationForm() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const options = [
-		{ key: "Email", value: "emailoc" },
-		{ key: "Telephone", value: "telephonemoc" },
-	];
 	const dropdownOptions = [
 		{ key: "Onaylanmamış Üye", value: "0" },
 		{ key: "Onaylanmış Üye", value: "1" },
@@ -32,31 +28,33 @@ function RegistrationForm() {
 		registrationType: "",
 		password: "",
 		confirmPassword: "",
-		modeOfContact: "",
 		phone: "",
 	};
+
+	const PhoneRegex = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
+
 	const validationSchema = Yup.object({
 		registrationType: Yup.string().required("Required"),
 		userName: Yup.string().required("Required"),
 		email: Yup.string().email("Invalid Email Format").required("Required"),
-		password: Yup.string().required("Required"),
+		password: Yup.string()
+			.required("Please Enter your password")
+			.matches(
+				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+				"Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+			),
 		firstName: Yup.string().required("Required"),
 		lastName: Yup.string().required("Required"),
 		confirmPassword: Yup.string()
 			.oneOf([Yup.ref("password"), ""], "Passwords must match")
 			.required("Required"),
-		modeOfContact: Yup.string().required("Required"),
-		phone: Yup.string().when("modeOfContact", {
-			is: "telephonemoc",
-			then: Yup.string().required("Required"),
-		}),
+		phone: Yup.string().matches(PhoneRegex, "Phone number is not valid"),
 	});
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	async function onSubmit(values) {
 		try {
 			setIsSubmitting(true);
-
 			await axios.post(
 				`http://localhost:5000/signup/${values.registrationType}`,
 				values
@@ -85,9 +83,9 @@ function RegistrationForm() {
 								</Col>
 								<Col md={12}>
 									<FormikControl
-										placeholder="Select One"
+										placeholder="Birini Seçiniz"
 										control="chakraselect"
-										label="Select a Type"
+										label="Lütfen Bir Üye Tipi Seçiniz"
 										name="registrationType"
 										options={dropdownOptions}
 									/>
@@ -98,7 +96,7 @@ function RegistrationForm() {
 									<FormikControl
 										control="chakrainput"
 										type="text"
-										label="First Name"
+										label="Adınız"
 										name="firstName"
 									/>
 								</Col>
@@ -106,61 +104,53 @@ function RegistrationForm() {
 									<FormikControl
 										control="chakrainput"
 										type="text"
-										label="Lastname"
+										label="Soyadınız"
 										name="lastName"
 									/>
 								</Col>
 							</Row>
 							<Row>
-								<Col md={6}>
+								<Col md={12}>
 									<FormikControl
 										control="chakrainput"
 										type="text"
-										label="User Name"
+										label="Kullanıcı Adınız"
 										name="userName"
-									/>
-								</Col>
-								<Col md={6}>
-									<FormikControl
-										control="chakrainput"
-										type="email"
-										label=" Email"
-										name="email"
-									/>
-								</Col>
-							</Row>
-							<Row>
-								<Col md={6}>
-									<FormikControl
-										control="chakrainput"
-										type="password"
-										label="Password"
-										name="password"
-									/>
-								</Col>
-								<Col md={6}>
-									<FormikControl
-										control="chakrainput"
-										type="password"
-										label="Confirm Password"
-										name="confirmPassword"
-									/>
-								</Col>
-							</Row>
-							<Row>
-								<Col md={12} className="modeOfContact">
-									<FormikControl
-										control="chakraradio"
-										label="Mode of Contact"
-										name="modeOfContact"
-										options={options}
 									/>
 								</Col>
 								<Col md={12}>
 									<FormikControl
 										control="chakrainput"
+										type="email"
+										label=" E-mail"
+										name="email"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={12}>
+									<FormikControl
+										control="chakrainput"
+										type="password"
+										label="Şifre"
+										name="password"
+									/>
+								</Col>
+								<Col md={12}>
+									<FormikControl
+										control="chakrainput"
+										type="password"
+										label="Lütfen şifrenizi tekrar giriniz"
+										name="confirmPassword"
+									/>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={12}>
+									<FormikControl
+										control="chakrainput"
 										type="text"
-										label="Phone Number"
+										label="Telefon Numaranız"
 										name="phone"
 									/>
 								</Col>
