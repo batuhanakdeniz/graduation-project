@@ -1,15 +1,12 @@
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import axios from "axios";
-import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import FormikControl from "../../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/button";
 import { fetchDetailContent, getLoggedUserData } from "../../../redux";
 
 function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
-	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
@@ -22,6 +19,7 @@ function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
 	});
 	useEffect(() => {
 		dispatch(getLoggedUserData());
+		// eslint-disable-next-line
 	}, []);
 
 	async function onSubmit(values) {

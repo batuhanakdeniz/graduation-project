@@ -1,21 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { Box, Heading, Text, Button, Image } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Image, Link } from "@chakra-ui/react";
 import İllisturation1 from "./undraw_map_1r69.svg";
 import İllisturation2 from "./undraw_Location_tracking_re_n3ok.svg";
 import İllisturation3 from "./undraw_Map_dark_re_36sy.svg";
 import "./HomePage.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAidLocations } from "../../redux";
 import BasicStatistics from "./BasicStatistics";
 
 function HomePage() {
-	const locationLength = useSelector((state) => state.aidLocations.locations);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(fetchAidLocations());
-		// eslint-disable-next-line
-	}, []);
 	return (
 		<div className="myHomePage">
 			<div className="myRow1">
@@ -24,7 +16,7 @@ function HomePage() {
 						<Row>
 							<Col md={12}>
 								<Heading>
-									<BasicStatistics aidLength={locationLength.length} />
+									<BasicStatistics />
 								</Heading>
 							</Col>
 							<Col md={12}>
@@ -40,9 +32,11 @@ function HomePage() {
 								>
 									Yardım eklemek ister misiniz?
 								</Button>
-								<Button rounded={"full"} px={6}>
-									Üye değil misiniz?
-								</Button>
+								<Link href="/signup">
+									<Button rounded={"full"} px={6}>
+										Üye değil misiniz?
+									</Button>
+								</Link>
 							</Col>
 						</Row>
 					</Col>

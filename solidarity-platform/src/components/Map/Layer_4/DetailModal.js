@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./DetailModal.scss";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -61,7 +61,7 @@ const CommentSection = styled.div`
 `;
 
 function DetailModal({ isOpen, onOpen, onClose }) {
-	const [images, setImages] = useState(null);
+	//const [images, setImages] = useState(null);
 	const detailContent = useSelector((state) => state.detailContent);
 	return (
 		<div>
