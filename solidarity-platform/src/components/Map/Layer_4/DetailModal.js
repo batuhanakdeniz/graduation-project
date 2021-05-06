@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DetailModal.scss";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import styled from "styled-components";
 import ImageGallery from "react-image-gallery";
-import { Feed } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import {
 	Button,
@@ -16,9 +15,11 @@ import {
 	ModalOverlay,
 	Divider,
 } from "@chakra-ui/react";
-import AddComment from "../FourthLayer/AddComment";
+import CommentComponent from "../Layer_5/CommentComponent";
+
 const ImageSection = styled.div`
 	min-height: 10rem;
+	height: 100%;
 	border-radius: 1rem;
 	background-color: rgba(69, 147, 86, 0.743636);
 	padding: 1rem;
@@ -60,8 +61,8 @@ const CommentSection = styled.div`
 `;
 
 function DetailModal({ isOpen, onOpen, onClose }) {
+	const [images, setImages] = useState(null);
 	const detailContent = useSelector((state) => state.detailContent);
-	const [displayAddComment, setDisplayAddComment] = useState(false);
 	return (
 		<div>
 			<Modal
@@ -77,7 +78,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 					<ModalBody>
 						<Container>
 							<br />
-							<Row xs={1} md={2}>
+							<Row xs={1} md={2} style={{ height: "100%" }}>
 								<Col>
 									<ImageSection>
 										<Row>
@@ -85,7 +86,12 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 												<h1>Images</h1>
 											</Col>
 											<Col md={12}>
-												<ImageGallery items={detailContent.aidImgSrc} />;
+												<Image
+													src={`${detailContent.aidImgSrc}`}
+													alt="sefa"
+													fluid
+												/>
+												{/* <ImageGallery items={images} />; */}
 											</Col>
 										</Row>
 									</ImageSection>
@@ -112,29 +118,10 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 							<Row>
 								<Col>
 									<CommentSection>
-										<Row>
-											<Col md={12}>
-												<h1>Comments</h1>
-											</Col>
-											<Col md={12}>
-												<Feed events={detailContent.comments} />
-											</Col>
-											<Col md={12}>
-												{
-													!displayAddComment
-													?<Button 
-														onClick={()=>setDisplayAddComment(!displayAddComment)}
-														ml="3rem"
-														mt="0.5rem"
-														variant="ghost"
-														textColor="blue"
-														textDecoration="underline"
-														_hover={{background:"green.700"}}
-													>Yorum Ekle</Button>
-													:<AddComment setDisplayAddComment={setDisplayAddComment} displayAddComment={displayAddComment} />
-												}												
-											</Col>
-										</Row>
+										<CommentComponent
+											Comments={detailContent.comments}
+											detaildId={detailContent.aidId}
+										/>
 									</CommentSection>
 								</Col>
 							</Row>

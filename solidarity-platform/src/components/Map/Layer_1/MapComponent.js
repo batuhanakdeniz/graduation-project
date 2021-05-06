@@ -14,13 +14,13 @@ import "../mapStyle.scss";
 import addAidMarker from "../assets/free-map-marker-icon-blue.png";
 
 import { Col, Row } from "react-bootstrap";
-import LocationMarker from "../FirstLayer/LocationMarker";
-import ShowAids from "../FirstLayer/ShowAids";
+import LocationMarker from "../Layer_2/LocationMarker";
+import ShowAids from "../Layer_2/ShowAids";
 //import DrawerExample from './Drawer'
-import { AddButton } from "../FirstLayer/AddButton";
-import { Search } from "../FirstLayer/SearchComponent";
+import { AddButton } from "../Layer_2/AddButton";
+import { Search } from "../Layer_2/SearchComponent";
 import { useSelector } from "react-redux";
-import { FlyToLocationButton } from "../FirstLayer/FlyToLocationButton";
+import { FlyToLocationButton } from "../Layer_2/FlyToLocationButton";
 //import { Button } from '@chakra-ui/react'
 
 function MapComponent({ match }) {
@@ -65,17 +65,7 @@ function MapComponent({ match }) {
 							mapmod={mapmod}
 						/>
 						<FlyToLocationButton position="bottomright" />
-						{mapmod ? (
-							<LocationMarker icon={addAidIcon} />
-						) : (
-							<LayersControl position="topright">
-								<LayersControl.Overlay checked name="Layer group with Marker">
-									<LayerGroup>
-										<ShowAids />
-									</LayerGroup>
-								</LayersControl.Overlay>
-							</LayersControl>
-						)}
+						{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
 					</MapContainer>
 				</Col>
 			</Row>
