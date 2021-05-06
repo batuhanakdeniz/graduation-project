@@ -25,6 +25,7 @@ function AddAidModal({
 	setIsSuccesfullySubmitted,
 }) {
 	const position = useSelector((state) => state.addAidLocation);
+	const [file, setFile] = useState([]);
 
 	const initialValues = {
 		header: "",
@@ -35,8 +36,8 @@ function AddAidModal({
 		address: "",
 		phone: "",
 		detail: "",
+		emergencyLevel: "",
 	};
-	const [file, setFile] = useState();
 	const validationSchema = Yup.object({
 		header: Yup.string().required("Required"),
 		langitude: Yup.string().required("Required"),
@@ -46,10 +47,25 @@ function AddAidModal({
 		phone: Yup.string().required("Required"),
 		address: Yup.string().required("Required"),
 		detail: Yup.string().required("Required"),
+		emergencyLevel: Yup.string().required("Required"),
 	});
+
+	const dropdownOptions = [
+		{ key: "1", value: "1" },
+		{ key: "2", value: "2" },
+		{ key: "3", value: "3" },
+		{ key: "4", value: "4" },
+		{ key: "5", value: "5" },
+		{ key: "6", value: "6" },
+		{ key: "7", value: "7" },
+		{ key: "8", value: "8" },
+		{ key: "9", value: "9" },
+		{ key: "10", value: "10" },
+	];
 
 	async function onSubmit(values) {
 		const data = new FormData();
+
 		data.append("header", values.header);
 		data.append("langitude", values.langitude);
 		data.append("latitude", values.latitude);
@@ -58,6 +74,7 @@ function AddAidModal({
 		data.append("phone", values.phone);
 		data.append("address", values.address);
 		data.append("detail", values.detail);
+		data.append("emergencyLevel", values.emergencyLevel);
 		data.append("file", file);
 		try {
 			axios
@@ -141,20 +158,32 @@ function AddAidModal({
 														name="phone"
 													/>
 												</Col>
-												<Col md={12}>
+												<Col md={6}>
 													<div className="addImageSection">
 														<label htmlFor="file">Add an Image</label>
 														<input
 															type="file"
 															label="Add an image"
 															id="file"
+															required
+															multiple
 															accept=".jpg"
 															onChange={(event) => {
-																const image = event.target.files[0];
-																setFile(image);
+																const images = event.target.files;
+																console.log("images", images);
+																setFile(images);
 															}}
 														/>
 													</div>
+												</Col>
+												<Col md={6}>
+													<FormikControl
+														control="chakraselect"
+														label="Emergency Level"
+														placeholder="Önem Derecesini Seçiniz"
+														name="emergencyLevel"
+														options={dropdownOptions}
+													/>
 												</Col>
 
 												<Col md={12}>

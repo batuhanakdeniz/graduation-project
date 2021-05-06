@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailContent, fetchPopupContent } from "../../../redux";
 import { useDisclosure } from "@chakra-ui/hooks";
-import DetailModal from "../ThirdLayer/DetailModal";
+import DetailModal from "../Layer_4/DetailModal";
 
 function AidPopUp({ aidId }) {
 	const popupContent = useSelector((state) => state.popupContent);

@@ -31,16 +31,23 @@
 		margin: 1rem 1rem 0rem 0rem;
 	}
 	#file {
-		margin-top: 1rem;
+		margin-top: 0.5rem;
 	}
 }
-.fly-to-location-button{
+.fly-to-location-button {
 	position: absolute;
-	top:10rem;
-	right:4px;
+	top: 10rem;
+	right: 4px;
 }
-.search-form{
+.search-form {
 	position: absolute;
-	top:2%;
+	top: 2%;
 	left: -3%;
+}
+#commentEvent {
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom-width: 2px;
+	border-bottom-color: cadetblue;
+	box-shadow: rgb(218, 162, 8);
 }

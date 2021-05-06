@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
 
 import { setAidLocation } from "../../../redux";
-import AddAidModal from "../SecondLayer/AddAidModal";
+import AddAidModal from "../Layer_3/AddAidModal";
 
 function LocationMarker(props) {
 	const position = useSelector((state) => state.addAidLocation);
