@@ -35,21 +35,22 @@ function AddAidModal({
 	const [town, setTown] = useState(null);
 	const [address, setAddress] = useState(null);
 
-	// useEffect(() => {
-	// 	if (properties !== []) {
-	// 		console.log("properties", properties.address.province);
-	// 		setProvince(properties.address.province);
-	// 		setTown(properties.address.town);
-	// 		setAddress(
-	// 			properties.address.neighbourhood
-	// 				? properties.address.neighbourhood +
-	// 						(properties.address.road ? ", " + properties.address.road : "")
-	// 				: ""
-	// 		);
-	// 	} else {
-	// 		console.log("of");
-	// 	}
-	// }, [properties]);
+	useEffect(() => {
+		if (properties !== []) {
+			if (properties.address) {
+				setProvince(properties.address.province);
+				setTown(properties.address.town);
+				setAddress(
+					properties.address.neighbourhood
+						? properties.address.neighbourhood +
+								(properties.address.road ? ", " + properties.address.road : "")
+						: ""
+				);
+			}
+		} else {
+			console.log("of");
+		}
+	}, [properties]);
 
 	const initialValues = {
 		header: "",
