@@ -68,7 +68,7 @@ function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
 									id="file"
 									required
 									multiple
-									accept=".jpg"
+									accept="image/*"
 									onChange={(event) => {
 										const images = event.target.files;
 										console.log("images", images);

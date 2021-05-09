@@ -31,14 +31,18 @@
 		font-size: 24px;
 		text-align: center;
 	}
-
 	background: linear-gradient(
-		164.17deg,
-		#41d56a 0%,
-		rgba(196, 196, 196, 0) 100%
+		268.54deg,
+		#77a066 0.55%,
+		rgba(69, 147, 86, 0.743636) 100%
 	);
-	box-shadow: inset 0px 0px 26px 24px rgba(4, 75, 41, 0.41),
-		inset 0px 0px 17px 59px rgba(255, 252, 252, 0.25);
+	// background: linear-gradient(
+	// 	164.17deg,
+	// 	#41d56a 0%,
+	// 	rgba(196, 196, 196, 0) 100%
+	// );
+	// box-shadow: inset 0px 0px 26px 24px rgba(4, 75, 41, 0.41),
+	// 	inset 0px 0px 17px 59px rgba(255, 252, 252, 0.25);
 }
 
 .registrationForm {
@@ -50,6 +54,11 @@
 	margin: 0rem auto;
 	padding: 3rem 3rem 3rem 3rem;
 	background: #cbe1cf;
+	background: linear-gradient(
+		268.54deg,
+		#77a066 0.55%,
+		rgba(69, 147, 86, 0.743636) 100%
+	);
 	border: 1px solid #04502b;
 	box-sizing: border-box;
 	box-shadow: inset 0px 0px 31px 21px rgba(0, 0, 0, 0.25);

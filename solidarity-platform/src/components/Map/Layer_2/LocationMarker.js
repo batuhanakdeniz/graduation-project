@@ -16,7 +16,7 @@ function LocationMarker(props) {
 	const map = useMapEvents({
 		click(e) {
 			dispatch(setAidLocationLatLng(e.latlng));
-			console.log("1");
+			//console.log("1");
 			geocoder.reverse(
 				e.latlng,
 				map.options.crs.scale(map.getZoom()),

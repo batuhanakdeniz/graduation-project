@@ -58,20 +58,20 @@ function LoginForm() {
 											<FormikControl
 												control="chakrainput"
 												type="email"
-												label="Email"
+												label="E-mail"
 												name="email"
 												placeholder="birisi@example.com"
 											/>
 											<FormikControl
 												control="chakrainput"
+												placeholder="*****"
 												type="password"
-												label="Password"
+												label="Şifre"
 												name="password"
 											/>
 											<Button
-												variant="outline"
-												bg="white.400"
-												textColor="white"
+												colorScheme="teal"
+												isFullWidth
 												type="submit"
 												disabled={!formik.isValid}
 											>

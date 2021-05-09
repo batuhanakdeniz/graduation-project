@@ -7,6 +7,7 @@ import { useHistory } from "react-router";
 import navbarPP from "../Details/joe.jpg";
 import { getLoggedIn } from "../../redux";
 import { getLoggedUserData } from "../../redux";
+import { Button } from "@chakra-ui/button";
 
 function NavbarComponent() {
 	const history = useHistory();
@@ -56,10 +57,14 @@ function NavbarComponent() {
 					{!isLoggedIn && (
 						<>
 							<Nav.Link id="NavlinksStyle" href="/login">
-								Giriş Yap
+								<Button colorScheme="teal" size="lg" isFullWidth>
+									Giriş Yap
+								</Button>
 							</Nav.Link>
 							<Nav.Link id="NavlinksStyle" href="/signup">
-								Üye Ol
+								<Button colorScheme="teal" size="lg" isFullWidth>
+									Üye Ol
+								</Button>
 							</Nav.Link>
 						</>
 					)}
