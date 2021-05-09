@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
 	Button,
+	FormErrorMessage,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -12,7 +13,7 @@ import {
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../FormComponents/FormikControl";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 
 import "../mapStyle.scss";
@@ -20,6 +21,7 @@ import axios from "axios";
 
 import L from "leaflet";
 import { useMapEvents } from "react-leaflet";
+import { getLoggedUserData } from "../../../redux";
 
 function AddAidModal({
 	onClose,
@@ -27,13 +29,16 @@ function AddAidModal({
 	isSuccesfullySubmitted,
 	setIsSuccesfullySubmitted,
 }) {
+	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
+	const properties = useSelector((state) => state.addAidProperties.properties);
 	const position = useSelector((state) => state.addAidLocation);
 
-	const [file, setFile] = useState();
-	const properties = useSelector((state) => state.addAidProperties.properties);
+	const dispatch = useDispatch();
+
 	const [province, setProvince] = useState(null);
 	const [town, setTown] = useState(null);
 	const [address, setAddress] = useState(null);
+	const [detailCounter, setDetailCounter] = useState(200);
 
 	useEffect(() => {
 		if (properties !== []) {
@@ -46,9 +51,10 @@ function AddAidModal({
 								(properties.address.road ? ", " + properties.address.road : "")
 						: ""
 				);
+				dispatch(getLoggedUserData());
 			}
 		} else {
-			console.log("of");
+			console.log("Something is wrong");
 		}
 	}, [properties]);
 
@@ -67,23 +73,59 @@ function AddAidModal({
 		phone: "",
 		detail: "",
 		emergencyLevel: "",
+		category: "",
+		files: [],
 	};
 	const PhoneRegex = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
+
 	const validationSchema = Yup.object({
-		header: Yup.string().required("Required"),
-		langitude: Yup.string().required("Required"),
-		latitude: Yup.string().required("Required"),
-		firstName: Yup.string().required("Required"),
-		lastName: Yup.string().required("Required"),
-		phone: Yup.string().matches(PhoneRegex, "Phone number is not valid"),
-		province: Yup.string().required("Required"),
-		town: Yup.string().required("Required"),
-		address: Yup.string().required("Required"),
-		detail: Yup.string().required("Required"),
-		emergencyLevel: Yup.string().required("Required"),
+		header: Yup.string()
+			.required("Gerekli Alan!")
+			.min(2, "Must be more than 2 characters")
+			.max(15, "Must be less than 15 characters"),
+		langitude: Yup.string().required("Gerekli Alan!"),
+		latitude: Yup.string().required("Gerekli Alan!"),
+		firstName: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/, "Must be only characters")
+			.min(2, "Must be more than 2 characters")
+			.max(15, "Must be less than 15 characters"),
+		lastName: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/, "Must be only characters")
+			.min(2, "Must be more than 2 characters")
+			.max(15, "Must be less than 15 characters"),
+		phone: Yup.string().matches(
+			PhoneRegex,
+			"Lütfen geçerli bir telefon numarası giriniz!"
+		),
+		province: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/, "Must be only characters")
+			.min(2, "Must be more than 2 characters")
+			.max(15, "Must be less than 15 characters"),
+		town: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/, "Must be only characters")
+			.min(2, "Must be more than 2 characters")
+			.max(15, "Must be less than 15 characters"),
+		address: Yup.string().required("Gerekli Alan!"),
+		detail: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(
+				/^[^\d@#!?|$%^&*()_+\-=[\]]+$/,
+				"Must be only characters and '.'"
+			)
+			.trim("Lütfen içeriğin sonundaki gereksiz boşlukları siliniz !")
+			.strict(true)
+			.min(2, "Must be more than 2 characters")
+			.max(200, "Must be less than 15 characters"),
+		emergencyLevel: Yup.string().required("Gerekli Alan!"),
+		category: Yup.string().required("Gerekli Alan!"),
+		//files: Yup.array().required(),
 	});
 
-	const dropdownOptions = [
+	const emergencyOptions = [
 		{ key: "1", value: "1" },
 		{ key: "2", value: "2" },
 		{ key: "3", value: "3" },
@@ -95,37 +137,56 @@ function AddAidModal({
 		{ key: "9", value: "9" },
 		{ key: "10", value: "10" },
 	];
+	const categoryOptions = [
+		{ key: "Bilgisayar", value: "computer" },
+		{ key: "Gıda", value: "food" },
+		{ key: "Tekstil", value: "clothes" },
+		{ key: "Diğer", value: "others" },
+	];
 
 	async function onSubmit(values) {
-		const data = new FormData();
+		console.log("logged User Data", loggedUserData.userName);
+		if (!loggedUserData.userName) {
+			alert("Yardım Ekleyebilmek için giriş yapmalısınız !!");
+		} else {
+			const data = new FormData();
+			data.append("userName", loggedUserData.userName);
+			data.append("header", values.header);
+			data.append("langitude", values.langitude);
+			data.append("latitude", values.latitude);
+			data.append("firstName", values.firstName);
+			data.append("lastName", values.lastName);
+			data.append("phone", values.phone);
+			data.append("province", values.province);
+			data.append("town", values.town);
+			data.append("address", values.address);
+			data.append("buildingNo", values.buildingNo);
+			data.append("floor", values.floor);
+			data.append("apartmentNo", values.apartmentNo);
+			data.append("detail", values.detail);
+			data.append("emergencyLevel", values.emergencyLevel);
+			data.append("category", values.category);
+			data.append("file", values.files);
 
-		data.append("header", values.header);
-		data.append("langitude", values.langitude);
-		data.append("latitude", values.latitude);
-		data.append("firstName", values.firstName);
-		data.append("lastName", values.lastName);
-		data.append("phone", values.phone);
-		data.append("province", values.province);
-		data.append("town", values.town);
-		data.append("address", values.address);
-		data.append("buildingNo", values.buildingNo);
-		data.append("floor", values.floor);
-		data.append("apartmentNo", values.apartmentNo);
-		data.append("detail", values.detail);
-		data.append("emergencyLevel", values.emergencyLevel);
-		data.append("file", file);
-
-		try {
-			axios
-				.post("http://localhost:5000/map/api/helps/details/upload/image", data)
-				.then((res) => console.log("res: ", res))
-				.catch((err) => console.log(err));
-			setIsSuccesfullySubmitted(true);
-		} catch (data) {
-			alert(data.message);
+			try {
+				axios
+					.post(
+						"http://localhost:5000/map/api/helps/details/upload/image",
+						data
+					)
+					.then((res) => console.log("res: ", res))
+					.catch((err) => console.log(err));
+				setIsSuccesfullySubmitted(true);
+			} catch (data) {
+				alert(data.message);
+			}
 		}
 	}
 
+	const handleDetailChange = (e) => {
+		e.preventDefault();
+		setDetailCounter((prev) => (prev = 200 - e.target.value.length));
+	};
 	return (
 		<Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
 			<ModalOverlay />
@@ -148,7 +209,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Langitude"
+														label="Boylam"
 														name="langitude"
 														disabled={true}
 													/>
@@ -157,7 +218,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Latitude"
+														label="Enlem"
 														name="latitude"
 														disabled={true}
 													/>
@@ -168,7 +229,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Yardım başlığı"
+														label="Yardım başlığı*"
 														name="header"
 													/>
 												</Col>
@@ -176,7 +237,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Adı"
+														label="Adı*"
 														name="firstName"
 													/>
 												</Col>
@@ -184,7 +245,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Soyadı"
+														label="Soyadı*"
 														name="lastName"
 													/>
 												</Col>
@@ -194,24 +255,25 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Telefon Numarası"
+														label="Telefon Numarası*"
 														name="phone"
 													/>
 												</Col>
-												<Col md={6}>
+												<Col md={12}>
 													<div className="addImageSection">
-														<label htmlFor="file">Fotoğraf Ekleyin</label>
+														<label htmlFor="file">Fotoğraf Ekleyin*</label>
 														<input
 															type="file"
-															label="Fotoğraf Ekleyin"
+															label="Fotoğraf Ekleyin*"
 															id="aidFile"
-															required
 															multiple
 															accept=".jpg"
 															onChange={(event) => {
-																const images = event.target.files[0];
-																console.log("images", images);
-																setFile(images);
+																console.log("images", event.target.values);
+																formik.setFieldValue(
+																	"files",
+																	event.target.files[0]
+																);
 															}}
 														/>
 													</div>
@@ -219,10 +281,19 @@ function AddAidModal({
 												<Col md={6}>
 													<FormikControl
 														control="chakraselect"
-														label="Önem Derecesini Seçiniz"
+														label="Önem Derecesini Seçiniz*"
 														placeholder="Önem Derecesini Seçiniz"
 														name="emergencyLevel"
-														options={dropdownOptions}
+														options={emergencyOptions}
+													/>
+												</Col>
+												<Col md={6}>
+													<FormikControl
+														control="chakraselect"
+														label="Kategori Seçiniz*"
+														placeholder="Kategori Seçiniz"
+														name="category"
+														options={categoryOptions}
 													/>
 												</Col>
 												<Col md={6}>
@@ -246,7 +317,7 @@ function AddAidModal({
 													<FormikControl
 														control="chakrainput"
 														type="text"
-														label="Adres*"
+														label="Mahalle/Sokak*"
 														name="address"
 													/>
 												</Col>
@@ -276,18 +347,23 @@ function AddAidModal({
 												</Col>
 												<Col md={12}>
 													<FormikControl
+														onChange={handleDetailChange}
 														control="chakratextarea"
 														label="Detay"
 														name="detail"
 													/>
+												</Col>
+												<Col md={12} className="align-content-end">
+													Kalan Karakter Sayısı : {detailCounter}
 												</Col>
 											</Row>
 											<Button
 												loadingText="Submitting"
 												colorScheme="teal"
 												type="submit"
+												isLoading={formik.isSubmitting}
 												isFullWidth
-												disabled={!formik.isValid}
+												disabled={!formik.isValid || formik.isSubmitting}
 											>
 												Yardım Ekle
 											</Button>

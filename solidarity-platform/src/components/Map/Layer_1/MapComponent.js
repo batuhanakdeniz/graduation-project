@@ -56,7 +56,7 @@ function MapComponent({ match }) {
 							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
-						<ZoomControl position="topright" zoomInText="➕" zoomOutText="➖" />
+						<ZoomControl position="bottomright" />
 						<Search />
 						<AddButton
 							position="bottomleft"
@@ -64,7 +64,7 @@ function MapComponent({ match }) {
 							setMapmod={setMapmod}
 							mapmod={mapmod}
 						/>
-						<FlyToLocationButton position="bottomright" />
+						<FlyToLocationButton />
 						{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
 					</MapContainer>
 				</Col>

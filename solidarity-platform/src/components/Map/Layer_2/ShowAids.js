@@ -79,7 +79,7 @@ function ShowAids() {
 
 	return (
 		<div>
-			<LayersControl position="topright">
+			<LayersControl position="bottomright">
 				{darkAids !== [] ? (
 					<LayersControl.Overlay checked name="Dark Marker">
 						<LayerGroup>
