@@ -5,6 +5,7 @@ import "./Navbar.scss";
 import axios from "axios";
 import { useHistory } from "react-router";
 import navbarPP from "../Details/joe.jpg";
+import batuPP from "./batu.jpeg";
 import { getLoggedIn } from "../../redux";
 import { getLoggedUserData } from "../../redux";
 import { Button } from "@chakra-ui/button";
@@ -75,7 +76,7 @@ function NavbarComponent() {
 							<NavDropdown
 								title={
 									<Image
-										src={navbarPP}
+										src={batuPP}
 										width="35"
 										height="35"
 										className="d-inline-block align-top"

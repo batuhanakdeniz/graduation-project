@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
 	Button,
-	FormErrorMessage,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -9,19 +8,17 @@ import {
 	ModalFooter,
 	ModalHeader,
 	ModalOverlay,
+	Progress,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../FormComponents/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-
 import "../mapStyle.scss";
 import axios from "axios";
-
-import L from "leaflet";
-import { useMapEvents } from "react-leaflet";
 import { getLoggedUserData } from "../../../redux";
+import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUploadField";
 
 function AddAidModal({
 	onClose,
@@ -39,6 +36,10 @@ function AddAidModal({
 	const [town, setTown] = useState(null);
 	const [address, setAddress] = useState(null);
 	const [detailCounter, setDetailCounter] = useState(200);
+
+	const [files, setFiles] = useState([]);
+	const [errorFiles, setErrorFiles] = useState([]);
+	const [progress, setProgress] = useState(0);
 
 	useEffect(() => {
 		if (properties !== []) {
@@ -73,10 +74,10 @@ function AddAidModal({
 		phone: "",
 		detail: "",
 		emergencyLevel: "",
-		category: "",
-		files: [],
+		category: [],
 	};
-	const PhoneRegex = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
+	const PhoneRegex =
+		/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
 
 	const validationSchema = Yup.object({
 		header: Yup.string()
@@ -121,8 +122,7 @@ function AddAidModal({
 			.min(2, "Must be more than 2 characters")
 			.max(200, "Must be less than 15 characters"),
 		emergencyLevel: Yup.string().required("Gerekli Alan!"),
-		category: Yup.string().required("Gerekli Alan!"),
-		//files: Yup.array().required(),
+		category: Yup.array().min(1, "Gerekli Alan!").required("Gerekli Alan!"),
 	});
 
 	const emergencyOptions = [
@@ -137,11 +137,11 @@ function AddAidModal({
 		{ key: "9", value: "9" },
 		{ key: "10", value: "10" },
 	];
-	const categoryOptions = [
-		{ key: "Bilgisayar", value: "computer" },
-		{ key: "Gıda", value: "food" },
-		{ key: "Tekstil", value: "clothes" },
-		{ key: "Diğer", value: "others" },
+	const checkboxOptions = [
+		{ key: "Bilgisayar", value: "computer", color: "teal" },
+		{ key: "Gıda", value: "food", color: "blue" },
+		{ key: "Tekstil", value: "clothes", color: "telegram" },
+		{ key: "Diğer", value: "others", color: "cyan" },
 	];
 
 	async function onSubmit(values) {
@@ -166,13 +166,31 @@ function AddAidModal({
 			data.append("detail", values.detail);
 			data.append("emergencyLevel", values.emergencyLevel);
 			data.append("category", values.category);
-			data.append("file", values.files);
+			files.map((file) => data.append("files", file.file));
 
 			try {
 				axios
 					.post(
 						"http://localhost:5000/map/api/helps/details/upload/image",
-						data
+						data,
+						{
+							onUploadProgress: (progressEvent) => {
+								const totalLength = progressEvent.lengthComputable
+									? progressEvent.total
+									: progressEvent.target.getResponseHeader("content-length") ||
+									  progressEvent.target.getResponseHeader(
+											"x-decompressed-content-length"
+									  );
+								if (progressEvent.lengthComputable) {
+									// console.log(
+									// 	progressEvent.loaded + " " + progressEvent.total
+									// );
+									setProgress(
+										Math.round((progressEvent.loaded * 100) / totalLength)
+									);
+								}
+							},
+						}
 					)
 					.then((res) => console.log("res: ", res))
 					.catch((err) => console.log(err));
@@ -200,30 +218,10 @@ function AddAidModal({
 							validationSchema={validationSchema}
 							onSubmit={onSubmit}
 						>
-							{(formik) => {
+							{({ values, errors, isValid, isSubmitting }) => {
 								return (
 									<div className="addAidForm">
 										<Form>
-											<Row>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Boylam"
-														name="langitude"
-														disabled={true}
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Enlem"
-														name="latitude"
-														disabled={true}
-													/>
-												</Col>
-											</Row>
 											<Row>
 												<Col md={12}>
 													<FormikControl
@@ -261,20 +259,13 @@ function AddAidModal({
 												</Col>
 												<Col md={12}>
 													<div className="addImageSection">
-														<label htmlFor="file">Fotoğraf Ekleyin*</label>
-														<input
-															type="file"
-															label="Fotoğraf Ekleyin*"
-															id="aidFile"
-															multiple
-															accept=".jpg"
-															onChange={(event) => {
-																console.log("images", event.target.values);
-																formik.setFieldValue(
-																	"files",
-																	event.target.files[0]
-																);
-															}}
+														<MultipleFileUploadField
+															setFiles={setFiles}
+															files={files}
+															fileErrors={errors}
+															progress={progress}
+															setProgress={setProgress}
+															setErrorFiles={setErrorFiles}
 														/>
 													</div>
 												</Col>
@@ -289,11 +280,10 @@ function AddAidModal({
 												</Col>
 												<Col md={6}>
 													<FormikControl
-														control="chakraselect"
+														control="chakracheckbox"
 														label="Kategori Seçiniz*"
-														placeholder="Kategori Seçiniz"
 														name="category"
-														options={categoryOptions}
+														options={checkboxOptions}
 													/>
 												</Col>
 												<Col md={6}>
@@ -358,15 +348,23 @@ function AddAidModal({
 												</Col>
 											</Row>
 											<Button
-												loadingText="Submitting"
-												colorScheme="teal"
-												type="submit"
-												isLoading={formik.isSubmitting}
+												id="submitButton"
+												color="teal"
 												isFullWidth
-												disabled={!formik.isValid || formik.isSubmitting}
+												loadingText="Submitting"
+												isLoading={
+													progress !== 0 && progress !== 100 ? true : false
+												}
+												disabled={
+													!isValid || files.length === 0 || errorFiles.length
+												}
+												type="submit"
 											>
 												Yardım Ekle
 											</Button>
+											{progress !== 0 && progress !== 100 ? (
+												<Progress mb="1rem" hasStripe value={progress} />
+											) : null}
 										</Form>
 									</div>
 								);
