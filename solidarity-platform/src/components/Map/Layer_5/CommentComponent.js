@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { Feed, Icon } from "semantic-ui-react";
 import AddComment from "../Layer_6/AddComment";
 
-function CommentComponent({ Comments, detaildId }) {
+function CommentComponent({ Comments, aidID }) {
 	const [displayAddComment, setDisplayAddComment] = useState(false);
 	return (
 		<Row>
@@ -62,7 +62,7 @@ function CommentComponent({ Comments, detaildId }) {
 					<AddComment
 						setDisplayAddComment={setDisplayAddComment}
 						displayAddComment={displayAddComment}
-						detaildId={detaildId}
+						aidID={aidID}
 					/>
 				)}
 			</Col>

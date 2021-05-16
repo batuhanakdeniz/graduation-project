@@ -19,20 +19,14 @@
 
 .addAidForm {
 	label {
-		margin: 1rem 1rem 0rem 0rem;
+		margin: 0.5rem 1rem 0.2rem 0rem;
 	}
-	button {
+	#submitButton {
 		margin-top: 0.5rem;
 	}
 }
 .addImageSection {
-	label {
-		font-weight: 500;
-		margin: 0rem 1rem 0rem 0rem;
-	}
-	#aidFile {
-		margin-top: 0.3rem;
-	}
+	margin-top: 0.3rem;
 }
 .fly-to-location-button {
 	position: absolute;

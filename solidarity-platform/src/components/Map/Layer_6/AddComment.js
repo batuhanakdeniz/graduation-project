@@ -4,13 +4,19 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import FormikControl from "../../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/button";
-import { fetchDetailContent, getLoggedUserData } from "../../../redux";
+import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUploadField";
+import { fetchDetailContent, getLoggedIn } from "../../../redux";
+import { Progress } from "@chakra-ui/progress";
+import axios from "axios";
 
-function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
+function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 	const dispatch = useDispatch();
 
-	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
+	const isLoggedIn = useSelector((state) => state.userData.isLoggedIn);
 	const [files, setFiles] = useState([]);
+	const [errorFiles, setErrorFiles] = useState([]);
+	const [progress, setProgress] = useState(0);
+
 	const initialValues = {
 		comment: "",
 	};
@@ -18,28 +24,47 @@ function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
 		comment: Yup.string().required("Required"),
 	});
 	useEffect(() => {
-		dispatch(getLoggedUserData());
+		dispatch(getLoggedIn());
 		// eslint-disable-next-line
 	}, []);
 
 	async function onSubmit(values) {
-		console.log("logged User Data", loggedUserData.userName);
-		if (!loggedUserData.userName) {
+		console.log("logged User Data", isLoggedIn);
+		if (!isLoggedIn) {
 			alert("Yorum yapabilmek için giriş yapmalısınız !!");
 		} else {
 			const data = new FormData();
 			data.append("comment", values.comment);
-			data.append("userName", loggedUserData.userName);
-			data.append("files", files);
+			data.append("aidID", aidID);
 
-			// try {
-			// 	await axios.post("http://localhost:5000/login", values);
-			// 	dispatch(getLoggedIn());
-			// 	history.push("/");
-			// } catch (values) {
-			// 	alert(values.message);
-			// }
-			dispatch(fetchDetailContent(detaildId));
+			files.map((file) => data.append("files", file.file));
+
+			try {
+				axios
+					.post("https://httpbin.org/anything", data, {
+						onUploadProgress: (progressEvent) => {
+							const totalLength = progressEvent.lengthComputable
+								? progressEvent.total
+								: progressEvent.target.getResponseHeader("content-length") ||
+								  progressEvent.target.getResponseHeader(
+										"x-decompressed-content-length"
+								  );
+							if (progressEvent.lengthComputable) {
+								// console.log(
+								// 	progressEvent.loaded + " " + progressEvent.total
+								// );
+								setProgress(
+									Math.round((progressEvent.loaded * 100) / totalLength)
+								);
+							}
+						},
+					})
+					.then((res) => console.log(res));
+				//dispatch(getLoggedIn());
+			} catch (values) {
+				alert(values.message);
+			}
+			dispatch(fetchDetailContent(aidID));
 		}
 	}
 	return (
@@ -48,7 +73,7 @@ function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
 		>
-			{(formik) => {
+			{({ errors, isValid }) => {
 				return (
 					<div>
 						<Form>
@@ -61,32 +86,28 @@ function AddComment({ setDisplayAddComment, displayAddComment, detaildId }) {
 								style={{ color: "black" }}
 							/>
 							<div className="addImageSection">
-								<label htmlFor="file">Add an Image</label>
-								<input
-									type="file"
-									label="Add an image"
-									id="file"
-									required
-									multiple
-									accept="image/*"
-									onChange={(event) => {
-										const images = event.target.files;
-										console.log("images", images);
-										setFiles(images);
-									}}
+								<MultipleFileUploadField
+									setFiles={setFiles}
+									files={files}
+									fileErrors={errors}
+									progress={progress}
+									setProgress={setProgress}
+									setErrorFiles={setErrorFiles}
 								/>
 							</div>
 							<Button
-								variant="outline"
-								bg="green.900"
-								textColor="white"
-								mt="1rem"
+								color="teal"
+								isFullWidth
+								loadingText="Submitting"
+								isLoading={progress !== 0 && progress !== 100 ? true : false}
+								disabled={!isValid || files.length === 0 || errorFiles.length}
 								type="submit"
-								_hover={{ background: "green.700" }}
-								disabled={!formik.isValid}
 							>
-								Yorum ekle
+								Yorum Ekle
 							</Button>
+							{progress !== 0 && progress !== 100 ? (
+								<Progress mb="1rem" hasStripe value={progress} />
+							) : null}
 							<Button
 								variant="outline"
 								bg="green.900"

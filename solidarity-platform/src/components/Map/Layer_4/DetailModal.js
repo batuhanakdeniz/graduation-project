@@ -120,7 +120,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 									<CommentSection>
 										<CommentComponent
 											Comments={detailContent.comments}
-											detaildId={detailContent.aidId}
+											aidID={detailContent.aidId}
 										/>
 									</CommentSection>
 								</Col>
