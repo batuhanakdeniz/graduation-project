@@ -87,7 +87,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 											</Col>
 											<Col md={12}>
 												<Image
-													src={`${detailContent.aidImgSrc}`}
+													src={"http://localhost:5000/upload/" + detailContent.aidImgSrc}
 													alt="sefa"
 													fluid
 												/>

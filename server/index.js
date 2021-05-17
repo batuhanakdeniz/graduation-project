@@ -5,6 +5,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser"
 import helpRouter from "./routers/helpRouter.js";
 import userRouter from "./routers/userRouter.js";
+import homeRouter from "./routers/homeRouter.js";
+
+
 const app = express();  //express server yaratıldı
 dotenv.config();        //process.env içine .env içindeki değerleri atar
 
@@ -19,8 +22,10 @@ app.use(express.json());    //anlamadım tam olarak ama endpoint içinde json fo
 app.use(cookieParser());
 
 
+app.use("/upload",express.static('upload'));
 
 
+app.use("/home", homeRouter);
 
 app.use("/map", helpRouter);
 app.use("/", userRouter);

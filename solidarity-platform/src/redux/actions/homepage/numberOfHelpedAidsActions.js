@@ -28,7 +28,7 @@ export const fetchNumberOfHelpedAids = () => {
 	return (dispatch) => {
 		dispatch(fetchNumberOfHelpedAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details`)
+			.get(`http://localhost:5000/home/api/help/helped/number`)
 			.then((response) => {
 				const number = response.data;
 				dispatch(fetchNumberOfHelpedAidsSuccess(number));

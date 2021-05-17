@@ -1,5 +1,5 @@
 import express from "express";
-import {getHelp, createHelp,getHelpLocations,getHelpLocation,getHelpBasics,getHelpBasic, getHelpDetail, getHelpDetails, postHelpImage, postHelpImageDENEME} from '../controllers/helpController.js'
+import {getHelp, createHelp,getHelpLocations,getHelpLocation,getHelpBasics,getHelpBasic, getHelpDetail, getHelpDetails, postHelp} from '../controllers/helpController.js'
 import {auth} from "../middleware/auth.js";
 import {upload} from "../middleware/upload.js";
 const router = express.Router();
@@ -15,8 +15,7 @@ router.get('/api/helps/basics',getHelpBasics);
 router.get('/api/helps/basics/:id',getHelpBasic);
 router.get('/api/helps/details',getHelpDetails);
 router.get('/api/helps/details/:id',getHelpDetail);
-router.post('/api/helps/details/:id/file',postHelpImage);
-router.post('/api/helps/details/upload/image',upload.single('file'),postHelpImageDENEME);
+router.post('/api/helps/details/upload/image',upload.array('files', 5),postHelp);
 
 
 export default router;

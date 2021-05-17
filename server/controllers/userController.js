@@ -19,8 +19,8 @@ export const getUser = async (req, res) => {
 //createUser is used to Register
 export const createUser = async (req, res) => {
     try {
-        const { userName, email, password, passwordVerify, firstName, lastName, modeOfContact, phone } = req.body;
-        const userType = req.params.userType;
+        const { userName, email, password, registrationType, firstName, lastName, modeOfContact, phone } = req.body;
+        const userType = registrationType;
         const existUserMail = await User.findOne({ email });
         if (existUserMail) {
             return res
@@ -29,6 +29,7 @@ export const createUser = async (req, res) => {
         }
         const existUserName = await User.findOne({ userName});
         if (existUserName){
+            console.log("amk bu kullanıcı var zaten YARRAK");
             return res
                     .status(400)
                     .json({errorMsg: "Bu User Name kayıtlıdır."});
