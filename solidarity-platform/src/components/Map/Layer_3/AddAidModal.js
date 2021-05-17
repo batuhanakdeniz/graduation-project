@@ -146,6 +146,7 @@ function AddAidModal({
 
 	async function onSubmit(values) {
 		console.log("logged User Data", loggedUserData.userName);
+		console.log(values);
 		if (!loggedUserData.userName) {
 			alert("Yardım Ekleyebilmek için giriş yapmalısınız !!");
 		} else {
@@ -167,7 +168,7 @@ function AddAidModal({
 			data.append("emergencyLevel", values.emergencyLevel);
 			data.append("category", values.category);
 			files.map((file) => data.append("files", file.file));
-
+			console.log(files);
 			try {
 				axios
 					.post(

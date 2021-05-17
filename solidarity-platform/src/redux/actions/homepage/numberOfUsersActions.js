@@ -28,7 +28,7 @@ export const fetchNumberOfUsers = () => {
 	return (dispatch) => {
 		dispatch(fetchNumberOfUsersRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details/`)
+			.get(`http://localhost:5000/home/api/user/number`)
 			.then((response) => {
 				const number = response.data;
 				dispatch(fetchNumberOfUsersSuccess(number));

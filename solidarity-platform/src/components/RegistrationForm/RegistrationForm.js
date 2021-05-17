@@ -56,7 +56,7 @@ function RegistrationForm() {
 		try {
 			setIsSubmitting(true);
 			await axios.post(
-				`http://localhost:5000/signup/${values.registrationType}`,
+				`http://localhost:5000/signup`,
 				values
 			);
 			dispatch(getLoggedIn());

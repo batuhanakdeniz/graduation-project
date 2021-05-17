@@ -85,11 +85,23 @@ export const getHelpBasics = async (req, res) => {
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
+				img: 1,
 			},
 			(err, helps) => {
 				if (err) throw err;
-				console.log(helps);
-				res.send(helps);
+				const sendHelp = {
+					_id: helps._id,
+					header: helps.header,
+					lat: helps.lat,
+					lng: helps.lng,
+					emergencyLevel: helps.emergencyLevel,
+					aidNo: helps.aidNo,
+					personName: helps.personName,
+					personLastName: helps.personLastName,
+					img: helps.img[0].filename,	
+				}
+				console.log(sendHelp);
+				res.send(sendHelp);
 			}
 		);
 	} catch (err) {
@@ -112,11 +124,23 @@ export const getHelpBasic = async (req, res) => {
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
+				img: 1,
 			},
 			(err, help) => {
 				if (err) throw err;
-				console.log(help);
-				res.send(help);
+				const sendHelp = {
+					_id: help._id,
+					header: help.header,
+					lat: help.lat,
+					lng: help.lng,
+					emergencyLevel: help.emergencyLevel,
+					aidNo: help.aidNo,
+					personName: help.personName,
+					personLastName: help.personLastName,
+					img: help.img[0].filename,	
+				}
+				console.log(sendHelp);
+				res.send(sendHelp);
 			}
 		);
 	} catch (err) {
@@ -154,8 +178,20 @@ export const getHelpDetail = async (req, res) => {
 			},
 			(err, help) => {
 				if (err) throw err;
-				console.log(help);
-				res.send(help);
+				const sendHelp = {
+					_id: help._id,
+					header: help.header,
+					lat: help.lat,
+					lng: help.lng,
+					emergencyLevel: help.emergencyLevel,
+					aidNo: help.aidNo,
+					personName:  help.personName,
+					personLastName: help.personLastName,
+					img: help.img[0].filename,
+					detail: help.detail,	
+				}
+				console.log(sendHelp);
+				res.send(sendHelp);
 			}
 		);
 	} catch (err) {
@@ -165,28 +201,24 @@ export const getHelpDetail = async (req, res) => {
 	}
 };
 
-export const postHelpImage = async (req, res) => {
-	try {
-	} catch (err) {
-		res.status(409).json({
-			message: err.message,
-		});
-	}
-};
-
-export const postHelpImageDENEME = async (req, res, next) => {
+export const postHelp = async (req, res, next) => {
 	try {
 		console.log(req.body);
 		const {
 			header,
 			langitude,
 			latitude,
-			emergencyLevel,
 			firstName,
 			lastName,
-			phone,
+			province,
+			town,
 			address,
+			buildingNo,
+			floor,
+			apartmentNo,
+			phone,
 			detail,
+			emergencyLevel,
 		} = req.body;
 		//DB İşlemleri
 		//Check is there any help near to 5m or 10m
@@ -203,19 +235,23 @@ export const postHelpImageDENEME = async (req, res, next) => {
 			});
 		}
 		//Base64 işlemleri yapılması gerekiyor
-		const newHelpImagePath = req.file.path;
+		const newHelpImage = req.files;
+		console.log("newHelpImage: ",newHelpImage);
 		const newHelp = new Help({
 			header: header,
 			lng: langitude,
 			lat: latitude,
-			aidNo: "default",
+			province: province,
+			town: town,
+			buildingNo: buildingNo,
+			floor: floor,
+			apartmentNo: apartmentNo,
 			personName: firstName,
 			personLastName: lastName,
 			phone: phone,
 			address: address,
 			emergencyLevel: emergencyLevel,
-			typeofhelp: "default",
-			img: newHelpImagePath,
+			img: newHelpImage,
 			detail: detail,
 		});
 

@@ -40,7 +40,7 @@ function AidPopUp({ aidId }) {
 					<div style={popupText}>
 						<Row>
 							<Col md={4} xs={12}>
-								<Image src="https://picsum.photos/200/300" fluid rounded />
+								<Image src={"http://localhost:5000/upload/" + popupContent.aidImgSrc} fluid rounded />
 							</Col>
 							<Col md={8} xs={12}>
 								Aid No: {popupContent.aidNo}
