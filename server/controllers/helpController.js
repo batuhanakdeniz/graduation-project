@@ -191,7 +191,7 @@ export const getHelpDetail = async (req, res) => {
 					aidNo: help.aidNo,
 					personName:  help.personName,
 					personLastName: help.personLastName,
-					img: help.img[0].filename,
+					img: help.img,
 					detail: help.detail,
 					comment: help.comment,	
 				}
