@@ -14,7 +14,7 @@ const initialState = {
 	aidName: "",
 	aidSurname: "",
 	aidEmercenyLevel: "",
-	img: "",
+	aidImgSrc: "",
 	error: "",
 };
 

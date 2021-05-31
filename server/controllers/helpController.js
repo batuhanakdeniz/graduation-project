@@ -98,8 +98,8 @@ export const getHelpBasics = async (req, res) => {
 					aidNo: helps.aidNo,
 					personName: helps.personName,
 					personLastName: helps.personLastName,
-					img: helps.img[0].filename,	
-				}
+					img: helps.img[0].filename,
+				};
 				console.log(sendHelp);
 				res.send(sendHelp);
 			}
@@ -137,8 +137,8 @@ export const getHelpBasic = async (req, res) => {
 					aidNo: help.aidNo,
 					personName: help.personName,
 					personLastName: help.personLastName,
-					img: help.img[0].filename,	
-				}
+					img: help.img[0].filename,
+				};
 				console.log(sendHelp);
 				res.send(sendHelp);
 			}
@@ -185,11 +185,11 @@ export const getHelpDetail = async (req, res) => {
 					lng: help.lng,
 					emergencyLevel: help.emergencyLevel,
 					aidNo: help.aidNo,
-					personName:  help.personName,
+					personName: help.personName,
 					personLastName: help.personLastName,
-					img: help.img[0].filename,
-					detail: help.detail,	
-				}
+					img: help.img,
+					detail: help.detail,
+				};
 				console.log(sendHelp);
 				res.send(sendHelp);
 			}
@@ -236,7 +236,7 @@ export const postHelp = async (req, res, next) => {
 		}
 		//Base64 işlemleri yapılması gerekiyor
 		const newHelpImage = req.files;
-		console.log("newHelpImage: ",newHelpImage);
+		console.log("newHelpImage: ", newHelpImage);
 		const newHelp = new Help({
 			header: header,
 			lng: langitude,

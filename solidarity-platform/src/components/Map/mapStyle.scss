@@ -50,3 +50,31 @@
 	border-bottom-color: cadetblue;
 	box-shadow: rgb(218, 162, 8);
 }
+
+.request-popup .leaflet-popup-content-wrapper {
+	border-radius: 0px;
+	min-width: max-content;
+}
+.popupContainer {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.popupHeader {
+	font-size: x-large;
+	font-weight: 800;
+	text-align: center;
+}
+.popupBody {
+	margin-top: 1rem;
+	img {
+		border-radius: 1rem;
+	}
+}
+.popupText {
+	margin-top: 1rem;
+	font-size: 16px;
+	.aidInfoHeader {
+		font-weight: 600;
+	}
+}
