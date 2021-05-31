@@ -1,5 +1,7 @@
 import Help from "../models/helpModel.js";
 import Image from "../models/imageModel.js";
+import User from "../models/userModel.js";
+
 import multer from "multer";
 import fs from "fs";
 export const getHelp = async (req, res) => {
@@ -16,7 +18,7 @@ export const createHelp = async (req, res) => {
 	const newHelps = new Help(req.body);
 	try {
 		await newHelps.save();
-		res.status(200).json(newHelps);
+		res.status(201).json(newHelps);
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -152,7 +154,8 @@ export const getHelpBasic = async (req, res) => {
 
 export const getHelpDetails = async (req, res) => {
 	try {
-		res.status(200);
+		const helps = await Help.find();
+		res.status(200).json(helps);
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -175,6 +178,7 @@ export const getHelpDetail = async (req, res) => {
 				personLastName: 1,
 				img: 1,
 				detail: 1,
+				comment: 1,
 			},
 			(err, help) => {
 				if (err) throw err;
@@ -188,7 +192,8 @@ export const getHelpDetail = async (req, res) => {
 					personName:  help.personName,
 					personLastName: help.personLastName,
 					img: help.img[0].filename,
-					detail: help.detail,	
+					detail: help.detail,
+					comment: help.comment,	
 				}
 				console.log(sendHelp);
 				res.send(sendHelp);
@@ -203,7 +208,7 @@ export const getHelpDetail = async (req, res) => {
 
 export const postHelp = async (req, res, next) => {
 	try {
-		console.log(req.body);
+		console.log("req.body: ", req.body);
 		const {
 			header,
 			langitude,
@@ -235,8 +240,14 @@ export const postHelp = async (req, res, next) => {
 			});
 		}
 		//Base64 işlemleri yapılması gerekiyor
-		const newHelpImage = req.files;
-		console.log("newHelpImage: ",newHelpImage);
+		const savedImages = [];
+		req.files.forEach((newImage) =>{
+			const savedImage = new Image(newImage);
+			savedImage.save().then(()=>{
+				console.log("Save oldu resimler...");
+			});
+			savedImages.push(savedImage);
+		});
 		const newHelp = new Help({
 			header: header,
 			lng: langitude,
@@ -251,16 +262,63 @@ export const postHelp = async (req, res, next) => {
 			phone: phone,
 			address: address,
 			emergencyLevel: emergencyLevel,
-			img: newHelpImage,
+			img: savedImages,
 			detail: detail,
 		});
 
 		const savedHelp = await newHelp.save();
 		console.log(savedHelp);
-		res.status(200).json("Yardım basarıyla yuklendi");
+		res.status(201).json("Yardım basarıyla yuklendi");
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
 		});
 	}
 };
+
+export const putHelp = async (req, res, next) =>{
+	try {
+		Help.findByIdAndUpdate(req.params.id,req.body,{new: true},
+			(err, help) => {
+					if (err) return res.status(404).send(err);
+					return res.status(200).send(help);
+				});
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+}
+export const deleteHelp = async (req, res, next) =>{
+	try {
+		Help.findByIdAndDelete(req.params.id,
+			(err, help) => {
+					if (err) return res.status(404).send(err);
+					const message = {
+						message: "Basarıyla silindi.",
+						id: help.id
+					}
+					return res.status(200).send(message);
+				});
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+}
+
+export const addComment = async (req,res, next) => {
+	try{
+		Help.findByIdAndUpdate(req.params.id,req.body,{new: true},
+			(err, help) => {
+					if (err) return res.status(404).send(err);
+					return res.status(200).send(help);
+				});
+	}
+	catch{
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+
+}
