@@ -19,8 +19,9 @@ export const getUser = async (req, res) => {
 //createUser is used to Register
 export const createUser = async (req, res) => {
     try {
-        const { userName, email, password, registrationType, firstName, lastName, modeOfContact, phone } = req.body;
+        const { userName, email, password, registrationType, firstName, lastName, phone } = req.body;
         const userType = registrationType;
+        console.log("registrationType: ", registrationType);
         const existUserMail = await User.findOne({ email });
         if (existUserMail) {
             return res
@@ -29,7 +30,6 @@ export const createUser = async (req, res) => {
         }
         const existUserName = await User.findOne({ userName});
         if (existUserName){
-            console.log("amk bu kullanıcı var zaten YARRAK");
             return res
                     .status(400)
                     .json({errorMsg: "Bu User Name kayıtlıdır."});
@@ -40,7 +40,7 @@ export const createUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            userName, email, passwordHash, firstName, lastName, modeOfContact, phone, userType
+            userName, email, passwordHash, firstName, lastName, phone, userType
         })
 
         const savedUser = await newUser.save();
@@ -146,4 +146,36 @@ export const getloggedUser = async (req, res) => {
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }
+}
+
+
+export const putUser = async (req, res, next) =>{
+	try {
+		User.findByIdAndUpdate(req.User,req.body,{new: true},
+			(err, help) => {
+					if (err) return res.status(404).send(err);
+					return res.status(200).send(help);
+				});
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+}
+export const deleteUser = async (req, res, next) =>{
+	try {
+		User.findByIdAndDelete(req.User,
+			(err, user) => {
+					if (err) return res.status(404).send(err);
+					const message = {
+						message: "Basarıyla silindi.",
+						id: user.id
+					}
+					return res.status(200).send(message);
+				});
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
 }

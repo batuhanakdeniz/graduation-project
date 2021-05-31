@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
+import Image from "./imageModel.js";
+import User from "./userModel.js";
+import Comment from "./commentModel.js";
+
 
 const helpSchema = mongoose.Schema({
+	_creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	header: String,
 	lng: String,
 	lat: String,
@@ -16,18 +21,10 @@ const helpSchema = mongoose.Schema({
 	emergencyLevel: String,
 	typeofhelp: String,
 	address: String,
-	img: [{
-		fieldname: String,
-		originalname: String,
-		encoding: String,
-		mimetype: String,
-		destination: String,
-		filename: String,
-		path: String,
-		size: Number
-	}],
+	img: [ Image.schema ],
 	detail: String,
 	phone: String,
+	comment: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 	createdAt: {
 		type: Date,
 		default: Date.now(),
@@ -37,3 +34,8 @@ const helpSchema = mongoose.Schema({
 const Help = mongoose.model("Help", helpSchema);
 
 export default Help;
+
+/**
+ * 	
+
+ */
