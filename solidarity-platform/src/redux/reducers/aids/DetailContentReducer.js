@@ -8,7 +8,7 @@ const initialState = {
 	loading: false,
 	aidId: undefined,
 	aidHeader: "",
-	aidImgSrc: "",
+	aidImgSrc: [],
 	comments: [
 		{
 			date: "1 Hour Ago",
