@@ -32,6 +32,9 @@ const colors = {
 	addAidWarning: {
 		500: "#db9704",
 	},
+	warningRed: {
+		500: "#ff0f0f",
+	},
 	components: {
 		Button: {
 			variants: {

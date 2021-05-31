@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DetailModal.scss";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -35,7 +35,7 @@ const ImageSection = styled.div`
 `;
 
 const InfoSection = styled.div`
-	min-height: 10rem;
+	min-height: 100%;
 	border-radius: 1rem;
 	background-color: rgba(69, 147, 86, 0.743636);
 	padding: 1rem;
@@ -61,8 +61,19 @@ const CommentSection = styled.div`
 `;
 
 function DetailModal({ isOpen, onOpen, onClose }) {
-	//const [images, setImages] = useState(null);
+	const [images, setImages] = useState([]);
 	const detailContent = useSelector((state) => state.detailContent);
+	useEffect(() => {
+		detailContent.aidImgSrc.map((img) =>
+			setImages((curr) => [
+				...curr,
+				{
+					original: `http://localhost:5000/upload/${img.filename}`,
+					thumbnail: `http://localhost:5000/upload/${img.filename}`,
+				},
+			])
+		);
+	}, [detailContent]);
 	return (
 		<div>
 			<Modal
@@ -86,12 +97,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 												<h1>Images</h1>
 											</Col>
 											<Col md={12}>
-												<Image
-													src={"http://localhost:5000/upload/" + detailContent.aidImgSrc}
-													alt="sefa"
-													fluid
-												/>
-												{/* <ImageGallery items={images} />; */}
+												<ImageGallery items={images} />;
 											</Col>
 										</Row>
 									</ImageSection>
