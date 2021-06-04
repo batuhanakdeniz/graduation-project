@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser"
 import helpRouter from "./routers/helpRouter.js";
 import userRouter from "./routers/userRouter.js";
 import homeRouter from "./routers/homeRouter.js";
+import rbacRouter from "./routers/rbacRouter.js";
 
 
 const app = express();  //express server yaratıldı
@@ -26,7 +27,7 @@ app.use("/upload",express.static('upload'));
 
 
 app.use("/home", homeRouter);
-
+app.use("/admin",rbacRouter);
 app.use("/map", helpRouter);
 app.use("/", userRouter);
 

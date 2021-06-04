@@ -28,6 +28,7 @@ export const createHelp = async (req, res) => {
 
 export const getHelpLocations = async (req, res) => {
 	try {
+		console.log("buraya geldim mi acaba");
 		Help.find(
 			{},
 			{
@@ -165,6 +166,10 @@ export const getHelpDetails = async (req, res) => {
 
 export const getHelpDetail = async (req, res) => {
 	try {
+		console.log("req.User: ", req.User);
+		console.log("req.userType: ", req.userType);
+
+		const user = User.findById(req.User);
 		Help.findById(
 			req.params.id,
 			{
@@ -208,7 +213,7 @@ export const getHelpDetail = async (req, res) => {
 
 export const postHelp = async (req, res, next) => {
 	try {
-		console.log("req.body: ", req.body);
+		console.log("req.User: ", req.User);
 		const {
 			header,
 			langitude,
@@ -240,10 +245,17 @@ export const postHelp = async (req, res, next) => {
 			});
 		}
 		//Base64 işlemleri yapılması gerekiyor
-
-		const newHelpImage = req.files;
-		console.log("newHelpImage: ", newHelpImage);
+		const savedImages = [];
+        req.files.forEach((newImage) =>{
+            const savedImage = new Image(newImage);
+            savedImage.save().then((err)=>{
+				if(!err)	return res.status(404).send(err)
+                console.log("Save oldu resimler...");
+            });
+            savedImages.push(savedImage);
+        });
 		const newHelp = new Help({
+			_creator: req.User,
 			header: header,
 			lng: langitude,
 			lat: latitude,
@@ -261,9 +273,9 @@ export const postHelp = async (req, res, next) => {
 			detail: detail,
 		});
 
-		const savedHelp = await newHelp.save();
-		console.log(savedHelp);
-		res.status(201).json("Yardım basarıyla yuklendi");
+		const savedHelp = await newHelp.save().then(()=>{
+			return res.status(201).send("Yardım başarıyla eklendi.");
+		});
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,

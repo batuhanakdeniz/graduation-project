@@ -7,7 +7,7 @@ import multer from "multer";
 export const getUser = async (req, res) => {
     try {
         //const users = await user.find();
-        res.status(200).json("Batu yazıyore");
+        res.status(200).json("");
     }
     catch (err) {
         res.status(404).json({
@@ -21,7 +21,6 @@ export const createUser = async (req, res) => {
     try {
         const { userName, email, password, registrationType, firstName, lastName, phone } = req.body;
         const userType = registrationType;
-        console.log("registrationType: ", registrationType);
         const existUserMail = await User.findOne({ email });
         if (existUserMail) {
             return res
@@ -48,6 +47,7 @@ export const createUser = async (req, res) => {
 
         const token = jwt.sign({
             User: savedUser._id,
+            userType: savedUser.userType
         },
             process.env.JWT_SECRET);
         //Cookie http-only send the token
@@ -90,6 +90,7 @@ export const loginUser = async (req, res) => {
 
         const token = jwt.sign({
             User: existingUser._id,
+            userType: existingUser.userType
         },
             process.env.JWT_SECRET);
         //Cookie http-only send the token
