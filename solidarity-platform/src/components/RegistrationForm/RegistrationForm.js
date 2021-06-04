@@ -14,10 +14,10 @@ function RegistrationForm() {
 	const dispatch = useDispatch();
 
 	const dropdownOptions = [
-		{ key: "Onaylanmamış Üye", value: "0" },
-		{ key: "Onaylanmış Üye", value: "1" },
-		{ key: "Yönetici Üye", value: "2" },
-		{ key: "Kuruma bağlı Üye", value: "3" },
+		{ key: "Onaylanmamış Üye", value: "Unconfirmed" },
+		{ key: "Onaylanmış Üye", value: "Confirmed" },
+		{ key: "Yönetici Üye", value: "Admin" },
+		{ key: "Kuruma bağlı Üye", value: "Corporate" },
 	];
 
 	const initialValues = {
