@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
@@ -6,18 +6,17 @@ import NavbarComponent from "./components/Navbar/NavbarComponent";
 import Footer from "./components/Footer/footer";
 import HomePage from "./components/Home Page/HomePage";
 import LoginPage from "./components/LoginForm/LoginForm";
-import YardimEkle from "./components/YardimEkle/YardimEkle";
 import MapComponent from "./components/Map/Layer_1/MapComponent";
 import DetailPage from "./components/Details/Detail";
 import AboutPage from "./components/About/about";
-import ProfilePage from "./components/Profile/ProfilePageComponent";
+import ProfileSelector from "./components/Profile/ProfileSelector";
 import ProfileEditPage from "./components/Profile/ProfileEditPage";
 import RegistrationTypesPage from "./components/RegistrationForm/RegistrationTypesPage";
 import NasilIsler from "./components/NasilIsler/NasilIsler";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getLoggedIn } from "./redux";
 axios.defaults.withCredentials = true; // ? always set true cookielere izin verir her zaman
 
@@ -70,17 +69,11 @@ function App() {
 							</Route>
 							<Route path="/map" exact component={MapComponent} />
 							<Route path="/about" exact component={AboutPage} />
-
 							<Route path="/signup" exact component={RegistrationTypesPage} />
-							<Route
-								path="/yardimekle/:lng/:lat"
-								exact
-								component={YardimEkle}
-							/>
-
-							<Route path="/profile" exact component={ProfilePage} />
+							<Route path="/profile" exact component={ProfileSelector} />
 							<Route path="/profile/edit" exact component={ProfileEditPage} />
 							<Route path="/map" exact component={MapComponent} />
+							<Route path="*" component={() => "404 Not FOund"} />
 						</Switch>
 					</DIVM>
 					<Footer />
