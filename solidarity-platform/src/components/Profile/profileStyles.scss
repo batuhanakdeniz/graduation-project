@@ -1,0 +1,146 @@
+.profilePage {
+	min-height: 80vh;
+}
+
+.userInfoColumn {
+	box-shadow: 10px 10px 32px -13px rgba(0, 0, 0, 0.75);
+	padding: 2rem;
+	border-radius: 0.5rem;
+	.columnItems {
+		margin-bottom: 2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.key {
+		background: gray;
+		span {
+			font-size: 1.6rem;
+			font-weight: 700;
+		}
+	}
+	.value {
+		margin-top: 1rem;
+		span {
+			font-size: 1.6rem;
+			font-weight: normal;
+		}
+	}
+}
+.adminPanel {
+	box-shadow: 10px 10px 32px -13px rgba(0, 0, 0, 0.75);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	height: 100%;
+}
+.pendingAids {
+	.pendingAid {
+		margin-bottom: 2rem;
+		padding: 0;
+	}
+}
+.pendingUsers {
+	margin-top: 2rem;
+	.pendingUser {
+		padding: 1rem;
+		margin-bottom: 1rem;
+		height: 10rem;
+		.columnItems {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			hr {
+				margin-top: 1rem;
+				border: 0.1rem solid rgb(0, 0, 0);
+				border-radius: 0.5rem;
+			}
+			.columnItem {
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				img {
+					height: 100%;
+				}
+			}
+			.key {
+				span {
+					font-size: 1.2rem;
+					font-weight: 700;
+				}
+			}
+			.value {
+				span {
+					font-size: 1.2rem;
+					font-weight: normal;
+				}
+			}
+			.buttonSection {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+	}
+}
+/***********All USERS**********************/
+.allUsersContainer {
+	margin-top: 2rem;
+	.pendingUser {
+		height: 6rem;
+		margin-bottom: 2rem;
+		hr {
+			margin-top: 1rem;
+			border: 0.1rem solid rgb(0, 0, 0);
+			border-radius: 0.5rem;
+		}
+		.columnItem {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			img {
+				height: 100%;
+			}
+			.key {
+				span {
+					font-size: 1.2rem;
+					font-weight: 700;
+				}
+			}
+			.value {
+				span {
+					font-size: 1.2rem;
+					font-weight: normal;
+				}
+			}
+			.buttonSection {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+		.selectType {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.key {
+				display: flex;
+				justify-content: space-evenly;
+				align-items: center;
+				span {
+					font-size: 1.2rem;
+					font-weight: 700;
+				}
+			}
+			.value {
+				span {
+					font-size: 1.2rem;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+}

@@ -17,7 +17,6 @@ function ProfileEditPage() {
 	return (
 		<div>
 			{console.log("loggedUserData", loggedUserData)}
-
 			<h1>{loggedUserData.firstName}</h1>
 			<h1>{loggedUserData.lastName}</h1>
 			<h1>Edit yapılacak alan</h1>

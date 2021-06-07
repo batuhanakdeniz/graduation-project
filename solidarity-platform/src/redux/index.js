@@ -9,3 +9,7 @@ export { setUserLocation } from "./actions/user/UserLocationActions";
 export { fetchNumberOfAids } from "./actions/homepage/numberOfAidsActions";
 export { fetchNumberOfHelpedAids } from "./actions/homepage/numberOfHelpedAidsActions";
 export { fetchNumberOfUsers } from "./actions/homepage/numberOfUsersActions";
+export { fetchPendingAids } from "./actions/admin/PendingAidsAction";
+export { fetchPendingUsers } from "./actions/admin/PendingUsersToConfirmAction";
+export { fetchAllUsers } from "./actions/admin/AllUsersAction";
+export { fetchAllAids } from "./actions/admin/AllAidsAction";
