@@ -4,16 +4,29 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 
 //getUser returns just a string
-export const getUser = async (req, res) => {
+export const getAllUser = async (req, res) => {
     try {
-        //const users = await user.find();
-        res.status(200).json("");
-    }
-    catch (err) {
-        res.status(404).json({
-            message: err.message,
-        });
-    }
+		User.find(
+			{},
+			{
+				_id: 1,
+				userName: 1,
+				userName: 1,
+                firstName: 1,
+                lastName: 1,
+                phone: 1,
+                userType: 1
+            },
+			(err, users) => {
+				if (err) throw err;
+				res.send(users);
+			}
+		);
+	} catch (err) {
+		res.status(409).json({
+			message: err.message,
+		});
+	}
 };
 
 //createUser is used to Register
