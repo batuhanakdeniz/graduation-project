@@ -1,7 +1,7 @@
 import Help from "../models/helpModel.js";
 import Image from "../models/imageModel.js";
 import User from "../models/userModel.js";
-
+import sharp from "sharp";
 import multer from "multer";
 import fs from "fs";
 export const getHelp = async (req, res) => {
@@ -88,23 +88,12 @@ export const getHelpBasics = async (req, res) => {
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
-				img: 1,
+				img: { $slice: 1},
 			},
 			(err, helps) => {
 				if (err) throw err;
-				const sendHelp = {
-					_id: helps._id,
-					header: helps.header,
-					lat: helps.lat,
-					lng: helps.lng,
-					emergencyLevel: helps.emergencyLevel,
-					aidNo: helps.aidNo,
-					personName: helps.personName,
-					personLastName: helps.personLastName,
-					img: helps.img[0].filename,
-				};
-				console.log(sendHelp);
-				res.send(sendHelp);
+				console.log(helps.img);
+				res.send(helps);
 			}
 		);
 	} catch (err) {
@@ -246,7 +235,13 @@ export const postHelp = async (req, res, next) => {
 		}
 		//Base64 işlemleri yapılması gerekiyor
 		const savedImages = [];
+		console.log("req.files: ",req.files);
         req.files.forEach((newImage) =>{
+			console.log("Image: ",newImage);
+			sharp(newImage.path)
+				.resize(600,900).toFormat('jpeg')
+				.jpeg({ quality: 80}).toFile(newImage.path);
+			console.log("newImage: ",newImage);
             const savedImage = new Image(newImage);
             savedImage.save().then((err)=>{
 				if(!err)	return res.status(404).send(err)
