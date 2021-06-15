@@ -7,11 +7,10 @@ export async function auth (req, res, next){
     try {
         //console.log("************************************\nreq.route.path: ",req.route.path);                     
         const token = req.cookies.token;
+        console.log(token);
         if (!token || token==undefined) return res.status(401).send();
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.User = verified.User;
-        //console.log("************************************\nreq.User: ",req.User);   
-        //console.log("************************************\nuser type: ", verified.userType);                                                        
+        req.User = verified.User;                                                      
         var authorized = false;
         const resource = await Resource.find({api_path: req.route.path},{api_path: 1,api_method: 1,authorized_Roles: 1});
         console.log(resource[0]);
@@ -29,10 +28,10 @@ export async function auth (req, res, next){
                     authorized=true;}
             }
             if(authorized===true)  next();  
-            else res.status(401).send();
+            else res.status(405).send();
         }
     } catch (error) {
-        res.status(401).json({
+        res.status(406).json({
             errorMessage: "Yetkiniz bulunmamaktadır.",
         })
     }

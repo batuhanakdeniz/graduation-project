@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllUser, createUser, loginUser, getloggedIn, getloggedOut, getloggedUser, putUser, deleteUser } from "../controllers/userController.js";
+import { getAllUser, createUser, loginUser, getloggedIn, getloggedOut, getloggedUser, putUser, deleteUser, verifyUser } from "../controllers/userController.js";
 import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -13,5 +13,5 @@ router.get('/api/loggedOut', getloggedOut);
 router.get('/api/loggedUser/update/:id', putUser);
 router.get('/api/loggedUser/delete/:id', deleteUser);
 //router.get('/profile/:id', getUserProfile);
-
+router.get('/api/auth/verify/:confirmationCode',verifyUser);
 export default router;

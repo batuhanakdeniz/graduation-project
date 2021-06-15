@@ -1,7 +1,6 @@
 import Help from "../models/helpModel.js";
 import Image from "../models/imageModel.js";
 import User from "../models/userModel.js";
-import sharp from "sharp";
 import multer from "multer";
 import fs from "fs";
 export const getHelp = async (req, res) => {
@@ -238,12 +237,15 @@ export const postHelp = async (req, res, next) => {
 		console.log("req.files: ",req.files);
         req.files.forEach((newImage) =>{
 			console.log("Image: ",newImage);
+			/*
 			sharp(newImage.path)
 				.resize(600,900).toFormat('jpeg')
 				.jpeg({ quality: 80}).toFile(newImage.path);
+			*/
 			console.log("newImage: ",newImage);
             const savedImage = new Image(newImage);
-            savedImage.save().then((err)=>{
+            
+			savedImage.save().then((err)=>{
 				if(!err)	return res.status(404).send(err)
                 console.log("Save oldu resimler...");
             });

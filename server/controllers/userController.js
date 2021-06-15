@@ -2,7 +2,9 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
-
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+import {sendConfirmationEmail} from "../config/mailer.js";
 //getUser returns just a string
 export const getAllUser = async (req, res) => {
     try {
@@ -50,37 +52,37 @@ export const createUser = async (req, res) => {
         //Hashing password
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
-
+        dotenv.config(); 
+        const confirmationCode = jwt.sign({email: email}, process.env.JWT_SECRET );
+        console.log(confirmationCode);
         const newUser = new User({
-            userName, email, passwordHash, firstName, lastName, phone, userType
+            userName, email, passwordHash, firstName, lastName, phone, userType, confirmationCode
         })
 
-        const savedUser = await newUser.save();
+        newUser.save((err)=>{
+            if(err){
+                console.log(err);
+                res.status(401).send({message: err});
+                return;
+            }
+            res.send({message: "Hesabınız oluşturulmuştur. Lütfen doğrulama için emailinizi kontrol ediniz.",});
+            sendConfirmationEmail(
+                newUser.userName,
+                newUser.email,
+                newUser.confirmationCode
+            )
+        });
         //Sign the token
-
-        const token = jwt.sign({
-            User: savedUser._id,
-            userType: savedUser.userType
-        },
-            process.env.JWT_SECRET);
-        //Cookie http-only send the token
-
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
-        }).send();
-
-        //res.status(200).json("Kayıt basarıyla gerceklesti.");
     }
     catch (err) {
+        console.log("bok mu var buraya geldim.");
         res.status(409).json({
             message: err.message,
         });
     }
 };
 //Login 
-export const loginUser = async (req, res) => {
+export const loginUser = async (req, res,next) => {
     try {
         const { email, password } = req.body;
 
@@ -100,12 +102,16 @@ export const loginUser = async (req, res) => {
                 message: "Wrong Email or password",
             });
         }
-
+        if(existingUser.status != "Active"){
+            return res.status(401).send({message: "Hesabınız henüz onaylanmamış. Lütfen emailinizi kontrol ediniz."});
+        }
         const token = jwt.sign({
             User: existingUser._id,
             userType: existingUser.userType
         },
-            process.env.JWT_SECRET);
+            process.env.JWT_SECRET,{
+                expiresIn: 86400
+            });
         //Cookie http-only send the token
 
         res.cookie("token", token, {
@@ -122,7 +128,7 @@ export const loginUser = async (req, res) => {
 };
 //LoggedIn and Logut will be here...
 
-export const getloggedIn = async (req, res) => {
+export const getloggedIn = async (req, res,next) => {
     try {
         const token = req.cookies.token;
         if (!token) return res.json(false);
@@ -133,7 +139,7 @@ export const getloggedIn = async (req, res) => {
         res.json(false);
     }
 };
-export const getloggedOut = async (req, res) => {
+export const getloggedOut = async (req, res,next) => {
     res
         .cookie("token", "", {
             httpOnly: true,
@@ -145,7 +151,7 @@ export const getloggedOut = async (req, res) => {
 };
 
 
-export const getloggedUser = async (req, res) => {
+export const getloggedUser = async (req, res,next) => {
     try {
         const user = await User.findById(req.User);
         if (!user) return res.json(false);
@@ -192,4 +198,26 @@ export const deleteUser = async (req, res, next) =>{
 			message: err.message,
 		});
 	}
+}
+
+export const verifyUser = async(req,res,next) =>{
+    User.findOne({
+        confirmationCode: req.params.confirmationCode
+    }).then((user)=>{
+        if(!user){
+            res.status(404).send({message: "Kullanıcı bulunamadı."});
+        }
+        user.status = "Active";
+        user.save((err)=>{
+            if(err){
+                res.status(500).send({message: err});
+                return;
+            }
+            res.status(200).send({message: "Kullanıcınız onaylanmıştır."});
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+        })
+
 }
