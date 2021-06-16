@@ -1,19 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedUserData } from "../../redux";
 import AdminProfilePage from "./AdminProfilePage";
 import ConfirmedUserProfilePage from "./ConfirmedUserProfilePage";
+import UncorfimedUserProfilePage from "./UncorfimedUserProfilePage";
 
 function ProfileSelector() {
 	const isLoggedIn = useSelector((state) => state.userData.isLoggedIn);
-	const memberType = "admin";
-	//const memberType = "confirmed";
+	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getLoggedUserData());
+		// eslint-disable-next-line
+	}, []);
 	return (
 		<>
 			{isLoggedIn !== undefined && isLoggedIn ? (
-				memberType === "admin" ? (
+				loggedUserData.userType === "Admin" ? (
 					<AdminProfilePage />
-				) : memberType === "confirmed" ? (
+				) : loggedUserData.userType === "Confirmed" ? (
 					<ConfirmedUserProfilePage />
+				) : loggedUserData.userType === "Unconfirmed" ? (
+					<UncorfimedUserProfilePage />
 				) : (
 					<h1>Sayfaya Ulaşılamıyor!!!!</h1>
 				)

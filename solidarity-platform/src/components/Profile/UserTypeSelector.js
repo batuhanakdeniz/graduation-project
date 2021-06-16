@@ -8,10 +8,10 @@ import { Col, Row } from "react-bootstrap";
 
 function UserTypeSelector({ user, setUserTypeEditMode }) {
 	const dropdownOptions = [
-		{ key: "Confirmed", value: "confirmed" },
-		{ key: "Unconfirmed", value: "unconfirmed" },
-		{ key: "Admin", value: "cdmin" },
-		{ key: "Cooparate", value: "cooparate" },
+		{ key: "Onaylanmış Üye", value: "Confirmed" },
+		{ key: "Onaylanmamış Üye", value: "Unconfirmed" },
+		{ key: "Yönetici Üye", value: "Admin" },
+		{ key: "Kuruma bağlı Üye", value: "Cooparate" },
 	];
 	const initialValues = {
 		userType: "",
