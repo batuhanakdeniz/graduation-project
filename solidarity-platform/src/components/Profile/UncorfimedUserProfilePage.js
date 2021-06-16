@@ -5,7 +5,8 @@ import { getLoggedUserData } from "../../redux";
 import UserInfoColumn from "./UserInfoColumn";
 import "./profileStyles.scss";
 import AdminPanel from "./AdminPanel";
-function AdminProfilePage() {
+import UnconfirmedUserPanel from "./UnconfirmedUserPanel";
+function UncorfimedUserProfilePage() {
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -21,11 +22,11 @@ function AdminProfilePage() {
 					<UserInfoColumn loggedUserData={loggedUserData} />
 				</Col>
 				<Col md={9}>
-					<AdminPanel />
+					<UnconfirmedUserPanel />
 				</Col>
 			</Row>
 		</div>
 	);
 }
 
-export default AdminProfilePage;
+export default UncorfimedUserProfilePage;

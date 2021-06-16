@@ -6,24 +6,46 @@
 	box-shadow: 10px 10px 32px -13px rgba(0, 0, 0, 0.75);
 	padding: 2rem;
 	border-radius: 0.5rem;
+	.userProfilPicture {
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			height: 100%;
+		}
+	}
 	.columnItems {
 		margin-bottom: 2rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-	.key {
-		background: gray;
-		span {
-			font-size: 1.6rem;
-			font-weight: 700;
+
+		.key {
+			background: gray;
+			border-radius: 0.5rem;
+			padding: 0.5rem 1rem;
+			span {
+				font-size: 1.6rem;
+				font-weight: 700;
+			}
 		}
-	}
-	.value {
-		margin-top: 1rem;
-		span {
-			font-size: 1.6rem;
-			font-weight: normal;
+		.value {
+			margin-top: 1rem;
+			span {
+				font-size: 1.6rem;
+				font-weight: normal;
+			}
+		}
+		.applicationSection {
+			background: rgba(56, 133, 54, 0.527);
+			border-radius: 0.5rem;
+			margin-top: 3rem;
+			padding: 0.5rem 1rem;
+			span {
+				font-size: 1.3rem;
+				font-weight: 700;
+			}
 		}
 	}
 }
@@ -37,6 +59,27 @@
 	.pendingAid {
 		margin-bottom: 2rem;
 		padding: 0;
+		.aidImg {
+			padding-left: 2rem;
+			padding-right: 0rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 20rem;
+			.image-gallery-slide img {
+				height: 100%;
+				width: 100%;
+			}
+		}
+		.value {
+		}
+		.key {
+			font-size: 1rem;
+			font-weight: 800;
+		}
+		.property {
+			margin-bottom: 1rem;
+		}
 	}
 }
 .pendingUsers {
@@ -141,6 +184,29 @@
 					font-weight: normal;
 				}
 			}
+		}
+	}
+}
+
+.allAidsContainer {
+	margin-bottom: 1rem;
+	.aidItem {
+		height: 25rem;
+		.key {
+			font-size: 1rem;
+			font-weight: 800;
+		}
+		.value {
+			margin-left: 1rem;
+		}
+		.aidImg {
+			height: 15rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.property {
+			margin-bottom: 1rem;
 		}
 	}
 }

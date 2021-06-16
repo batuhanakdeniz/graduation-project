@@ -30,7 +30,6 @@ export const fetchAllAids = (aidId) => {
 			.get(`http://localhost:5000/map/api/helps/basics`)
 			.then((response) => {
 				const allAids = response.data;
-				console.log(allAids);
 				dispatch(fetchAllAidsSuccess(allAids));
 			})
 			.catch((error) => {
