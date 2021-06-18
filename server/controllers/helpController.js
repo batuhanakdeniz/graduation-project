@@ -2,7 +2,6 @@ import Help from "../models/helpModel.js";
 import Image from "../models/imageModel.js";
 import User from "../models/userModel.js";
 import multer from "multer";
-import fs from "fs";
 export const getHelp = async (req, res) => {
 	try {
 		const helps = await Help.find();
