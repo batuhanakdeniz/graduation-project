@@ -1,15 +1,23 @@
 import { Button } from "@chakra-ui/button";
 import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, ListGroupItem, ListGroup } from "react-bootstrap";
 import { Feed, Icon } from "semantic-ui-react";
 import AddComment from "../Layer_6/AddComment";
 
 function CommentComponent({ Comments, aidID }) {
 	const [displayAddComment, setDisplayAddComment] = useState(false);
 	return (
-		<Row>
-			<Col md={12}>
-				<h1>Comments</h1>
+		<Row style={{ padding: "1rem", marginTop: "1rem" }}>
+			<Col
+				md={12}
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					marginBottom: "1rem",
+				}}
+			>
+				<span style={{ fontSize: "1.8rem", fontWeight: "800" }}>Yorumlar</span>
 			</Col>
 			<Col md={12}>
 				<Feed>
@@ -49,12 +57,10 @@ function CommentComponent({ Comments, aidID }) {
 				{!displayAddComment ? (
 					<Button
 						onClick={() => setDisplayAddComment(!displayAddComment)}
-						ml="3rem"
-						mt="0.5rem"
-						variant="ghost"
-						textColor="blue"
-						textDecoration="underline"
-						_hover={{ background: "green.700" }}
+						colorScheme="teal"
+						size="lg"
+						isFullWidth
+						_hover={{ background: "teal.700" }}
 					>
 						Yorum Ekle
 					</Button>
