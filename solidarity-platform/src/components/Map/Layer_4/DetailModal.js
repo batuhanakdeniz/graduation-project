@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DetailModal.scss";
-import { Container, Row, Col } from "react-bootstrap";
-import styled from "styled-components";
+import { Row, Col, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import ImageGallery from "react-image-gallery";
 import { useSelector } from "react-redux";
 import {
@@ -13,52 +12,29 @@ import {
 	ModalFooter,
 	ModalHeader,
 	ModalOverlay,
-	Divider,
 } from "@chakra-ui/react";
 import CommentComponent from "../Layer_5/CommentComponent";
 
-const ImageSection = styled.div`
-	min-height: 10rem;
-	height: 100%;
-	border-radius: 1rem;
-	background-color: rgba(69, 147, 86, 0.743636);
-	padding: 1rem;
-	img {
-		margin-bottom: 1rem;
-	}
-	h1 {
-		font-size: 1.5rem;
-		text-align: center;
-		margin-bottom: 1rem;
-		font-weight: bold;
-	}
-`;
-
-const InfoSection = styled.div`
-	min-height: 100%;
-	border-radius: 1rem;
-	background-color: rgba(69, 147, 86, 0.743636);
-	padding: 1rem;
-	h1 {
-		font-size: 1.5rem;
-		text-align: center;
-		margin-bottom: 1rem;
-		font-weight: bold;
-	}
-`;
-const CommentSection = styled.div`
-	min-height: 10rem;
-	border-radius: 1rem;
-	background-color: rgba(69, 147, 86, 0.743636);
-	padding: 2rem;
-	h1 {
-		font-size: 1.5rem;
-		text-align: center;
-		margin-bottom: 1rem;
-		font-weight: bold;
-	}
-	margin-bottom: 1rem;
-`;
+import Rating from "@material-ui/lab/Rating";
+import { makeStyles } from "@material-ui/core/styles";
+const labels = {
+	0.5: "Normal",
+	1: "Normal",
+	1.5: "Normal",
+	2: "Normal",
+	2.5: "Normal",
+	3: "Acil",
+	3.5: "Acil",
+	4: "Acil",
+	4.5: "Çok Acil",
+	5: "Çok Acil",
+};
+const useStyles = makeStyles({
+	root: {
+		display: "flex",
+		alignItems: "center",
+	},
+});
 
 function DetailModal({ isOpen, onOpen, onClose }) {
 	const [images, setImages] = useState([]);
@@ -66,7 +42,6 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 	useEffect(() => {
 		detailContent.aidImgSrc.map((img) =>
 			setImages((curr) => [
-				...curr,
 				{
 					original: `http://localhost:5000/upload/${img.filename}`,
 					thumbnail: `http://localhost:5000/upload/${img.filename}`,
@@ -74,6 +49,14 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 			])
 		);
 	}, [detailContent]);
+	const [value, setValue] = React.useState(2);
+	const [hover, setHover] = React.useState(-1);
+	const [voteDisplay, setVoteDisplay] = useState(false);
+	const voteSubmitHandler = () => {
+		setVoteDisplay(!voteDisplay);
+		console.log("value", value);
+	};
+	const classes = useStyles();
 	return (
 		<div>
 			<Modal
@@ -87,51 +70,179 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 					<ModalHeader>Detay</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						<Container>
-							<br />
-							<Row xs={1} md={2} style={{ height: "100%" }}>
-								<Col>
-									<ImageSection>
-										<Row>
-											<Col md={12}>
-												<h1>Images</h1>
-											</Col>
-											<Col md={12}>
-												<ImageGallery items={images} />;
-											</Col>
-										</Row>
-									</ImageSection>
-								</Col>
-								<Col>
-									<InfoSection>
-										<h1> Aid Header : {detailContent.aidHeader} </h1>
-										<p> Aid No : {detailContent.aidNo} </p>
-										<p> Person Name : {detailContent.aidName} </p>
-										<p> Person Surname : {detailContent.aidSurname} </p>
-										<p>
-											{" "}
-											Person EmergencyLevel : {
-												detailContent.aidEmercenyLevel
-											}{" "}
-										</p>
-										<Divider />
-										<h1> Aid detail :</h1>
-										<p>{detailContent.aidDetail} </p>
-									</InfoSection>
-								</Col>
-							</Row>
-							<br />
-							<Row>
-								<Col>
-									<CommentSection>
-										<CommentComponent
-											Comments={detailContent.comments}
-											aidID={detailContent.aidId}
-										/>
-									</CommentSection>
-								</Col>
-							</Row>
-						</Container>
+						<Card>
+							<Card.Body className="detailCard">
+								<Row>
+									<Col md={12} className="text-center">
+										<Card.Title style={{ fontSize: "xx-large" }}>
+											{detailContent.aidHeader}
+										</Card.Title>
+									</Col>
+								</Row>
+								<Row>
+									<Col
+										md={6}
+										style={{
+											display: "flex",
+											justifyContent: "center",
+											alignItems: "center",
+										}}
+									>
+										<ImageGallery items={images} />;
+									</Col>
+									<Col md={6}>
+										<ListGroup className="list-group-flush">
+											<ListGroupItem>
+												<strong>Yardım Numarası : </strong>
+												{detailContent.aidNo}
+											</ListGroupItem>
+											<ListGroupItem>
+												<strong>Adı : </strong>
+												{detailContent.aidName}
+											</ListGroupItem>
+											<ListGroupItem>
+												<strong>Soyadı : </strong>
+												{detailContent.aidSurname}
+											</ListGroupItem>
+											<ListGroupItem>
+												<Row>
+													{!voteDisplay ? (
+														<Col md={12}>
+															<strong>Önem Derecesi </strong>
+														</Col>
+													) : (
+														<Col md={12}>
+															<strong>Lütfen Oylayın </strong>
+														</Col>
+													)}
+													{!voteDisplay && detailContent ? (
+														<Col md={12}>
+															<div className={classes.root}>
+																<Row
+																	style={{
+																		display: "flex",
+																		alignItems: "center",
+																	}}
+																>
+																	<Col md={8}>
+																		<Rating
+																			name="hover-feedback"
+																			value={
+																				detailContent.aidEmercenyLevel
+																					? detailContent.aidEmercenyLevel
+																					: 5
+																			}
+																			precision={0.5}
+																			readOnly
+																		/>
+																	</Col>
+																	{value !== null && (
+																		<Col md={4}>
+																			{detailContent.aidEmercenyLevel
+																				? labels[detailContent.aidEmercenyLevel]
+																				: labels[5]}
+																		</Col>
+																	)}
+																</Row>
+															</div>
+														</Col>
+													) : null}
+													{!voteDisplay && (
+														<Col md={4}>
+															<Button
+																colorScheme="teal"
+																onClick={() => setVoteDisplay(!voteDisplay)}
+																size="sm"
+															>
+																Oyla
+															</Button>
+														</Col>
+													)}
+													{voteDisplay && (
+														<div className={classes.root}>
+															<Col md={12}>
+																<Row
+																	style={{
+																		display: "flex",
+																		alignItems: "center",
+																	}}
+																>
+																	<Col md={8}>
+																		<Rating
+																			name="hover-feedback"
+																			value={value}
+																			precision={0.5}
+																			onChange={(event, newValue) => {
+																				setValue(newValue);
+																			}}
+																			onChangeActive={(event, newHover) => {
+																				setHover(newHover);
+																			}}
+																		/>
+																	</Col>
+																	{value !== null && (
+																		<Col md={4}>
+																			{
+																				labels[
+																					hover !== -1
+																						? hover
+																						: detailContent.aidEmercenyLevel
+																				]
+																			}
+																		</Col>
+																	)}
+																	<Col md={11}>
+																		<Button
+																			colorScheme="teal"
+																			onClick={voteSubmitHandler}
+																			size="sm"
+																			isFullWidth
+																		>
+																			Onayla ve Kapat
+																		</Button>
+																	</Col>
+																	<Col md={1}>
+																		<Button
+																			colorScheme="warningRed"
+																			onClick={() =>
+																				setVoteDisplay(!voteDisplay)
+																			}
+																			size="sm"
+																		>
+																			X
+																		</Button>
+																	</Col>
+																</Row>
+															</Col>
+														</div>
+													)}
+												</Row>
+											</ListGroupItem>
+											<ListGroupItem>
+												<strong>Detay : </strong>
+												Lorem Ipsum is simply dummy text of the printing and
+												typesetting industry. Lorem Ipsum has been the
+												industry's standard dummy text ever since the 1500s,
+												when an unknown printer took a galley of type and
+												scrambled it to make a type specimen book. It has
+												survived not only five centuries, but also the leap into
+												electronic typesetting, remaining essentially unchanged.
+												It was popularised in the 1960s with the release of
+												Letraset sheets containing Lorem Ipsum passages, and
+												more recently with desktop publishing software like
+												Aldus PageMaker including versions of Lorem Ipsum.
+											</ListGroupItem>
+										</ListGroup>
+									</Col>
+								</Row>
+							</Card.Body>
+							<Card.Body>
+								<CommentComponent
+									Comments={detailContent.comments}
+									aidID={detailContent.aidId}
+								/>
+							</Card.Body>
+						</Card>
 					</ModalBody>
 					<ModalFooter>
 						<Button onClick={onClose}>Close</Button>
@@ -143,3 +254,16 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 }
 
 export default DetailModal;
+
+/* 
+
+*/
+
+/*
+
+*/
+
+/*
+
+
+*/

@@ -8,6 +8,7 @@ import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUplo
 import { fetchDetailContent, getLoggedIn } from "../../../redux";
 import { Progress } from "@chakra-ui/progress";
 import axios from "axios";
+import { Col, Row } from "react-bootstrap";
 
 function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 	const dispatch = useDispatch();
@@ -34,7 +35,7 @@ function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 			alert("Yorum yapabilmek için giriş yapmalısınız !!");
 		} else {
 			const data = new FormData();
-			data.append("comment", values.comment);
+			data.append("extraText", values.comment);
 			data.append("aidID", aidID);
 
 			files.map((file) => data.append("files", file.file));
@@ -95,31 +96,44 @@ function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 									setErrorFiles={setErrorFiles}
 								/>
 							</div>
-							<Button
-								color="teal"
-								isFullWidth
-								loadingText="Submitting"
-								isLoading={progress !== 0 && progress !== 100 ? true : false}
-								disabled={!isValid || files.length === 0 || errorFiles.length}
-								type="submit"
+							<Row
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
 							>
-								Yorum Ekle
-							</Button>
-							{progress !== 0 && progress !== 100 ? (
-								<Progress mb="1rem" hasStripe value={progress} />
-							) : null}
-							<Button
-								variant="outline"
-								bg="green.900"
-								textColor="white"
-								mt="1rem"
-								ml="1rem"
-								type="submit"
-								_hover={{ background: "green.700" }}
-								onClick={() => setDisplayAddComment(!displayAddComment)}
-							>
-								İptal
-							</Button>
+								<Col md={11}>
+									<Button
+										colorScheme="teal"
+										isFullWidth
+										size="lg"
+										loadingText="Submitting"
+										isLoading={
+											progress !== 0 && progress !== 100 ? true : false
+										}
+										disabled={
+											!isValid || files.length === 0 || errorFiles.length
+										}
+										type="submit"
+									>
+										Yorum Ekle
+									</Button>
+									{progress !== 0 && progress !== 100 ? (
+										<Progress mb="1rem" hasStripe value={progress} />
+									) : null}
+								</Col>
+								<Col md={1}>
+									<Button
+										colorScheme="warningRed"
+										size="lg"
+										_hover={{ background: "red.900" }}
+										onClick={() => setDisplayAddComment(!displayAddComment)}
+									>
+										X
+									</Button>
+								</Col>
+							</Row>
 						</Form>
 					</div>
 				);
