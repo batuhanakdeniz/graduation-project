@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosastic from "mongoosastic";
 
 const userSchema = mongoose.Schema({
     email: {type: String, required: true},
@@ -20,6 +21,8 @@ const userSchema = mongoose.Schema({
 },{
     timestamp: true
 });
+
+userSchema.plugin(mongoosastic);
 
 const User = mongoose.model('User', userSchema);
 export default User;

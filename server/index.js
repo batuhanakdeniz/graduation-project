@@ -7,7 +7,7 @@ import helpRouter from "./routers/helpRouter.js";
 import userRouter from "./routers/userRouter.js";
 import homeRouter from "./routers/homeRouter.js";
 import rbacRouter from "./routers/rbacRouter.js";
-
+//import elasticSearch from "./services/elasticService.js"
 
 const app = express();  //express server yaratıldı
 dotenv.config();        //process.env içine .env içindeki değerleri atar

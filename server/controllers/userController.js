@@ -6,6 +6,34 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import {sendConfirmationEmail} from "../config/mailer.js";
 //getUser returns just a string
+
+
+User.createMapping((err, mapping)=>{
+	if(err){
+		console.log("error creating mapping");
+		console.log(err);
+	}else{
+		console.log("Mapping:");
+		console.log(mapping);
+	}
+})
+
+var stream = User.synchronize();
+var count = 0;
+
+stream.on('data', function(){
+	count++;
+})
+
+stream.on('close', function(){
+	console.log("Indexed "+ count + " documents");
+})
+
+stream.on('error', function(err){
+	console.log(err);
+})
+
+
 export const getAllUser = async (req, res) => {
     try {
 		User.find(

@@ -3,6 +3,41 @@ import Image from "../models/imageModel.js";
 import User from "../models/userModel.js";
 import multer from "multer";
 import fs from "fs";
+import mongoosastic from "mongoosastic";
+const mapping = {
+	proporties: {
+		address:"text",
+		detail: "text",
+		header: "text",
+		personName: "text",
+		personLastName: "text",
+	}
+}
+Help.createMapping((err, mapping)=>{
+	if(err){
+		console.log("error creating mapping");
+		console.log(err);
+	}else{
+		console.log("Mapping:");
+		console.log(mapping);
+	}
+})
+
+var stream = Help.synchronize();
+var count = 0;
+
+stream.on('data', function(){
+	count++;
+})
+
+stream.on('close', function(){
+	console.log("Indexed "+ count + " documents");
+})
+
+stream.on('error', function(err){
+	console.log(err);
+})
+
 export const getHelp = async (req, res) => {
 	try {
 		const helps = await Help.find();

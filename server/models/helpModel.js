@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Image from "./imageModel.js";
 import User from "./userModel.js";
 import Comment from "./commentModel.js";
-
+import mongoosastic from "mongoosastic";
 
 const helpSchema = mongoose.Schema({
 	_creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -20,7 +20,6 @@ const helpSchema = mongoose.Schema({
 	apartmentNo: String,
 	emergencyLevel: String,
 	typeofhelp: String,
-	address: String,
 	img: [ Image.schema ],
 	detail: String,
 	phone: String,
@@ -30,6 +29,8 @@ const helpSchema = mongoose.Schema({
 		default: Date.now(),
 	},
 });
+
+helpSchema.plugin(mongoosastic);
 
 const Help = mongoose.model("Help", helpSchema);
 

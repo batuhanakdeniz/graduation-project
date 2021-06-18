@@ -1,0 +1,20 @@
+{
+    "mail": "socialaidplatform@gmail.com",
+    "pass": "Batu!1234",
+    "elasticsearch": {
+        "url": "http://localhost:",
+        "port": "9200",
+        "elasticsearchIndices": {
+            "HELPS":{
+                "index": "helps",
+                "type": "HELPS",
+                "collectionName": "helps"
+            },
+            "USERS":{
+                "index": "users",
+                "type": "USERS",
+                "collectionName": "users"
+            }
+        }
+    }
+}
