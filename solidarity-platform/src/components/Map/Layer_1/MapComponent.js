@@ -1,29 +1,19 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import L from "leaflet";
-import {
-	MapContainer,
-	TileLayer,
-	LayersControl,
-	LayerGroup,
-	MapConsumer,
-	ZoomControl,
-	useMap,
-	useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import "../mapStyle.scss";
 import addAidMarker from "../assets/free-map-marker-icon-blue.png";
 
 import { Col, Row } from "react-bootstrap";
 import LocationMarker from "../Layer_2/LocationMarker";
 import ShowAids from "../Layer_2/ShowAids";
-//import DrawerExample from './Drawer'
 import { AddButton } from "../Layer_2/AddButton";
 import { Search } from "../Layer_2/SearchComponent";
 import { useSelector } from "react-redux";
 import { FlyToLocationButton } from "../Layer_2/FlyToLocationButton";
-//import { Button } from '@chakra-ui/react'
 
 function MapComponent({ match }) {
+	//eslint-disable-next-line
 	const [zoom, setZoom] = useState(17);
 
 	const mapCenter = useSelector((state) => state.userLocation);

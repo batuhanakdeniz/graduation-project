@@ -10,20 +10,20 @@ export const AidCards = ({ seachContent }) => {
 	useEffect(() => {
 		setFilteredData(
 			(prev) =>
-				(prev = aidData.filter((aid) => aid.emergencyLevel == seachContent))
+				(prev = aidData.filter((aid) => aid.emergencyLevel === seachContent))
 		);
 
 		setListHeightCounter((prev) => prev + 1);
 
-		if (seachContent == 10) {
+		if (seachContent === 10) {
 			setListHeightCounter((prev) => (prev /= 2));
 		}
 		if (seachContent.length === 0 || !seachContent.trim()) {
 			setListHeightCounter((prev) => (prev = 0));
 		}
+		// eslint-disable-next-line
 	}, [seachContent]);
 	// eslint-disable-next-line
-
 	const memo = useMemo(() => (
 		<List
 			className="List"

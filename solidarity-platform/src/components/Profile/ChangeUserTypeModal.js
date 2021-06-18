@@ -1,16 +1,25 @@
-import { Button } from "@chakra-ui/react";
 import React from "react";
+import { Button } from "@chakra-ui/react";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikControl from "../FormComponents/FormikControl";
 
-function ChangeUserTypeModal({ show, handleClose }) {
-	const dropdownOptions = [
-		{ key: "Onaylanmış Üye", value: "Confirmed" },
-		{ key: "Yönetici Üye", value: "Admin" },
-		{ key: "Kuruma bağlı Üye", value: "Corporate" },
-	];
+function ChangeUserTypeModal({ type, show, handleClose }) {
+	const dropdownOptions =
+		type === "Unconfirmed"
+			? [
+					{
+						key: "Onaylanmış Üye",
+						value: "Confirmed",
+					},
+					{ key: "Yönetici Üye", value: "Admin" },
+					{ key: "Kuruma bağlı Üye", value: "Corporate" },
+			  ]
+			: [
+					{ key: "Yönetici Üye", value: "Admin" },
+					{ key: "Kuruma bağlı Üye", value: "Corporate" },
+			  ];
 	const initialValues = {
 		userType: "",
 	};

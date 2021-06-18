@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DetailModal.scss";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import ImageGallery from "react-image-gallery";
 import { useSelector } from "react-redux";

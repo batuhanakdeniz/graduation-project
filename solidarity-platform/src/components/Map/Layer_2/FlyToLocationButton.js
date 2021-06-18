@@ -3,14 +3,12 @@ import React, { useMemo } from "react";
 import { useMap, useMapEvents } from "react-leaflet";
 import { useDispatch } from "react-redux";
 import { setUserLocation } from "../../../redux";
-import { POSITION_CLASSES } from "../PositionClass";
-
+import { BiCurrentLocation } from "react-icons/bi";
 export const FlyToLocationButton = () => {
 	const parentMap = useMap();
 	const dispatch = useDispatch();
 	const locationButton = () => {
 		parentMap.locate();
-		// console.log(parentMap);
 	};
 	const map = useMapEvents({
 		locationfound: (location) => {
@@ -20,10 +18,9 @@ export const FlyToLocationButton = () => {
 		},
 	});
 	// eslint-disable-next-line
-	// eslint-disable-next-line
 	const button = useMemo(() => (
 		<Button onClick={locationButton} colorScheme="brand" size="lg">
-			<i class="fas fa-location-arrow"></i>
+			<BiCurrentLocation size="2rem" />
 		</Button> //todo onClick ekle ve yardım eklenir hale gelsin
 	));
 

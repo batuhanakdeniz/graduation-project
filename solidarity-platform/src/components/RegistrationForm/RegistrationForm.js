@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Row, Col } from "react-bootstrap";
 import FormikControl from "../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { getLoggedIn } from "../../redux";
 
 function RegistrationForm() {
-	const history = useHistory();
-	const dispatch = useDispatch();
+	const [message, setMessage] = useState("");
+	const [successful, setSuccessful] = useState(false);
 
 	const dropdownOptions = [
 		{ key: "Onaylanmamış Üye", value: "Unconfirmed" },
@@ -31,7 +28,8 @@ function RegistrationForm() {
 		phone: "",
 	};
 
-	const PhoneRegex = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
+	const PhoneRegex =
+		/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
 
 	const validationSchema = Yup.object({
 		registrationType: Yup.string().required("Required"),
@@ -51,18 +49,24 @@ function RegistrationForm() {
 		phone: Yup.string().matches(PhoneRegex, "Phone number is not valid"),
 	});
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	async function onSubmit(values) {
+		setMessage("");
+		setSuccessful(false);
 		try {
-			setIsSubmitting(true);
-			await axios.post(
-				`http://localhost:5000/signup`,
-				values
-			);
-			dispatch(getLoggedIn());
-			history.push("/");
-		} catch (values) {
-			alert(values.message);
+			const response = await axios.post(`http://localhost:5000/signup`, values);
+			console.log("response", response);
+			setMessage(response.data.message);
+			setSuccessful(true);
+			//dispatch(getLoggedIn());
+		} catch (error) {
+			const resMessage =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			setMessage(resMessage);
+			setSuccessful(false);
 		}
 	}
 	return (
@@ -159,7 +163,7 @@ function RegistrationForm() {
 								<Col md={12} style={{ textAlign: "center" }}>
 									<Button
 										variant="solid"
-										isLoading={isSubmitting}
+										isLoading={formik.isSubmitting}
 										loadingText="Submitting"
 										colorScheme="teal"
 										size="lg"
@@ -172,6 +176,22 @@ function RegistrationForm() {
 									</Button>
 								</Col>
 							</Row>
+							{message && (
+								<Row style={{ marginTop: "1rem" }}>
+									<Col md={12}>
+										<div
+											className={
+												successful
+													? "alert alert-success"
+													: "alert alert-danger"
+											}
+											role="alert"
+										>
+											{message}
+										</div>
+									</Col>
+								</Row>
+							)}
 						</Form>
 					);
 				}}

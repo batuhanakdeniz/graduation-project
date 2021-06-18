@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button } from "@chakra-ui/button";
 import { FaTrashAlt } from "react-icons/fa";
 import { Col, Image, Row } from "react-bootstrap";
-import { Select, Stack } from "@chakra-ui/react";
 import UserTypeSelector from "./UserTypeSelector";
 import { GrEdit } from "react-icons/gr";
 import { CgDetailsMore } from "react-icons/cg";

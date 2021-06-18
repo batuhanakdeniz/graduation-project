@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
-import { IoHelpBuoy } from "react-icons/io5";
 import { Button } from "@chakra-ui/button";
 import { Col, Row } from "react-bootstrap";
 const aidStars = {

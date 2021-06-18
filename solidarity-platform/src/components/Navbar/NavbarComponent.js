@@ -4,7 +4,6 @@ import { Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "./Navbar.scss";
 import axios from "axios";
 import { useHistory } from "react-router";
-import navbarPP from "../Details/joe.jpg";
 import batuPP from "./batu.jpeg";
 import { getLoggedIn } from "../../redux";
 import { getLoggedUserData } from "../../redux";

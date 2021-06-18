@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
@@ -16,8 +16,9 @@ import NasilIsler from "./components/NasilIsler/NasilIsler";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getLoggedIn } from "./redux";
+import Welcome from "./components/RegistrationForm/Welcome";
 axios.defaults.withCredentials = true; // ? always set true cookielere izin verir her zaman
 
 const DIVM = styled.div`
@@ -73,6 +74,7 @@ function App() {
 							<Route path="/profile" exact component={ProfileSelector} />
 							<Route path="/profile/edit" exact component={ProfileEditPage} />
 							<Route path="/map" exact component={MapComponent} />
+							<Route path="/confirm/:confirmationCode" component={Welcome} />
 							<Route path="*" component={() => "404 Not FOund"} />
 						</Switch>
 					</DIVM>
