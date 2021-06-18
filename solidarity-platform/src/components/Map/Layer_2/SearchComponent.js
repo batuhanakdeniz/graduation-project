@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import { Form, FormControl } from "react-bootstrap";
 import { useMap } from "react-leaflet";
 import { AidCards } from "../Layer_3/AidCards";
-import { POSITION_CLASSES } from "../PositionClass";
 import { Button } from "@chakra-ui/button";
 
 export const Search = ({ position, zoom }) => {
@@ -34,8 +33,6 @@ export const Search = ({ position, zoom }) => {
 		</Form>
 	));
 
-	const positionClass =
-		(position && POSITION_CLASSES[position]) || POSITION_CLASSES.bottomleft;
 	return (
 		<div style={{ marginLeft: "5rem" }} className="search-form">
 			<div className="leaflet-control leaflet-bar">{button}</div>

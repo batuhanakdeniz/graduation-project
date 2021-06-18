@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLoggedUserData } from "../../redux";
 import UserInfoColumn from "./UserInfoColumn";
 import "./profileStyles.scss";
-import AdminPanel from "./AdminPanel";
 import UnconfirmedUserPanel from "./UnconfirmedUserPanel";
 function UncorfimedUserProfilePage() {
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);

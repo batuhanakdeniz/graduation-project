@@ -5,7 +5,6 @@ import ChangeUserTypeModal from "./ChangeUserTypeModal";
 
 function UserInfoColumn({ loggedUserData }) {
 	const [show, setShow] = useState(false);
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	return (
@@ -46,25 +45,34 @@ function UserInfoColumn({ loggedUserData }) {
 			{loggedUserData && loggedUserData.userType === "Confirmed" && (
 				<Row className="columnItems">
 					<Col md={12} className="applicationSection">
-						<span>Admin olmak ister misiniz?</span>
-					</Col>
-					<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
-						<Button colorScheme="green" isFullWidth>
-							Başvuru Yap
-						</Button>
-					</Col>
-				</Row>
-			)}
-			{loggedUserData && loggedUserData.userType === "Uncorfimed" && (
-				<Row className="columnItems">
-					<Col md={12} className="applicationSection">
-						<span>Üyeliğinizi yükseltmek ister misiniz?</span>
+						<span>Üyeliğinizi değiştirmek ister misiniz?</span>
 					</Col>
 					<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
 						<Button colorScheme="green" onClick={handleShow} isFullWidth>
 							Başvuru Yap
 						</Button>
-						<ChangeUserTypeModal handleClose={handleClose} show={show} />
+						<ChangeUserTypeModal
+							type={loggedUserData.userType}
+							handleClose={handleClose}
+							show={show}
+						/>
+					</Col>
+				</Row>
+			)}
+			{loggedUserData && loggedUserData.userType === "Unconfirmed" && (
+				<Row className="columnItems">
+					<Col md={12} className="applicationSection">
+						<span>Üyeliğinizi değiştirmek ister misiniz?</span>
+					</Col>
+					<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
+						<Button colorScheme="green" onClick={handleShow} isFullWidth>
+							Başvuru Yap
+						</Button>
+						<ChangeUserTypeModal
+							type={loggedUserData.userType}
+							handleClose={handleClose}
+							show={show}
+						/>
 					</Col>
 				</Row>
 			)}

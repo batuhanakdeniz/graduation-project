@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/react";
 import "./LoginForm.scss";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import loginSvg from "./login.svg";
 import axios from "axios";
@@ -16,6 +16,7 @@ import { getLoggedIn } from "../../redux";
 function LoginForm() {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const [message, setMessage] = useState("");
 	const initialValues = {
 		email: "",
 		password: "",
@@ -26,12 +27,20 @@ function LoginForm() {
 	});
 
 	async function onSubmit(values) {
+		setMessage("");
 		try {
 			await axios.post("http://localhost:5000/login", values);
 			dispatch(getLoggedIn());
-			history.push("/");
-		} catch (values) {
-			alert(values.message);
+			history.push("/profile");
+		} catch (error) {
+			const resMessage =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			setMessage(resMessage);
+			console.log(resMessage);
 		}
 	}
 
@@ -82,6 +91,15 @@ function LoginForm() {
 								);
 							}}
 						</Formik>
+						{message && (
+							<Row style={{ marginTop: "1rem" }}>
+								<Col>
+									<div className="alert alert-danger" role="alert">
+										{message}
+									</div>
+								</Col>
+							</Row>
+						)}
 					</div>
 				</div>
 			</Container>

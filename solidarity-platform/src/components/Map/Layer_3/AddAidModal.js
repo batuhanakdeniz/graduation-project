@@ -57,6 +57,7 @@ function AddAidModal({
 		} else {
 			console.log("Something is wrong");
 		}
+		// eslint-disable-next-line
 	}, [properties]);
 
 	const initialValues = {

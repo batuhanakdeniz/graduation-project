@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Feed, Icon } from "semantic-ui-react";
 import AddComment from "../Layer_6/AddComment";

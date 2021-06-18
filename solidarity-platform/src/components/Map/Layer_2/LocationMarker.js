@@ -6,8 +6,6 @@ import L from "leaflet";
 import { setAidLocationLatLng, setAidLocationProperties } from "../../../redux";
 import AddAidModal from "../Layer_3/AddAidModal";
 
-import LCG from "leaflet-control-geocoder";
-
 function LocationMarker(props) {
 	const position = useSelector((state) => state.addAidLocation);
 	const dispatch = useDispatch();
