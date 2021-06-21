@@ -24,12 +24,21 @@ function CommentComponent({ Comments, aidID }) {
 					{Comments.map((comment, index) => (
 						<Feed.Event key={index} id="commentEvent">
 							<Feed.Label>
-								<img src={comment.image} alt="" />
+								<img
+									src={
+										comment.image
+											? comment.image
+											: "https://picsum.photos/200/200"
+									}
+									alt=""
+								/>
 							</Feed.Label>
 							<Feed.Content>
 								<Feed.Summary>
-									<Feed.User>{comment.summary}</Feed.User>
-									<Feed.Date>{comment.date}</Feed.Date>
+									<Feed.User>
+										{comment.personName ? comment.personName : "Sefa Aydoğan"}
+									</Feed.User>
+									<Feed.Date>{comment.createdAt}</Feed.Date>
 								</Feed.Summary>
 								{comment.extraImages ? (
 									<Feed.Extra images>
@@ -38,13 +47,13 @@ function CommentComponent({ Comments, aidID }) {
 										))}
 									</Feed.Extra>
 								) : null}
-								{comment.extraText ? (
-									<Feed.Extra text>{comment.extraText}</Feed.Extra>
+								{comment.text ? (
+									<Feed.Extra text>{comment.text}</Feed.Extra>
 								) : null}
 								<Feed.Meta>
 									<Feed.Like>
 										<Icon name="like" />
-										{comment.meta}
+										{comment.meta ? comment.meta : "5"}
 									</Feed.Like>
 								</Feed.Meta>
 							</Feed.Content>

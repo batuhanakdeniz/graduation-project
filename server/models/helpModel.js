@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Image from "./imageModel.js";
 import User from "./userModel.js";
 import Comment from "./commentModel.js";
+import Category from "./categoryModel.js";
+import SubCategory from "./subCategoryModel.js"
 
 
 const helpSchema = mongoose.Schema({
@@ -9,7 +11,7 @@ const helpSchema = mongoose.Schema({
 	header: String,
 	lng: String,
 	lat: String,
-	aidNo: {type: String, default: "0"},
+	aidCode: {type: String},
 	personName: String,
 	personLastName: String,
 	address: {
@@ -19,16 +21,20 @@ const helpSchema = mongoose.Schema({
 		floor: {type: String},
 		apartmentNo: {type: String},
 	},
-	emergencyLevel: String,
-	typeofhelp: String,
+	emergencyLevel: {
+		level: Number,
+		voteNumber: Number},
+	typeofhelp: [
+		Category.schema,
+		SubCategory.schema
+	],
 	addressFull: String,
 	img: [ Image.schema ],
 	detail: String,
 	phone: String,
-	comment: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+	comment: [ Comment.schema],
 	createdAt: {
-		type: Date,
-		default: Date.now(),
+		type: String	
 	},
 });
 

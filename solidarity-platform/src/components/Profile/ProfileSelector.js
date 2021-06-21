@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedUserData } from "../../redux";
-import AdminProfilePage from "./AdminProfilePage";
-import ConfirmedUserProfilePage from "./ConfirmedUserProfilePage";
-import UncorfimedUserProfilePage from "./UncorfimedUserProfilePage";
+import AdminProfilePage from "./Admin/AdminProfilePage";
+import ConfirmedUserProfilePage from "./ConfirmedUser/ConfirmedUserProfilePage";
+import UncorfimedUserProfilePage from "./UnconfirmedUser/UncorfimedUserProfilePage";
 
 function ProfileSelector() {
 	const isLoggedIn = useSelector((state) => state.userData.isLoggedIn);

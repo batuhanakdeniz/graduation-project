@@ -82,6 +82,29 @@
 		}
 	}
 }
+.pendingComments {
+	.pendingComment {
+		margin-bottom: 2rem;
+		padding: 1rem;
+		.key {
+			font-size: 1rem;
+			font-weight: 800;
+		}
+		.property {
+			margin-bottom: 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			img {
+				height: 100%;
+			}
+		}
+		.aidImg {
+			margin-top: 2rem;
+		}
+	}
+}
 .pendingUsers {
 	margin-top: 2rem;
 	.pendingUser {
@@ -127,6 +150,7 @@
 		}
 	}
 }
+
 /***********All USERS**********************/
 .allUsersContainer {
 	margin-top: 2rem;

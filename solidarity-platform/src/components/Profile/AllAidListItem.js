@@ -31,7 +31,7 @@ function AllAidListItem({ aid }) {
 								</Col>
 								<Col md={12} className="property">
 									<span className="key">Önem Derecesi : </span>
-									<span className="value">{aid.emergencyLevel}</span>
+									<span className="value">{aid.emergencyLevel.level}</span>
 								</Col>
 							</Row>
 						</Card.Body>

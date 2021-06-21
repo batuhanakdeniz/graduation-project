@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
       },
       filename: function (req, file, cb) {
         const formattedFileName = file.originalname.split(' ').join('-');
-        cb(null, "Batu-" + file.fieldname + '-' + Date.now() + '-' + formattedFileName)
+        cb(null, file.fieldname + '-' + Date.now() + '-' + formattedFileName)
       }
 })
 

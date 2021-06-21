@@ -7,11 +7,11 @@ import helpRouter from "./routers/helpRouter.js";
 import userRouter from "./routers/userRouter.js";
 import homeRouter from "./routers/homeRouter.js";
 import rbacRouter from "./routers/rbacRouter.js";
-
+import fs from "fs";
+import path from "path";
 
 const app = express();  //express server yaratıldı
 dotenv.config();        //process.env içine .env içindeki değerleri atar
-
 app.use(cors({
     origin: ["http://localhost:3000"],
     credentials: true,  //Frontendden Cookie ve token gönderilmesine izin verir 
@@ -37,6 +37,7 @@ const PORT = process.env.PORT;
 mongoose.connect(process.env.CONNECTION_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
 })
 .then(() => {
     app.listen(PORT, () => {

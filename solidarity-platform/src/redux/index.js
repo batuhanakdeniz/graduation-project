@@ -13,3 +13,6 @@ export { fetchPendingAids } from "./actions/admin/PendingAidsAction";
 export { fetchPendingUsers } from "./actions/admin/PendingUsersToConfirmAction";
 export { fetchAllUsers } from "./actions/admin/AllUsersAction";
 export { fetchAllAids } from "./actions/admin/AllAidsAction";
+export { fetchPendingComments } from "./actions/admin/PendingCommentsAction";
+export { fetchAidCategory } from "./actions/aids/AidCategoryAction";
+export { fetchMapSearchAid } from "./actions/aids/MapSearchAidAction";

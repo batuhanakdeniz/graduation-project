@@ -13,10 +13,8 @@ export const getAllUser = async (req, res) => {
 			{
 				_id: 1,
 				userName: 1,
-				userName: 1,
                 firstName: 1,
                 lastName: 1,
-                phone: 1,
                 userType: 1
             },
 			(err, users) => {
@@ -171,7 +169,7 @@ export const getloggedUser = async (req, res,next) => {
 
 export const putUser = async (req, res, next) =>{
 	try {
-		User.findByIdAndUpdate(req.User,req.body,{new: true},
+		User.findByIdAndUpdate(req.User,req.body,
 			(err, help) => {
 					if (err) return res.status(404).send(err);
 					return res.status(200).send(help);
@@ -220,4 +218,19 @@ export const verifyUser = async(req,res,next) =>{
         console.log(err);
         })
 
+}
+
+export const putUserStatus = async (req, res, next) =>{
+	try {
+        const userId = req.params.userId;
+		User.findByIdAndUpdate(userId,{userType: req.body.userType},
+			(err, help) => {
+					if (err) return res.status(404).send(err);
+					return res.status(200).send(help);
+				});
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
 }

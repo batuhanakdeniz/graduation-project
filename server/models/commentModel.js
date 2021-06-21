@@ -5,15 +5,15 @@ import Help from "./helpModel.js"
 const commentSchema = mongoose.Schema({
     help_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Help'},
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    date: String,
-    avatar: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
-    meta: String,
-    summary: String,
-    extraText: String,
+    text: String,
+    status: {
+        type: String,
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },
     extraImages: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Image'} ],
     createdAt:{
-        type: Date,
-        default: Date.now(),
+        type: String,
     }
 });
 
