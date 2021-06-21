@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	Button,
 	Modal,
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import "../mapStyle.scss";
 import axios from "axios";
-import { getLoggedUserData } from "../../../redux";
+import { fetchAidCategory, getLoggedUserData } from "../../../redux";
 import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUploadField";
 
 function AddAidModal({
@@ -75,7 +75,8 @@ function AddAidModal({
 		phone: "",
 		detail: "",
 		emergencyLevel: "",
-		category: [],
+		categoryNo: null,
+		subCategoryNo: null,
 	};
 	const PhoneRegex =
 		/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
@@ -123,22 +124,32 @@ function AddAidModal({
 			.min(2, "Must be more than 2 characters")
 			.max(200, "Must be less than 15 characters"),
 		emergencyLevel: Yup.string().required("Gerekli Alan!"),
-		category: Yup.array().min(1, "Gerekli Alan!").required("Gerekli Alan!"),
+		categoryNo: Yup.string().required("Gerekli Alan!"),
+		subCategoryNo: Yup.string().required("Gerekli Alan!"),
 	});
 
 	const emergencyOptions = [
-		{ key: "1", value: "1" },
-		{ key: "2", value: "2" },
-		{ key: "3", value: "3" },
-		{ key: "4", value: "4" },
-		{ key: "5", value: "5" },
+		{ key: "1", value: 1 },
+		{ key: "2", value: 2 },
+		{ key: "3", value: 3 },
+		{ key: "4", value: 4 },
+		{ key: "5", value: 5 },
 	];
-	const checkboxOptions = [
-		{ key: "Bilgisayar", value: "computer", color: "teal" },
-		{ key: "Gıda", value: "food", color: "blue" },
-		{ key: "Tekstil", value: "clothes", color: "telegram" },
-		{ key: "Diğer", value: "others", color: "cyan" },
-	];
+	const category = useSelector((state) => state.aidCategory);
+	const [subCatOpts, setSubCatOpts] = useState([]);
+	useEffect(() => {
+		dispatch(fetchAidCategory());
+	}, []);
+
+	const categoryOptions = category.categoryList;
+
+	const subCategoryOptions = subCatOpts;
+	// const checkboxOptions = [
+	// 	{ key: "Bilgisayar", value: "computer", color: "teal" },
+	// 	{ key: "Gıda", value: "food", color: "blue" },
+	// 	{ key: "Tekstil", value: "clothes", color: "telegram" },
+	// 	{ key: "Diğer", value: "others", color: "cyan" },
+	// ];
 
 	async function onSubmit(values) {
 		console.log("logged User Data", loggedUserData.userName);
@@ -201,6 +212,20 @@ function AddAidModal({
 	const handleDetailChange = (e) => {
 		e.preventDefault();
 		setDetailCounter((prev) => (prev = 200 - e.target.value.length));
+	};
+	const handleCategoryChange = (e) => {
+		e.preventDefault();
+		console.log("object", e.target.value);
+		setSubCatOpts([]);
+		category.categoryList[e.target.value - 1].subCategories.map((subCat) =>
+			setSubCatOpts((curr) => [
+				...curr,
+				{
+					key: subCat.subCategoryName,
+					value: subCat.subCategoryCode,
+				},
+			])
+		);
 	};
 	return (
 		<Modal onClose={onClose} size={"xl"} isOpen={isOpen}>
@@ -275,12 +300,24 @@ function AddAidModal({
 														options={emergencyOptions}
 													/>
 												</Col>
+												<Col md={6}></Col>
 												<Col md={6}>
 													<FormikControl
-														control="chakracheckbox"
+														control="chakraselect"
 														label="Kategori Seçiniz*"
-														name="category"
-														options={checkboxOptions}
+														placeholder="Kategori Seçiniz"
+														name="categoryNo"
+														onChange={handleCategoryChange}
+														options={categoryOptions}
+													/>
+												</Col>
+												<Col md={6}>
+													<FormikControl
+														control="chakraselect"
+														label="Alt Kategori Seçiniz*"
+														placeholder="Alt Kategori Seçiniz"
+														name="subCategoryNo"
+														options={subCategoryOptions}
 													/>
 												</Col>
 												<Col md={6}>

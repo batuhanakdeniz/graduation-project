@@ -70,7 +70,7 @@ function AidPopUp({ aidId }) {
 										<Col md={6}>
 											<Rating
 												name="hover-feedback"
-												value={popupContent.aidEmercenyLevel}
+												value={popupContent.aidEmercenyLevel.level}
 												precision={0.5}
 												readOnly
 											/>
@@ -78,9 +78,9 @@ function AidPopUp({ aidId }) {
 										<Col md={2}></Col>
 										<Col
 											md={4}
-											style={labels[popupContent.aidEmercenyLevel].style}
+											style={labels[popupContent.aidEmercenyLevel.level].style}
 										>
-											{labels[popupContent.aidEmercenyLevel].value}
+											{labels[popupContent.aidEmercenyLevel.level].value}
 										</Col>
 									</Row>
 								</div>

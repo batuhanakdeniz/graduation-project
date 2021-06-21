@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedUserData } from "../../redux";
-import UserInfoColumn from "./UserInfoColumn";
-import "./profileStyles.scss";
-import UnconfirmedUserPanel from "./UnconfirmedUserPanel";
-function UncorfimedUserProfilePage() {
+import { getLoggedUserData } from "../../../redux";
+import UserInfoColumn from "../UserInfoColumn";
+import "../profileStyles.scss";
+import AdminPanel from "./AdminPanel";
+function AdminProfilePage() {
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -21,11 +21,11 @@ function UncorfimedUserProfilePage() {
 					<UserInfoColumn loggedUserData={loggedUserData} />
 				</Col>
 				<Col md={9}>
-					<UnconfirmedUserPanel />
+					<AdminPanel />
 				</Col>
 			</Row>
 		</div>
 	);
 }
 
-export default UncorfimedUserProfilePage;
+export default AdminProfilePage;

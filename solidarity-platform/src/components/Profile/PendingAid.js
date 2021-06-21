@@ -5,18 +5,33 @@ import ImageGallery from "react-image-gallery";
 import { GiCheckMark } from "react-icons/gi";
 import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
+import { useDispatch } from "react-redux";
+import { fetchDetailContent } from "../../redux";
+import { useDisclosure } from "@chakra-ui/react";
+import DetailModal from "../Map/Layer_4/DetailModal";
 
 function PendingAid(props) {
 	const { aid } = props;
+	const dispatch = useDispatch();
 	const thisAidData = {
 		aidNo: aid.aidNo,
 		person: aid.personName,
 		personLastname: aid.personLastName,
-		emergency: aid.emergencyLevel,
+		emergencyLevel: aid.emergencyLevel,
 		img: aid.img,
 		comments: aid.comments,
 	};
-
+	const aidDetailButtonHandler = () => {
+		onOpen();
+		dispatch(fetchDetailContent(aid.aidID));
+	};
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const confirmAidHandler = () => {
+		console.log("sefa");
+	};
+	const deleteAidHandler = () => {
+		console.log("sefa");
+	};
 	return (
 		<Col className="pendingAid">
 			<Card border="black">
@@ -38,7 +53,9 @@ function PendingAid(props) {
 								</Col>
 								<Col md={12} className="property">
 									<span className="key">Önem Derecesi : </span>
-									<span className="value">{thisAidData.emergency}</span>
+									<span className="value">
+										{thisAidData.emergencyLevel.level}
+									</span>
 								</Col>
 							</Row>
 						</Card.Body>
@@ -52,13 +69,27 @@ function PendingAid(props) {
 						alignItems: "center",
 					}}
 				>
-					<Button colorScheme="teal" ml="1rem">
+					<Button
+						colorScheme="teal"
+						ml="1rem"
+						onClick={() => confirmAidHandler()}
+					>
 						<GiCheckMark />
 					</Button>
-					<Button colorScheme="blackAlpha" ml="1rem">
+
+					<Button
+						colorScheme="blackAlpha"
+						ml="1rem"
+						onClick={() => aidDetailButtonHandler()}
+					>
 						<CgDetailsMore />
+						<DetailModal onClose={onClose} isOpen={isOpen} />
 					</Button>
-					<Button colorScheme="warningRed" ml="1rem">
+					<Button
+						colorScheme="warningRed"
+						ml="1rem"
+						onClick={() => deleteAidHandler()}
+					>
 						<FaTrashAlt />
 					</Button>
 				</Card.Footer>

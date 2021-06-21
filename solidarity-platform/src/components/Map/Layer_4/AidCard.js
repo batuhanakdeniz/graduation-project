@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import "../mapStyle.scss";
 import styled from "styled-components";
+import { useMap, useMapEvents } from "react-leaflet";
 
 const MyCard = styled.div`
 	background: ${(props) => (props.color ? props.color : "white")};
@@ -26,36 +27,52 @@ const MyCard = styled.div`
 `;
 
 function AidCard({ aid }) {
+	console.log("last", aid);
+	const parentMap = useMap();
+	const gotoAidHandler = (
+		lat = 41.020835883676874,
+		lng = 28.657279014587406
+	) => {
+		parentMap.setView([lat, lng]);
+	};
+
+	const SearchDetailHandler = () => {
+		console.log("detay gelecek");
+	};
 	return (
 		<Col>
 			<MyCard
 				color={
-					aid.emergencyLevel > 5
-						? aid.emergencyLevel > 9
+					aid.emergencyLevel && aid.emergencyLevel >= 5
+						? aid.emergencyLevel > 4
 							? "black"
-							: aid.emergencyLevel <= 7
+							: aid.emergencyLevel <= 3
 							? "purple"
 							: "red"
-						: aid.emergencyLevel < 3
+						: aid.emergencyLevel <= 1
 						? "green"
 						: "orange"
 				}
 			>
 				<Row>
 					<Col md={8}>
-						<div className="cardHeader">{aid.lng}</div>
-						<div className="cardInfos">{aid.lat}</div>
-						<div className="cardInfos">
-							Emergency Level : {aid.emergencyLevel}
-						</div>
+						<div className="cardHeader">{aid.header && aid.header}</div>
+						<div className="cardHeader">{aid.detail && aid.detail}</div>
+						{aid.emergencyLevel && (
+							<div className="cardInfos">
+								Emergency Level : aid.emergencyLevel.level
+							</div>
+						)}
 					</Col>
 					<Col md={4}>
 						<Row>
 							<Col>
-								<Button>Git</Button>
+								<Button onClick={() => gotoAidHandler(aid.lat, aid.lng)}>
+									Git
+								</Button>
 							</Col>
 							<Col>
-								<Button>Yorumlar</Button>
+								<Button onClick={() => SearchDetailHandler()}>Detay</Button>
 							</Col>
 						</Row>
 					</Col>

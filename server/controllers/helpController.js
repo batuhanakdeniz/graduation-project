@@ -90,7 +90,7 @@ export const getHelpBasics = async (req, res) => {
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
-				img: { $slice: 1},
+				img: { $slice: 1 },
 			},
 			(err, helps) => {
 				if (err) throw err;
@@ -161,28 +161,33 @@ export const getHelpDetail = async (req, res) => {
 	try {
 		console.log("req.User: ", req.User);
 
-		Help.findById(req.params.id).populate('comment').exec((err, help) => {
-			if (err) throw err;
-			let activeComments = [];
-			console.log("help comment: ",help.comment);
-			help.comment.forEach((comment)=>{
-				if(comment.status == "Active"){ activeComments.push(comment)}
-			})
-			const sendHelp = {
-				_id: help._id,
-				header: help.header,
-				lat: help.lat,
-				lng: help.lng,
-				emergencyLevel: help.emergencyLevel,
-				aidNo: help.aidNo,
-				personName: help.personName,
-				personLastName: help.personLastName,
-				img: help.img,
-				detail: help.detail,
-				comment: activeComments
-			};
-			console.log(sendHelp);
-			return res.status(200).send(sendHelp);});
+		Help.findById(req.params.id)
+			.populate("comment")
+			.exec((err, help) => {
+				if (err) throw err;
+				let activeComments = [];
+				console.log("help comment: ", help.comment);
+				help.comment.forEach((comment) => {
+					if (comment.status == "Active") {
+						activeComments.push(comment);
+					}
+				});
+				const sendHelp = {
+					_id: help._id,
+					header: help.header,
+					lat: help.lat,
+					lng: help.lng,
+					emergencyLevel: help.emergencyLevel,
+					aidNo: help.aidNo,
+					personName: help.personName,
+					personLastName: help.personLastName,
+					img: help.img,
+					detail: help.detail,
+					comment: activeComments,
+				};
+				console.log(sendHelp);
+				return res.status(200).send(sendHelp);
+			});
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -207,7 +212,7 @@ export const postHelp = async (req, res, next) => {
 			apartmentNo,
 			phone,
 			detail,
-			emergencyLevel
+			emergencyLevel,
 			//category,
 			//subCategory
 		} = req.body;
@@ -225,19 +230,19 @@ export const postHelp = async (req, res, next) => {
 		}
 		//Base64 işlemleri yapılması gerekiyor
 		const savedImages = [];
-		console.log("req.files: ",req.files);
-        req.files.forEach((newImage) =>{
-			console.log("Image: ",newImage);
-			console.log("newImage: ",newImage);
-            const savedImage = new Image(newImage);
-            
-			savedImage.save().then((err)=>{
-				if(!err)	return res.status(404).send(err)
-                console.log("Save oldu resimler...");
-            });
-            savedImages.push(savedImage);
-        });
-/*
+		console.log("req.files: ", req.files);
+		req.files.forEach((newImage) => {
+			console.log("Image: ", newImage);
+			console.log("newImage: ", newImage);
+			const savedImage = new Image(newImage);
+
+			savedImage.save().then((err) => {
+				if (!err) return res.status(404).send(err);
+				console.log("Save oldu resimler...");
+			});
+			savedImages.push(savedImage);
+		});
+		/*
 		const categoryNo = 0;
 		await Category.findOne({categoryName: category}, (err,category) =>{
 			if(err)	return res.status(404).send({message: err})
@@ -250,7 +255,9 @@ export const postHelp = async (req, res, next) => {
 		});
 		const aidCode = categoryNo + subCategoryNo + shortid.generate();
 */
-		const now = new Date().toLocaleString("tr-TR", {timeZone: "Asia/Istanbul"});
+		const now = new Date().toLocaleString("tr-TR", {
+			timeZone: "Asia/Istanbul",
+		});
 		const newHelp = new Help({
 			_creator: req.User,
 			//aidCode: aidCode,
@@ -267,16 +274,24 @@ export const postHelp = async (req, res, next) => {
 			personName: firstName,
 			personLastName: lastName,
 			phone: phone,
-			addressFull: address + "Apartman no: " + buildingNo + "Kat: " + floor + "Daire: " + apartmentNo,
+			addressFull:
+				address +
+				"Apartman no: " +
+				buildingNo +
+				"Kat: " +
+				floor +
+				"Daire: " +
+				apartmentNo,
 			emergencyLevel: {
-				level:Number(emergencyLevel),
-				voteNumber: 1},
+				level: Number(emergencyLevel),
+				voteNumber: 1,
+			},
 			img: savedImages,
 			detail: detail,
 			createdAt: now,
 		});
 
-		const savedHelp = await newHelp.save().then(()=>{
+		const savedHelp = await newHelp.save().then(() => {
 			return res.status(201).send("Yardım başarıyla eklendi.");
 		});
 	} catch (err) {
@@ -286,60 +301,62 @@ export const postHelp = async (req, res, next) => {
 	}
 };
 
-export const putHelp = async (req, res, next) =>{
+export const putHelp = async (req, res, next) => {
 	try {
-		Help.findByIdAndUpdate(req.params.id,req.body,{new: true},
+		Help.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{ new: true },
 			(err, help) => {
-					if (err) return res.status(404).send(err);
-					return res.status(200).send(help);
-				});
+				if (err) return res.status(404).send(err);
+				return res.status(200).send(help);
+			}
+		);
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
 		});
 	}
-}
+};
 
-export const putHelpEmergencyLevel = async (req, res, next) =>{
+export const putHelpEmergencyLevel = async (req, res, next) => {
 	try {
-		Help.findByIdAndUpdate(req.params.id,
-			(err, help) => {
-					if (err) return res.status(404).send(err);
-					console.log("object:",help);
-					var helpEmergencyLevel = help.emergencyLevel.level;
-					var helpVoteNumber = help.emergencyLevel.voteNumber;
-					var Total = helpEmergencyLevel * helpVoteNumber;
-					Total = Total + req.body.emergencyLevel;
-					help.emergencyLevel.voteNumber = help.emergencyLevel.voteNumber +1;
-					help.emergencyLevel.level = Total/ help.emergencyLevel.voteNumber;
-					help.save();
-					return res.status(200).send(help);
-				});
+		Help.findByIdAndUpdate(req.params.id, (err, help) => {
+			if (err) return res.status(404).send(err);
+			console.log("object:", help);
+			var helpEmergencyLevel = help.emergencyLevel.level;
+			var helpVoteNumber = help.emergencyLevel.voteNumber;
+			var Total = helpEmergencyLevel * helpVoteNumber;
+
+			Total = Total + req.body.value;
+			help.emergencyLevel.voteNumber = help.emergencyLevel.voteNumber + 1;
+			help.emergencyLevel.level = Total / help.emergencyLevel.voteNumber;
+			help.save();
+			return res.status(200).send(help);
+		});
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
 		});
 	}
-}
+};
 
-
-export const deleteHelp = async (req, res, next) =>{
+export const deleteHelp = async (req, res, next) => {
 	try {
-		Help.findByIdAndDelete(req.params.id,
-			(err, help) => {
-					if (err) return res.status(404).send(err);
-					const message = {
-						message: "Basarıyla silindi.",
-						id: help.id
-					}
-					return res.status(200).send(message);
-				});
+		Help.findByIdAndDelete(req.params.id, (err, help) => {
+			if (err) return res.status(404).send(err);
+			const message = {
+				message: "Basarıyla silindi.",
+				id: help.id,
+			};
+			return res.status(200).send(message);
+		});
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
 		});
 	}
-}
+};
 
 /*
 export const getHelpdeniyore = async (req, res) => {

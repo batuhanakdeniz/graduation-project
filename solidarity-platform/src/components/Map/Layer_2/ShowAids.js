@@ -56,24 +56,26 @@ function ShowAids() {
 		// eslint-disable-next-line
 	}, []);
 	useEffect(() => {
-		setDarkAids(aidLocations.locations.filter((aid) => aid.emergencyLevel > 4));
+		setDarkAids(
+			aidLocations.locations.filter((aid) => aid.emergencyLevel.level > 4)
+		);
 		setRedAids(
 			aidLocations.locations.filter(
-				(aid) => aid.emergencyLevel > 3 && aid.emergencyLevel <= 4
+				(aid) => aid.emergencyLevel.level > 3 && aid.emergencyLevel.level <= 4
 			)
 		);
 		setPinkAids(
 			aidLocations.locations.filter(
-				(aid) => aid.emergencyLevel > 2 && aid.emergencyLevel <= 3
+				(aid) => aid.emergencyLevel.level > 2 && aid.emergencyLevel.level <= 3
 			)
 		);
 		setOrangeAids(
 			aidLocations.locations.filter(
-				(aid) => aid.emergencyLevel > 1 && aid.emergencyLevel <= 2
+				(aid) => aid.emergencyLevel.level > 1 && aid.emergencyLevel.level <= 2
 			)
 		);
 		setGreenAids(
-			aidLocations.locations.filter((aid) => aid.emergencyLevel <= 1)
+			aidLocations.locations.filter((aid) => aid.emergencyLevel.level <= 1)
 		);
 	}, [aidLocations]);
 

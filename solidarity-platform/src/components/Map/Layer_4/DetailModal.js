@@ -17,6 +17,7 @@ import CommentComponent from "../Layer_5/CommentComponent";
 
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 const labels = {
 	0.5: "Normal",
 	1: "Normal",
@@ -40,8 +41,10 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 	const [images, setImages] = useState([]);
 	const detailContent = useSelector((state) => state.detailContent);
 	useEffect(() => {
+		setImages([]);
 		detailContent.aidImgSrc.map((img) =>
 			setImages((curr) => [
+				...curr,
 				{
 					original: `http://localhost:5000/upload/${img.filename}`,
 					thumbnail: `http://localhost:5000/upload/${img.filename}`,
@@ -55,6 +58,13 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 	const voteSubmitHandler = () => {
 		setVoteDisplay(!voteDisplay);
 		console.log("value", value);
+		const vote = {
+			value: value,
+		};
+		axios.put(
+			`http://localhost:5000/map/api/helps/emergencyLevel/${detailContent.aidId}`,
+			vote
+		);
 	};
 	const classes = useStyles();
 	return (
@@ -124,22 +134,23 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 																		alignItems: "center",
 																	}}
 																>
-																	<Col md={8}>
+																	<Col md={7}>
 																		<Rating
 																			name="hover-feedback"
 																			value={
-																				detailContent.aidEmercenyLevel
-																					? detailContent.aidEmercenyLevel
-																					: 5
+																				detailContent.aidEmergencyLevel.level
 																			}
 																			precision={0.5}
 																			readOnly
 																		/>
 																	</Col>
 																	{value !== null && (
-																		<Col md={4}>
-																			{detailContent.aidEmercenyLevel
-																				? labels[detailContent.aidEmercenyLevel]
+																		<Col md={5}>
+																			{detailContent.aidEmergencyLevel
+																				? labels[
+																						detailContent.aidEmergencyLevel
+																							.level
+																				  ]
 																				: labels[5]}
 																		</Col>
 																	)}
@@ -167,7 +178,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 																		alignItems: "center",
 																	}}
 																>
-																	<Col md={8}>
+																	<Col md={7}>
 																		<Rating
 																			name="hover-feedback"
 																			value={value}
@@ -181,12 +192,13 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 																		/>
 																	</Col>
 																	{value !== null && (
-																		<Col md={4}>
+																		<Col md={5}>
 																			{
 																				labels[
 																					hover !== -1
 																						? hover
-																						: detailContent.aidEmercenyLevel
+																						: detailContent.aidEmergencyLevel
+																								.level
 																				]
 																			}
 																		</Col>
