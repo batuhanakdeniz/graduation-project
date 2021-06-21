@@ -160,48 +160,29 @@ export const getHelpDetails = async (req, res) => {
 export const getHelpDetail = async (req, res) => {
 	try {
 		console.log("req.User: ", req.User);
-		console.log("req.userType: ", req.userType);
 
-		const user = User.findById(req.User);
-		Help.findById(
-			req.params.id,
-			{
-				_id: 1,
-				header: 1,
-				lat: 1,
-				lng: 1,
-				emergencyLevel: 1,
-				aidNo: 1,
-				personName: 1,
-				personLastName: 1,
-				img: 1,
-				detail: 1,
-				comment: 1,
-			},
-			(err, help) => {
-				if (err) throw err;
-				let activeComments = [];
-				console.log("help comment: ",help.comment);
-				help.comment.forEach((comment)=>{
-					if(comment.status == "Active"){ activeComments.push(comment)}
-				})
-				const sendHelp = {
-					_id: help._id,
-					header: help.header,
-					lat: help.lat,
-					lng: help.lng,
-					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
-					personName: help.personName,
-					personLastName: help.personLastName,
-					img: help.img,
-					detail: help.detail,
-					comment: activeComments
-				};
-				console.log(sendHelp);
-				return res.status(200).send(sendHelp);
-			}
-		);
+		Help.findById(req.params.id).populate('comment').exec((err, help) => {
+			if (err) throw err;
+			let activeComments = [];
+			console.log("help comment: ",help.comment);
+			help.comment.forEach((comment)=>{
+				if(comment.status == "Active"){ activeComments.push(comment)}
+			})
+			const sendHelp = {
+				_id: help._id,
+				header: help.header,
+				lat: help.lat,
+				lng: help.lng,
+				emergencyLevel: help.emergencyLevel,
+				aidNo: help.aidNo,
+				personName: help.personName,
+				personLastName: help.personLastName,
+				img: help.img,
+				detail: help.detail,
+				comment: activeComments
+			};
+			console.log(sendHelp);
+			return res.status(200).send(sendHelp);});
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -409,3 +390,46 @@ export const getHelpdeniyore = async (req, res) => {
 		});
 	}
 };*/
+
+/**
+ * 
+ * 
+ * 
+ * ,
+			{
+				_id: 1,
+				header: 1,
+				lat: 1,
+				lng: 1,
+				emergencyLevel: 1,
+				aidNo: 1,
+				personName: 1,
+				personLastName: 1,
+				img: 1,
+				detail: 1,
+				comment: 1,
+			},
+			(err, help) => {
+				if (err) throw err;
+				let activeComments = [];
+				console.log("help comment: ",help.comment);
+				help.comment.forEach((comment)=>{
+					if(comment.status == "Active"){ activeComments.push(comment)}
+				})
+				const sendHelp = {
+					_id: help._id,
+					header: help.header,
+					lat: help.lat,
+					lng: help.lng,
+					emergencyLevel: help.emergencyLevel,
+					aidNo: help.aidNo,
+					personName: help.personName,
+					personLastName: help.personLastName,
+					img: help.img,
+					detail: help.detail,
+					comment: activeComments
+				};
+				console.log(sendHelp);
+				return res.status(200).send(sendHelp);
+			}
+ */
