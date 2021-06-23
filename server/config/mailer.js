@@ -528,3 +528,13 @@ export const sendConfirmationEmail = (name, email, confirmationCode) => {
 		.catch((err) => console.log("sendConfirmaiton error: ", err));
 };
 
+
+
+export const sendHelpInfo = () => {
+
+}
+ //If more than 1 people apply to help for the same post send email
+export const sendInfoForSameHelp = () => {
+
+}
+

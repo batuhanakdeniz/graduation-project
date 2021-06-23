@@ -7,7 +7,21 @@ const userSchema = mongoose.Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     phone: {type: String, required: true},
-    userType: { type: String, required:true},
+    userType: { type: String, 
+        enum: ['Admin','Confirmed','Unconfirmed','Coorprate'],
+        required:true},
+    statusUserType:{
+        isStatusPending: {
+            type: Boolean,
+            default: false}
+    ,
+    
+        applyUserType:{ 
+            type: String, 
+            enum: ['Admin','Confirmed','Unconfirmed','Coorprate'],
+            default: null
+        }
+    },
     status: {
         type: String,
         enum: ['Pending', 'Active'],

@@ -34,7 +34,7 @@ export const postSubCategory = async (req, res) => {
 	}
 };
 
-export const getCategory = async (req, res) => {
+export const getCategories = async (req, res) => {
 	try {
 		const categories = await Category.find();
 		res.status(200).send(categories);
@@ -45,10 +45,31 @@ export const getCategory = async (req, res) => {
 	}
 };
 
+export const getSubCategories = async (req, res) => {
+	try {
+		const subCategories = await SubCategory.find();
+		res.status(200).send(subCategories);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
+
+export const getCategory = async (req, res) => {
+	try {
+		const category = await Category.find({categoryCode: req.params.categoryNo});
+		res.status(200).send(category);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
 export const getSubCategory = async (req, res) => {
 	try {
-		const subCategories = await subCategory.find();
-		res.status(200).send(subCategories);
+		const subCategory = await SubCategory.find({subCategoryCode: req.params.subCategoryNo});
+		res.status(200).send(subCategory);
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,

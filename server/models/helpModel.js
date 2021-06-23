@@ -9,9 +9,11 @@ import SubCategory from "./subCategoryModel.js"
 const helpSchema = mongoose.Schema({
 	_creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	header: String,
-	lng: String,
-	lat: String,
-	aidCode: {type: String},
+	location: {
+		lng: {type: String, required:true},
+		lat: {type: String, required:true},	
+	},
+	aidCode: {type: String, required:true},
 	personName: String,
 	personLastName: String,
 	address: {
@@ -24,15 +26,27 @@ const helpSchema = mongoose.Schema({
 	emergencyLevel: {
 		level: Number,
 		voteNumber: Number},
-	typeofhelp: [
-		Category.schema,
-		SubCategory.schema
+	typeofhelp: {
+		category: {type: String},
+		subcategory: {type: String}
+	},
+	HelpingUser:[
+	{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null},
 	],
 	addressFull: String,
 	img: [ Image.schema ],
 	detail: String,
 	phone: String,
 	comment: [ Comment.schema],
+	status: {
+        type: String,
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },
+	statusForHelping:{
+		type: Boolean,
+		default: false
+	},
 	createdAt: {
 		type: String	
 	},
@@ -42,7 +56,3 @@ const Help = mongoose.model("Help", helpSchema);
 
 export default Help;
 
-/**
- * 	
-
- */

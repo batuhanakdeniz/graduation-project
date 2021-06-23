@@ -2,26 +2,27 @@ import Help from "../models/helpModel.js";
 import Image from "../models/imageModel.js";
 import User from "../models/userModel.js";
 import multer from "multer";
-export const getHelpSearch = async (req, res) => {
+export const postHelpSearch = async (req, res) => {
 	try {  
     const search = req.params.search;
     const query = {
                     "$search":{
                       "index": 'helps',
-                      "highlight": {
-                        "path": ['header','detail']
-                      },
                       "compound":{
                         "should": [{
                           "text": {
                             "query": `${search}`,
                             "path": 'header',
                             "score": { "boost": {"value": 5}}
-                            }
-                          },{
+                          }
+                        },{
                             "text": {
                               "query": `${search}`,
-                              "path": ['typeofhelp','detail']
+                              "path": {"value": "detail", "multi": "simpleAnalyzer"},
+                              "fuzzy": {
+                                "maxEdits": 2,
+                                "prefixLength": 3
+                              }
                             }
                           }
                         ]
@@ -45,3 +46,18 @@ export const getHelpSearch = async (req, res) => {
 		});
 	}
 };
+
+/**
+ * 
+ * 
+ * 
+ * 
+ * "text": {
+                              "query": `${search}`,
+                              "path": "detail",
+                              "fuzzy": {
+                                "maxEdits": 2,
+                                "prefixLength": 3
+                              }
+                            }
+ */

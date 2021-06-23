@@ -30,13 +30,11 @@ export const createHelp = async (req, res) => {
 
 export const getHelpLocations = async (req, res) => {
 	try {
-		console.log("buraya geldim mi acaba");
 		Help.find(
 			{},
 			{
 				_id: 1,
-				lat: 1,
-				lng: 1,
+				location:1,
 				emergencyLevel: 1,
 			},
 			(err, helps) => {
@@ -46,7 +44,6 @@ export const getHelpLocations = async (req, res) => {
 			}
 		);
 	} catch (err) {
-		console.log("fena hata var heee");
 		res.status(409).json({
 			message: err.message,
 		});
@@ -60,8 +57,7 @@ export const getHelpLocation = async (req, res) => {
 			req.params.id,
 			{
 				_id: 1,
-				lat: 1,
-				lng: 1,
+				location:1,
 				emergencyLevel: 1,
 			},
 			(err, help) => {
@@ -84,11 +80,11 @@ export const getHelpBasics = async (req, res) => {
 			{
 				_id: 1,
 				header: 1,
-				lat: 1,
-				lng: 1,
+				location: 1,
 				emergencyLevel: 1,
 				aidNo: 1,
 				personName: 1,
+				typeofhelp: 1,
 				personLastName: 1,
 				img: { $slice: 1 },
 			},
@@ -112,33 +108,33 @@ export const getHelpBasic = async (req, res) => {
 			{
 				_id: 1,
 				header: 1,
-				lat: 1,
-				lng: 1,
+				location: 1,
 				emergencyLevel: 1,
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
 				img: 1,
 				createdAt: 1,
+				typeofhelp: 1,
 			},
 			(err, help) => {
 				if (err) throw err;
 				const sendHelp = {
 					_id: help._id,
 					header: help.header,
-					lat: help.lat,
-					lng: help.lng,
+					location: help.location,
 					emergencyLevel: help.emergencyLevel,
 					aidNo: help.aidNo,
 					personName: help.personName,
 					personLastName: help.personLastName,
 					img: help.img[0].filename,
+					typeofhelp: help.typeofhelp,
 					createdAt: help.createdAt,
 				};
 				console.log(sendHelp);
 				res.send(sendHelp);
 			}
-		);
+	);
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -162,7 +158,7 @@ export const getHelpDetail = async (req, res) => {
 		console.log("req.User: ", req.User);
 
 		Help.findById(req.params.id)
-			.populate("comment")
+			.populate("comment").populate("user")
 			.exec((err, help) => {
 				if (err) throw err;
 				let activeComments = [];
@@ -175,8 +171,9 @@ export const getHelpDetail = async (req, res) => {
 				const sendHelp = {
 					_id: help._id,
 					header: help.header,
-					lat: help.lat,
-					lng: help.lng,
+					location: {
+						lat: help.lat,
+						lng: help.lng},
 					emergencyLevel: help.emergencyLevel,
 					aidNo: help.aidNo,
 					personName: help.personName,
@@ -198,6 +195,10 @@ export const getHelpDetail = async (req, res) => {
 export const postHelp = async (req, res, next) => {
 	try {
 		console.log("req.User: ", req.User);
+		console.log("req.body.categoryName: ", req.body.categoryNo);
+		console.log("req.body.subCategoryName: ", req.body.subCategoryNo);
+
+
 		const {
 			header,
 			langitude,
@@ -213,15 +214,21 @@ export const postHelp = async (req, res, next) => {
 			phone,
 			detail,
 			emergencyLevel,
-			//category,
-			//subCategory
+			categoryNo,
+			subCategoryNo
 		} = req.body;
+		console.log("categoryName",categoryNo);
+		console.log("subCategoryName",subCategoryNo);
+		console.log("emergencyLevel",emergencyLevel);
+
 
 		//DB İşlemleri
 		//Check is there any help near to 5m or 10m
 		const existingHelp = await Help.findOne({
+			location:{
 			lng: langitude,
-			lat: latitude,
+			lat: latitude
+			}
 		});
 		if (existingHelp) {
 			return res.status(401).json({
@@ -230,40 +237,26 @@ export const postHelp = async (req, res, next) => {
 		}
 		//Base64 işlemleri yapılması gerekiyor
 		const savedImages = [];
-		console.log("req.files: ", req.files);
 		req.files.forEach((newImage) => {
-			console.log("Image: ", newImage);
-			console.log("newImage: ", newImage);
 			const savedImage = new Image(newImage);
-
 			savedImage.save().then((err) => {
 				if (!err) return res.status(404).send(err);
 				console.log("Save oldu resimler...");
 			});
 			savedImages.push(savedImage);
 		});
-		/*
-		const categoryNo = 0;
-		await Category.findOne({categoryName: category}, (err,category) =>{
-			if(err)	return res.status(404).send({message: err})
-			categoryNo = category.categoryCode;
-		});
-		const subCategoryNo = 0;
-		await SubCategory.findOne({subCategoryName: subCategory}, (err,subCategory) =>{
-			if(err)	return res.status(404).send({message: err})
-			subCategoryNo = subCategory.subCategoryCode;
-		});
-		const aidCode = categoryNo + subCategoryNo + shortid.generate();
-*/
+
+		const aidCode = subCategoryNo + shortid.generate();
 		const now = new Date().toLocaleString("tr-TR", {
 			timeZone: "Asia/Istanbul",
 		});
 		const newHelp = new Help({
 			_creator: req.User,
-			//aidCode: aidCode,
+			aidCode: aidCode,
 			header: header,
-			lng: langitude,
-			lat: latitude,
+			location:{
+				lng: langitude,
+				lat: latitude},
 			address: {
 				province: province,
 				town: town,
@@ -288,10 +281,14 @@ export const postHelp = async (req, res, next) => {
 			},
 			img: savedImages,
 			detail: detail,
+			typeofhelp: {
+				category: categoryNo,
+				subcategory: subCategoryNo
+			},
 			createdAt: now,
 		});
-
-		const savedHelp = await newHelp.save().then(() => {
+		console.log(newHelp);
+		const savedHelp = newHelp.save().then(() => {
 			return res.status(201).send("Yardım başarıyla eklendi.");
 		});
 	} catch (err) {
@@ -358,95 +355,42 @@ export const deleteHelp = async (req, res, next) => {
 	}
 };
 
-/*
-export const getHelpdeniyore = async (req, res) => {
+export const getPendingHelpDetails = async (req, res) => {
 	try {
-
-		Help.findById(
-			req.params.id,
-			{
-				_id: 1,
-				header: 1,
-				lat: 1,
-				lng: 1,
-				emergencyLevel: 1,
-				aidNo: 1,
-				personName: 1,
-				personLastName: 1,
-				img: 1,
-				detail: 1,
-				comment: 1,
-			},
-			(err, help) => {
-				let activeComments = [];
-				console.log("help comment: ",help.comment);
-				help.comment.forEach((comment)=>{
-					if(comment.status == "Active"){ activeComments.push(comment)}
-				})
-				if (err) throw err;
-				const sendHelp = {
-					_id: help._id,
-					header: help.header,
-					lat: help.lat,
-					lng: help.lng,
-					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
-					personName: help.personName,
-					personLastName: help.personLastName,
-					img: help.img,
-					detail: help.detail,
-					comment: activeComments
-				};
-				console.log(sendHelp);
-				return res.status(200).send(sendHelp);
-			}
-		);
+		const helps = await Help.find({status: 'Pending'},{
+			_id: 1,
+			header: 1,
+			lat: 1,
+			lng: 1,
+			emergencyLevel: 1,
+			aidNo: 1,
+			personName: 1,
+			personLastName: 1,
+			img: 1,
+			createdAt: 1,
+		},
+		(err, help) => {
+			if (err) throw err;
+			const sendHelp = {
+				_id: help._id,
+				header: help.header,
+				lat: help.lat,
+				lng: help.lng,
+				emergencyLevel: help.emergencyLevel,
+				aidNo: help.aidNo,
+				personName: help.personName,
+				personLastName: help.personLastName,
+				img: help.img[0].filename,
+				createdAt: help.createdAt,
+			};
+			console.log(sendHelp);
+			res.send(sendHelp);
+		});
+		res.status(200).json(helps);
 	} catch (err) {
-		res.status(404).json({
+		res.status(409).json({
 			message: err.message,
 		});
 	}
-};*/
+};
 
-/**
- * 
- * 
- * 
- * ,
-			{
-				_id: 1,
-				header: 1,
-				lat: 1,
-				lng: 1,
-				emergencyLevel: 1,
-				aidNo: 1,
-				personName: 1,
-				personLastName: 1,
-				img: 1,
-				detail: 1,
-				comment: 1,
-			},
-			(err, help) => {
-				if (err) throw err;
-				let activeComments = [];
-				console.log("help comment: ",help.comment);
-				help.comment.forEach((comment)=>{
-					if(comment.status == "Active"){ activeComments.push(comment)}
-				})
-				const sendHelp = {
-					_id: help._id,
-					header: help.header,
-					lat: help.lat,
-					lng: help.lng,
-					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
-					personName: help.personName,
-					personLastName: help.personLastName,
-					img: help.img,
-					detail: help.detail,
-					comment: activeComments
-				};
-				console.log(sendHelp);
-				return res.status(200).send(sendHelp);
-			}
- */
