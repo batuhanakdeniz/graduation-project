@@ -94,7 +94,7 @@ export const getAllUser = async (req, res) => {
 	}
 };
 
-export const getPendingUserType = async (req, res) => {
+export const getAllPendingUserType = async (req, res) => {
     try {
 		User.find(
 			{'statusUserType.isStatusPending': true },
@@ -118,4 +118,6 @@ export const getPendingUserType = async (req, res) => {
 		});
 	}
 };
+
+
 

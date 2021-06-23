@@ -31,7 +31,7 @@ export const createHelp = async (req, res) => {
 export const getHelpLocations = async (req, res) => {
 	try {
 		Help.find(
-			{},
+			{status: 'Active'},
 			{
 				_id: 1,
 				location:1,
@@ -82,11 +82,12 @@ export const getHelpBasics = async (req, res) => {
 				header: 1,
 				location: 1,
 				emergencyLevel: 1,
-				aidNo: 1,
+				aidCode: 1,
 				personName: 1,
 				typeofhelp: 1,
 				personLastName: 1,
 				img: { $slice: 1 },
+				statusForHelping: 1
 			},
 			(err, helps) => {
 				if (err) throw err;
@@ -103,39 +104,29 @@ export const getHelpBasics = async (req, res) => {
 
 export const getHelpBasic = async (req, res) => {
 	try {
-		Help.findById(
-			req.params.id,
-			{
-				_id: 1,
-				header: 1,
-				location: 1,
-				emergencyLevel: 1,
-				aidNo: 1,
-				personName: 1,
-				personLastName: 1,
-				img: 1,
-				createdAt: 1,
-				typeofhelp: 1,
-			},
-			(err, help) => {
-				if (err) throw err;
-				const sendHelp = {
-					_id: help._id,
-					header: help.header,
-					location: help.location,
-					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
-					personName: help.personName,
-					personLastName: help.personLastName,
-					img: help.img[0].filename,
-					typeofhelp: help.typeofhelp,
-					createdAt: help.createdAt,
-				};
-				console.log(sendHelp);
-				res.send(sendHelp);
-			}
-	);
+		Help.findOne({_id: req.params.id}).populate('_creator').exec((err,help)=>{
+			if (err) throw err;
+			console.log(help);
+			console.log("help._creator-----",help._creator);
+			const sendHelp = {
+				_id: help._id,
+				header: help.header,
+				location: help.location,
+				emergencyLevel: help.emergencyLevel,
+				aidNo: help.aidCode,
+				personName: help.personName,
+				personLastName: help.personLastName,
+				img: help.img[0].filename,
+				typeofhelp: help.typeofhelp,
+				createdAt: help.createdAt,
+				creatorUserName: help._creator.firstName,
+				statusForHelping: help.statusForHelping
+			};
+			console.log(sendHelp);
+			return res.status(200).send(sendHelp);
+			});
 	} catch (err) {
+		console.log(err);
 		res.status(409).json({
 			message: err.message,
 		});
@@ -175,7 +166,7 @@ export const getHelpDetail = async (req, res) => {
 						lat: help.lat,
 						lng: help.lng},
 					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
+					aidNo: help.aidCode,
 					personName: help.personName,
 					personLastName: help.personLastName,
 					img: help.img,
@@ -303,7 +294,6 @@ export const putHelp = async (req, res, next) => {
 		Help.findByIdAndUpdate(
 			req.params.id,
 			req.body,
-			{ new: true },
 			(err, help) => {
 				if (err) return res.status(404).send(err);
 				return res.status(200).send(help);
@@ -357,7 +347,7 @@ export const deleteHelp = async (req, res, next) => {
 
 export const getPendingHelpDetails = async (req, res) => {
 	try {
-		const helps = await Help.find({status: 'Pending'},{
+		Help.find({status: 'Pending'},{
 			_id: 1,
 			header: 1,
 			lat: 1,
@@ -386,7 +376,6 @@ export const getPendingHelpDetails = async (req, res) => {
 			console.log(sendHelp);
 			res.send(sendHelp);
 		});
-		res.status(200).json(helps);
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,
@@ -394,3 +383,64 @@ export const getPendingHelpDetails = async (req, res) => {
 	}
 };
 
+
+
+export const getUserOwnHelps = async (req, res) => {
+    try {
+		Help.find(
+			{_creator: req.User },
+			{
+				_id: 1,
+				header: 1,
+				location: 1,
+				emergencyLevel: 1,
+				aidNo: 1,
+				personName: 1,
+				personLastName: 1,
+				img: 1,
+				createdAt: 1,
+			},
+			(err, help) => {
+				if (err) throw err;
+				console.log(help);
+				res.status(200).send(help);
+			});
+	} catch (err) {
+		res.status(409).json({
+			message: err.message,
+		});
+	}
+};
+
+/**
+ * ,
+			{
+				_id: 1,
+				header: 1,
+				location: 1,
+				emergencyLevel: 1,
+				aidNo: 1,
+				personName: 1,
+				personLastName: 1,
+				img: 1,
+				createdAt: 1,
+				typeofhelp: 1,
+			},
+			(err, help) => {
+				if (err) throw err;
+				const sendHelp = {
+					_id: help._id,
+					header: help.header,
+					location: help.location,
+					emergencyLevel: help.emergencyLevel,
+					aidNo: help.aidNo,
+					personName: help.personName,
+					personLastName: help.personLastName,
+					img: help.img[0].filename,
+					typeofhelp: help.typeofhelp,
+					createdAt: help.createdAt,
+				};
+				console.log(sendHelp);
+				res.send(sendHelp);
+			}
+ */

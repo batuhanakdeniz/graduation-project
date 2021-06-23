@@ -25,6 +25,7 @@ export const putHelpComment = async (req, res) => {
 		const newComment = new Comment({
 			_id: new mongoose.Types.ObjectId(),
 			help_id: req.params.id,
+			user_id: req.User,
 			text: text,
 			extraImages: savedImages,
 			createdAt: now,
@@ -62,6 +63,17 @@ export const getPendingComment = async (req, res) => {
 	try {
 		const pendingComments = await Comment.find({status: 'Pending'});
 		res.status(200).send(pendingComments);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
+
+export const getUserOwnComment = async (req, res) => {
+	try {
+		const ownComments = await Comment.find({user_id: req.User});
+		res.status(200).send(ownComments);
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
