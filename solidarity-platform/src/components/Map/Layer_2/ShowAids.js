@@ -88,7 +88,7 @@ function ShowAids() {
 							{darkAids.map((aid) => (
 								<Marker
 									key={aid._id}
-									position={[aid.lat, aid.lng]}
+									position={[aid.location.lat, aid.location.lng]}
 									icon={darkIcon}
 								>
 									<AidPopUp aidId={aid._id} />
@@ -103,7 +103,7 @@ function ShowAids() {
 							{redAids.map((aid) => (
 								<Marker
 									key={aid._id}
-									position={[aid.lat, aid.lng]}
+									position={[aid.location.lat, aid.location.lng]}
 									icon={redIcon}
 								>
 									<AidPopUp aidId={aid._id} />
@@ -118,7 +118,7 @@ function ShowAids() {
 							{pinkAids.map((aid) => (
 								<Marker
 									key={aid._id}
-									position={[aid.lat, aid.lng]}
+									position={[aid.location.lat, aid.location.lng]}
 									icon={pinkIcon}
 								>
 									<AidPopUp aidId={aid._id} />
@@ -133,7 +133,7 @@ function ShowAids() {
 							{orangeAids.map((aid) => (
 								<Marker
 									key={aid._id}
-									position={[aid.lat, aid.lng]}
+									position={[aid.location.lat, aid.location.lng]}
 									icon={orangeIcon}
 								>
 									<AidPopUp aidId={aid._id} />
@@ -148,7 +148,7 @@ function ShowAids() {
 							{greenAids.map((aid) => (
 								<Marker
 									key={aid._id}
-									position={[aid.lat, aid.lng]}
+									position={[aid.location.lat, aid.location.lng]}
 									icon={greenIcon}
 								>
 									<AidPopUp aidId={aid._id} />
