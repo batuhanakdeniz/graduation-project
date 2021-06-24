@@ -20,10 +20,11 @@ import labels from "./labels";
 const useStyles = makeStyles({
 	root: {
 		marginTop: "0.2rem",
-		display: "flex",
-		alignItems: "center",
 	},
 });
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
 function AidPopUp({ aidId }) {
 	const popupContent = useSelector((state) => state.popupContent);
 	const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function AidPopUp({ aidId }) {
 	const handleModalClick = () => {
 		onOpen();
 	};
+
 	const classes = useStyles();
 	return (
 		<>
@@ -55,7 +57,9 @@ function AidPopUp({ aidId }) {
 						</div>
 
 						<Card.Body className="mb-0">
-							<Card.Title className="mb-0">{popupContent.aidHeader}</Card.Title>
+							<Card.Title className="mb-0 text-center font-weight-bold">
+								{capitalizeFirstLetter(popupContent.aidHeader)}
+							</Card.Title>
 						</Card.Body>
 						<Card.Subtitle className="ml-4 mb-2 text-muted">
 							<strong>Önem Derecesi</strong>
@@ -67,15 +71,21 @@ function AidPopUp({ aidId }) {
 											alignItems: "center",
 										}}
 									>
-										<Col md={6}>
+										<Col
+											md={6}
+											style={{
+												display: "flex",
+												flexDirection: "column",
+											}}
+										>
 											<Rating
 												name="hover-feedback"
 												value={popupContent.aidEmercenyLevel.level}
 												precision={0.5}
 												readOnly
 											/>
+											{popupContent.aidEmercenyLevel.voteNumber} kez oylandı
 										</Col>
-										<Col md={2}></Col>
 										<Col
 											md={4}
 											style={labels[popupContent.aidEmercenyLevel.level].style}
@@ -89,7 +99,14 @@ function AidPopUp({ aidId }) {
 						<ListGroup className="list-group-flush">
 							<ListGroupItem>
 								<strong>Statü : </strong>
-								<span>Yardım eden kimse yok</span>
+								{popupContent.statusForHelping !== undefined &&
+								!popupContent.statusForHelping ? (
+									<span>Yardım eden kimse yok</span>
+								) : (
+									popupContent.helpingUsers.map((helpingUser, idx) => (
+										<span key={idx}>{helpingUser}</span>
+									))
+								)}
 							</ListGroupItem>
 							<ListGroupItem>
 								<strong>Ad : </strong>
@@ -100,26 +117,12 @@ function AidPopUp({ aidId }) {
 								<span>{popupContent.aidSurname}</span>
 							</ListGroupItem>
 							<ListGroupItem>
-								<strong>Yardım Kategorileri : </strong>
-								<Row md={2}>
+								<Row md={1}>
 									<Col>
+										<strong>Yardım Kategorisi : </strong>
 										<span>
-											<i class="fas fa-check"></i> {popupContent.aidSurname}
-										</span>
-									</Col>
-									<Col>
-										<span>
-											<i class="fas fa-check"></i> {popupContent.aidSurname}
-										</span>
-									</Col>
-									<Col>
-										<span>
-											<i class="fas fa-check"></i> {popupContent.aidSurname}
-										</span>
-									</Col>
-									<Col>
-										<span>
-											<i class="fas fa-check"></i> {popupContent.aidSurname}
+											{popupContent.categoryName} -{" "}
+											{popupContent.subcategoryName}
 										</span>
 									</Col>
 								</Row>
@@ -155,8 +158,8 @@ function AidPopUp({ aidId }) {
 							</Card.Link>
 						</Card.Body>
 						<Card.Footer>
-							<strong>21 Mayıs 2021</strong> tarihinde <strong>Ahmet</strong>{" "}
-							tarafından eklendi
+							<strong>{popupContent.createdAt}</strong> tarihinde{" "}
+							<strong>{popupContent.createrUsername}</strong> tarafından eklendi
 						</Card.Footer>
 					</Card>
 				</Container>

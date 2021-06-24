@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchDetailContent } from "../../redux";
 import { useDisclosure } from "@chakra-ui/react";
 
-function PendingCommentItem(props) {
+function LoggedUserCommentItem(props) {
 	const { Comment } = props;
 	const dispatch = useDispatch();
 	const [images, setImages] = useState([]);
@@ -111,4 +111,4 @@ function PendingCommentItem(props) {
 	);
 }
 
-export default PendingCommentItem;
+export default LoggedUserCommentItem;

@@ -20,12 +20,7 @@ import axios from "axios";
 import { fetchAidCategory, getLoggedUserData } from "../../../redux";
 import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUploadField";
 
-function AddAidModal({
-	onClose,
-	isOpen,
-	isSuccesfullySubmitted,
-	setIsSuccesfullySubmitted,
-}) {
+function AddAidModal({ onClose, isOpen }) {
 	const loggedUserData = useSelector((state) => state.userData.loggedUserData);
 	const properties = useSelector((state) => state.addAidProperties.properties);
 	const position = useSelector((state) => state.addAidLocation);
@@ -85,7 +80,7 @@ function AddAidModal({
 		header: Yup.string()
 			.required("Gerekli Alan!")
 			.min(2, "Must be more than 2 characters")
-			.max(15, "Must be less than 15 characters"),
+			.max(30, "Must be less than 30 characters"),
 		langitude: Yup.string().required("Gerekli Alan!"),
 		latitude: Yup.string().required("Gerekli Alan!"),
 		firstName: Yup.string()
@@ -137,19 +132,16 @@ function AddAidModal({
 	];
 	const category = useSelector((state) => state.aidCategory);
 	const [subCatOpts, setSubCatOpts] = useState([]);
+	const [message, setMessage] = useState("");
+	const [successful, setSuccessful] = useState(false);
 	useEffect(() => {
 		dispatch(fetchAidCategory());
+		// eslint-disable-next-line
 	}, []);
 
 	const categoryOptions = category.categoryList;
 
-	const subCategoryOptions = subCatOpts;
-	// const checkboxOptions = [
-	// 	{ key: "Bilgisayar", value: "computer", color: "teal" },
-	// 	{ key: "Gıda", value: "food", color: "blue" },
-	// 	{ key: "Tekstil", value: "clothes", color: "telegram" },
-	// 	{ key: "Diğer", value: "others", color: "cyan" },
-	// ];
+	const subCategoryOptions = subCatOpts ? subCatOpts : { key: "", value: "" };
 
 	async function onSubmit(values) {
 		console.log("logged User Data", loggedUserData.userName);
@@ -173,38 +165,44 @@ function AddAidModal({
 			data.append("apartmentNo", values.apartmentNo);
 			data.append("detail", values.detail);
 			data.append("emergencyLevel", values.emergencyLevel);
-			data.append("category", values.category);
+			data.append("categoryNo", values.categoryNo);
+			data.append("subCategoryNo", values.subCategoryNo);
 			files.map((file) => data.append("files", file.file));
 			console.log(files);
 			try {
-				axios
-					.post(
-						"http://localhost:5000/map/api/helps/details/upload/image",
-						data,
-						{
-							onUploadProgress: (progressEvent) => {
-								const totalLength = progressEvent.lengthComputable
-									? progressEvent.total
-									: progressEvent.target.getResponseHeader("content-length") ||
-									  progressEvent.target.getResponseHeader(
-											"x-decompressed-content-length"
-									  );
-								if (progressEvent.lengthComputable) {
-									// console.log(
-									// 	progressEvent.loaded + " " + progressEvent.total
-									// );
-									setProgress(
-										Math.round((progressEvent.loaded * 100) / totalLength)
-									);
-								}
-							},
-						}
-					)
-					.then((res) => console.log("res: ", res))
-					.catch((err) => console.log(err));
-				setIsSuccesfullySubmitted(true);
-			} catch (data) {
-				alert(data.message);
+				const response = await axios.post(
+					"http://localhost:5000/map/api/helps/details/create",
+					data,
+					{
+						onUploadProgress: (progressEvent) => {
+							const totalLength = progressEvent.lengthComputable
+								? progressEvent.total
+								: progressEvent.target.getResponseHeader("content-length") ||
+								  progressEvent.target.getResponseHeader(
+										"x-decompressed-content-length"
+								  );
+							if (progressEvent.lengthComputable) {
+								// console.log(
+								// 	progressEvent.loaded + " " + progressEvent.total
+								// );
+								setProgress(
+									Math.round((progressEvent.loaded * 100) / totalLength)
+								);
+							}
+						},
+					}
+				);
+				setMessage(response.data);
+				setSuccessful(true);
+			} catch (error) {
+				const resMessage =
+					(error.response &&
+						error.response.data &&
+						error.response.data.message) ||
+					error.message ||
+					error.toString();
+				setMessage(resMessage);
+				setSuccessful(false);
 			}
 		}
 	}
@@ -234,179 +232,188 @@ function AddAidModal({
 				<ModalHeader>Yardım Ekle</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					{!isSuccesfullySubmitted ? (
-						<Formik
-							initialValues={initialValues}
-							validationSchema={validationSchema}
-							onSubmit={onSubmit}
-						>
-							{({ values, errors, isValid, isSubmitting }) => {
-								return (
-									<div className="addAidForm">
-										<Form>
-											<Row>
+					<Formik
+						initialValues={initialValues}
+						validationSchema={validationSchema}
+						onSubmit={onSubmit}
+					>
+						{({ values, errors, isValid, isSubmitting }) => {
+							return (
+								<div className="addAidForm">
+									<Form>
+										<Row>
+											<Col md={12}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Yardım başlığı*"
+													name="header"
+												/>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Adı*"
+													name="firstName"
+												/>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Soyadı*"
+													name="lastName"
+												/>
+											</Col>
+										</Row>
+										<Row>
+											<Col md={12}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Telefon Numarası*"
+													name="phone"
+												/>
+											</Col>
+											<Col md={12}>
+												<div className="addImageSection">
+													<MultipleFileUploadField
+														files={files}
+														setFiles={setFiles}
+														setErrorFiles={setErrorFiles}
+													/>
+												</div>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakraselect"
+													label="Önem Derecesini Seçiniz*"
+													placeholder="Önem Derecesini Seçiniz"
+													name="emergencyLevel"
+													options={emergencyOptions}
+												/>
+											</Col>
+											<Col md={6}></Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakraselect"
+													label="Kategori Seçiniz*"
+													placeholder="Kategori Seçiniz"
+													name="categoryNo"
+													onChange={handleCategoryChange}
+													options={categoryOptions}
+												/>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakraselect"
+													label="Alt Kategori Seçiniz*"
+													placeholder="Alt Kategori Seçiniz"
+													name="subCategoryNo"
+													options={subCategoryOptions}
+												/>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="İl*"
+													name="province"
+												/>
+											</Col>
+											<Col md={6}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="İlçe*"
+													name="town"
+												/>
+											</Col>
+
+											<Col md={12}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Mahalle/Sokak*"
+													name="address"
+												/>
+											</Col>
+											<Col md={4}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Bina No"
+													name="buildingNo"
+												/>
+											</Col>
+											<Col md={4}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Kat"
+													name="floor"
+												/>
+											</Col>
+											<Col md={4}>
+												<FormikControl
+													control="chakrainput"
+													type="text"
+													label="Daire No"
+													name="apartmentNo"
+												/>
+											</Col>
+											<Col md={12}>
+												<FormikControl
+													onChange={handleDetailChange}
+													control="chakratextarea"
+													label="Detay"
+													name="detail"
+												/>
+											</Col>
+											<Col md={12} className="align-content-end">
+												Kalan Karakter Sayısı : {detailCounter}
+											</Col>
+										</Row>
+										<Button
+											id="submitButton"
+											color="teal"
+											isFullWidth
+											loadingText="Submitting"
+											isLoading={
+												progress !== 0 && progress !== 100 ? true : false
+											}
+											disabled={
+												!isValid || files.length === 0 || errorFiles.length
+											}
+											type="submit"
+										>
+											Yardım Ekle
+										</Button>
+										{progress !== 0 && progress !== 100 ? (
+											<Progress mb="1rem" hasStripe value={progress} />
+										) : null}
+										{message && (
+											<Row style={{ marginTop: "1rem" }}>
 												<Col md={12}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Yardım başlığı*"
-														name="header"
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Adı*"
-														name="firstName"
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Soyadı*"
-														name="lastName"
-													/>
-												</Col>
-											</Row>
-											<Row>
-												<Col md={12}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Telefon Numarası*"
-														name="phone"
-													/>
-												</Col>
-												<Col md={12}>
-													<div className="addImageSection">
-														<MultipleFileUploadField
-															setFiles={setFiles}
-															files={files}
-															fileErrors={errors}
-															progress={progress}
-															setProgress={setProgress}
-															setErrorFiles={setErrorFiles}
-														/>
+													<div
+														className={
+															successful
+																? "alert alert-success"
+																: "alert alert-danger"
+														}
+														role="alert"
+													>
+														{message}
 													</div>
 												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakraselect"
-														label="Önem Derecesini Seçiniz*"
-														placeholder="Önem Derecesini Seçiniz"
-														name="emergencyLevel"
-														options={emergencyOptions}
-													/>
-												</Col>
-												<Col md={6}></Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakraselect"
-														label="Kategori Seçiniz*"
-														placeholder="Kategori Seçiniz"
-														name="categoryNo"
-														onChange={handleCategoryChange}
-														options={categoryOptions}
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakraselect"
-														label="Alt Kategori Seçiniz*"
-														placeholder="Alt Kategori Seçiniz"
-														name="subCategoryNo"
-														options={subCategoryOptions}
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="İl*"
-														name="province"
-													/>
-												</Col>
-												<Col md={6}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="İlçe*"
-														name="town"
-													/>
-												</Col>
-
-												<Col md={12}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Mahalle/Sokak*"
-														name="address"
-													/>
-												</Col>
-												<Col md={4}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Bina No"
-														name="buildingNo"
-													/>
-												</Col>
-												<Col md={4}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Kat"
-														name="floor"
-													/>
-												</Col>
-												<Col md={4}>
-													<FormikControl
-														control="chakrainput"
-														type="text"
-														label="Daire No"
-														name="apartmentNo"
-													/>
-												</Col>
-												<Col md={12}>
-													<FormikControl
-														onChange={handleDetailChange}
-														control="chakratextarea"
-														label="Detay"
-														name="detail"
-													/>
-												</Col>
-												<Col md={12} className="align-content-end">
-													Kalan Karakter Sayısı : {detailCounter}
-												</Col>
 											</Row>
-											<Button
-												id="submitButton"
-												color="teal"
-												isFullWidth
-												loadingText="Submitting"
-												isLoading={
-													progress !== 0 && progress !== 100 ? true : false
-												}
-												disabled={
-													!isValid || files.length === 0 || errorFiles.length
-												}
-												type="submit"
-											>
-												Yardım Ekle
-											</Button>
-											{progress !== 0 && progress !== 100 ? (
-												<Progress mb="1rem" hasStripe value={progress} />
-											) : null}
-										</Form>
-									</div>
-								);
-							}}
-						</Formik>
-					) : (
-						<h2> Form is submitted, turn the map </h2>
-					)}
+										)}
+									</Form>
+								</div>
+							);
+						}}
+					</Formik>
 				</ModalBody>
 				<ModalFooter>
 					<Button onClick={onClose}>Close</Button>

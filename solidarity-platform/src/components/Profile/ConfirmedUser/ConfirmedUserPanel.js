@@ -1,32 +1,40 @@
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import PendingAids from "../PendingAids";
-import AllAidsList from "../AllAidsList";
-import PendingComments from "../PendingComments";
+import LoggedUsersActiveAids from "../LoggedUsersActiveAids";
+import LoggedUsersPendingAids from "../LoggedUsersPendingAids";
+import LoggedUsersActiveComments from "../LoggedUsersActiveComments";
+import LoggedUsersPendingComments from "../LoggedUsersPendingComments";
+
 function ConfirmedUserPanel() {
 	return (
 		<div className="adminPanel">
 			<Tabs isFitted variant="enclosed" isLazy>
 				<TabList>
 					<Tab _selected={{ color: "white", bg: "green.400" }}>
-						Onay Bekleyen Yardımlar
+						Aktif Yardımlarım
 					</Tab>
 					<Tab _selected={{ color: "white", bg: "pink.400" }}>
-						Onay Bekleyen Yorumlar
+						Onay Bekleyen Yardımlarım
 					</Tab>
 					<Tab _selected={{ color: "white", bg: "red.400" }}>
-						Bütün Yardımlar
+						Aktif Yorumlarım
+					</Tab>
+					<Tab _selected={{ color: "white", bg: "orange.400" }}>
+						Onay Bekleyen Yorumlarım
 					</Tab>
 				</TabList>
 				<TabPanels>
 					<TabPanel>
-						<PendingAids />
+						<LoggedUsersActiveAids />
 					</TabPanel>
 					<TabPanel>
-						<PendingComments />
+						<LoggedUsersPendingAids />
 					</TabPanel>
 					<TabPanel>
-						<AllAidsList />
+						<LoggedUsersActiveComments />
+					</TabPanel>
+					<TabPanel>
+						<LoggedUsersPendingComments />
 					</TabPanel>
 				</TabPanels>
 			</Tabs>

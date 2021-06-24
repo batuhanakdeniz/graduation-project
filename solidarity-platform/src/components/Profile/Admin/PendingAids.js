@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CardDeck, Row, Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { fetchPendingAids } from "../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPendingAids } from "../../../redux";
 import PendingAid from "./PendingAid";
-import aidData from "../aidData";
-import PaginatationComponent from "./PaginatationComponent";
+import PaginatationComponent from "../PaginatationComponent";
 function PendingAids() {
-	//const pendingAids = useSelector((state) => state.pendingAids);
+	const pendingAids = useSelector((state) => state.pendingAids);
 	const dispatch = useDispatch();
-	const pendingAids = {
-		loading: false,
-		pendingAidsList: aidData,
-		error: "",
-	};
+
 	useEffect(() => {
-		dispatch(fetchPendingAids());
+		//dispatch(fetchPendingAids());
 		// ! Alt satır kalacak silme
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

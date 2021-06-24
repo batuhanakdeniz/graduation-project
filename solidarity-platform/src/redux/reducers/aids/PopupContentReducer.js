@@ -15,6 +15,12 @@ const initialState = {
 	aidSurname: "",
 	aidEmercenyLevel: "",
 	aidImgSrc: "",
+	createdAt: "",
+	createrUsername: "",
+	helpingUsers: [],
+	statusForHelping: undefined,
+	categoryName: "",
+	subcategoryName: "",
 	error: "",
 };
 
@@ -38,6 +44,12 @@ const popupContentReducer = (state = initialState, action) => {
 				aidSurname: action.payload.personLastName,
 				aidEmercenyLevel: action.payload.emergencyLevel,
 				aidImgSrc: action.payload.img,
+				createdAt: action.payload.createdAt,
+				createrUsername: action.payload.creatorUserName,
+				helpingUsers: action.payload.HelpingUser,
+				statusForHelping: action.payload.statusForHelping,
+				categoryName: action.payload.categoryName,
+				subcategoryName: action.payload.subcategoryName,
 				error: "",
 			};
 		case FETCH_POPUP_CONTENT_FAILURE:

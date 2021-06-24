@@ -27,7 +27,7 @@ export const fetchPendingUsers = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingUsersRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/location`)
+			.get(`http://localhost:5000/api/admin/users/pending`)
 			.then((response) => {
 				const pendingUsers = response.data;
 				console.log(pendingUsers);

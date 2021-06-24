@@ -61,10 +61,13 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 		const vote = {
 			value: value,
 		};
-		axios.put(
-			`http://localhost:5000/map/api/helps/emergencyLevel/${detailContent.aidId}`,
-			vote
-		);
+		axios
+			.put(
+				`http://localhost:5000/map/api/helps/emergencyLevel/${detailContent.aidId}`,
+				vote
+			)
+			.then((res) => console.log("vote res", res))
+			.catch((err) => console.log("vote err", err));
 	};
 	const classes = useStyles();
 	return (
@@ -103,7 +106,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 									<Col md={6}>
 										<ListGroup className="list-group-flush">
 											<ListGroupItem>
-												<strong>Yardım Numarası : </strong>
+												<strong>Yardım Kodu : </strong>
 												{detailContent.aidNo}
 											</ListGroupItem>
 											<ListGroupItem>
@@ -127,48 +130,61 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 													)}
 													{!voteDisplay && detailContent ? (
 														<Col md={12}>
-															<div className={classes.root}>
-																<Row
-																	style={{
-																		display: "flex",
-																		alignItems: "center",
-																	}}
-																>
-																	<Col md={7}>
-																		<Rating
-																			name="hover-feedback"
-																			value={
-																				detailContent.aidEmergencyLevel.level
-																			}
-																			precision={0.5}
-																			readOnly
-																		/>
-																	</Col>
-																	{value !== null && (
-																		<Col md={5}>
-																			{detailContent.aidEmergencyLevel
-																				? labels[
+															<Row>
+																{detailContent &&
+																	detailContent.aidEmergencyLevel &&
+																	detailContent.aidEmergencyLevel.level && (
+																		<>
+																			<Col
+																				md={5}
+																				style={{
+																					display: "flex",
+																					flexDirection: "column",
+																				}}
+																			>
+																				<Rating
+																					name="hover-feedback"
+																					value={
 																						detailContent.aidEmergencyLevel
 																							.level
-																				  ]
-																				: labels[5]}
-																		</Col>
+																					}
+																					precision={0.5}
+																					readOnly
+																				/>
+																				{
+																					detailContent.aidEmergencyLevel
+																						.voteNumber
+																				}{" "}
+																				kez oylandı
+																			</Col>
+																			<Col md={3}>
+																				{
+																					labels[
+																						detailContent.aidEmergencyLevel
+																							.level
+																					]
+																				}
+																			</Col>
+																			{!voteDisplay && (
+																				<Col md={4}>
+																					<Button
+																						colorScheme="teal"
+																						variant="outline"
+																						onClick={() =>
+																							setVoteDisplay(!voteDisplay)
+																						}
+																						size="md"
+																					>
+																						Oyla
+																					</Button>
+																				</Col>
+																			)}
+																		</>
 																	)}
-																</Row>
-															</div>
+															</Row>
 														</Col>
 													) : null}
-													{!voteDisplay && (
-														<Col md={4}>
-															<Button
-																colorScheme="teal"
-																onClick={() => setVoteDisplay(!voteDisplay)}
-																size="sm"
-															>
-																Oyla
-															</Button>
-														</Col>
-													)}
+
 													{voteDisplay && (
 														<div className={classes.root}>
 															<Col md={12}>
@@ -232,17 +248,7 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 											</ListGroupItem>
 											<ListGroupItem>
 												<strong>Detay : </strong>
-												Lorem Ipsum is simply dummy text of the printing and
-												typesetting industry. Lorem Ipsum has been the
-												industry's standard dummy text ever since the 1500s,
-												when an unknown printer took a galley of type and
-												scrambled it to make a type specimen book. It has
-												survived not only five centuries, but also the leap into
-												electronic typesetting, remaining essentially unchanged.
-												It was popularised in the 1960s with the release of
-												Letraset sheets containing Lorem Ipsum passages, and
-												more recently with desktop publishing software like
-												Aldus PageMaker including versions of Lorem Ipsum.
+												{detailContent.aidDetail}
 											</ListGroupItem>
 										</ListGroup>
 									</Col>

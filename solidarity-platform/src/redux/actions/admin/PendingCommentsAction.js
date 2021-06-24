@@ -27,7 +27,7 @@ export const fetchPendingComments = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingCommentsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/location`)
+			.get(`http://localhost:5000/map/api/helps/details/comment/pending`)
 			.then((response) => {
 				const pendingComments = response.data;
 				console.log(pendingComments);

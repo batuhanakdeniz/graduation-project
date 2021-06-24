@@ -6,9 +6,9 @@ import { GiCheckMark } from "react-icons/gi";
 import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 import { useDispatch } from "react-redux";
-import { fetchDetailContent } from "../../redux";
+import { fetchDetailContent } from "../../../redux";
 import { useDisclosure } from "@chakra-ui/react";
-import DetailModal from "../Map/Layer_4/DetailModal";
+import DetailModal from "../../Map/Layer_4/DetailModal";
 
 function PendingAid(props) {
 	const { aid } = props;
