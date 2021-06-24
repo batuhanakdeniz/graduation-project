@@ -1,10 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import FormikControl from "../FormComponents/FormikControl";
+import FormikControl from "../../FormComponents/FormikControl";
 import { Button } from "@chakra-ui/button";
 import { GiCheckMark } from "react-icons/gi";
 import { Col, Row } from "react-bootstrap";
+import axios from "axios";
 
 function UserTypeSelector({ user, setUserTypeEditMode }) {
 	const dropdownOptions = [
@@ -21,8 +22,11 @@ function UserTypeSelector({ user, setUserTypeEditMode }) {
 	});
 
 	const onSubmit = (values) => {
-		console.log("Form Data", values);
 		console.log("Saved Data", JSON.parse(JSON.stringify(values)));
+
+		axios
+			.put(`http://localhost:5000//api/admin/users/status/${user._id}`, values)
+			.then((res) => console.log("res", res));
 		setUserTypeEditMode(false);
 	};
 	return (

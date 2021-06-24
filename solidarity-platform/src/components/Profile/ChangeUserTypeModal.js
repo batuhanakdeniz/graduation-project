@@ -4,6 +4,7 @@ import { Col, Container, Modal, Row } from "react-bootstrap";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikControl from "../FormComponents/FormikControl";
+import axios from "axios";
 
 function ChangeUserTypeModal({ type, show, handleClose }) {
 	const dropdownOptions =
@@ -28,8 +29,16 @@ function ChangeUserTypeModal({ type, show, handleClose }) {
 	});
 
 	const onSubmit = (values) => {
-		console.log("Form Data", values);
 		console.log("Saved Data", JSON.parse(JSON.stringify(values)));
+		let formValues = {
+			statusUserType: {
+				isStatusPending: true,
+				applyUserType: values.userType,
+			},
+		};
+		axios
+			.put(`http://localhost:5000/api/loggedUser/update`, formValues)
+			.then((res) => console.log("sdfasd", res));
 		handleClose();
 	};
 	return (

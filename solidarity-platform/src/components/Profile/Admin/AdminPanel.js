@@ -1,10 +1,12 @@
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import PendingUsers from "../PendingUsers";
-import PendingAids from "../PendingAids";
-import AllAidsList from "../AllAidsList";
-import AllUserList from "../AllUserList";
-import PendingComments from "../PendingComments";
+import PendingUsers from "./PendingUsers";
+import PendingAids from "./PendingAids";
+import AllAidsList from "./AllAidsList";
+import AllUserList from "./AllUserList";
+import PendingComments from "./PendingComments";
+import LoggedUsersActiveAids from "../LoggedUsersActiveAids";
+import LoggedUsersActiveComments from "../LoggedUsersActiveComments";
 function AdminPanel() {
 	return (
 		<div className="adminPanel">
@@ -25,6 +27,12 @@ function AdminPanel() {
 					<Tab _selected={{ color: "white", bg: "pink.400" }}>
 						Onay Bekleyen Yorumlar
 					</Tab>
+					<Tab _selected={{ color: "white", bg: "blue.200" }}>
+						Benim Yardımlarım
+					</Tab>
+					<Tab _selected={{ color: "white", bg: "red.200" }}>
+						Benim Yorumlarım
+					</Tab>
 				</TabList>
 				<TabPanels>
 					<TabPanel>
@@ -41,6 +49,12 @@ function AdminPanel() {
 					</TabPanel>
 					<TabPanel>
 						<PendingComments />
+					</TabPanel>
+					<TabPanel>
+						<LoggedUsersActiveAids />
+					</TabPanel>
+					<TabPanel>
+						<LoggedUsersActiveComments />
 					</TabPanel>
 				</TabPanels>
 			</Tabs>

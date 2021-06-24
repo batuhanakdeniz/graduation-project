@@ -25,7 +25,7 @@ export const Search = ({ position, zoom }) => {
 		<Form inline>
 			<FormControl
 				type="text"
-				placeholder="Search"
+				placeholder="Bir Yardım Ara"
 				className="mr-sm-2"
 				onBlur={handleSearchBlur}
 				onChange={handleSearch}

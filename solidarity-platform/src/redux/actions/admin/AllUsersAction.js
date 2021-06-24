@@ -27,7 +27,7 @@ export const fetchAllUsers = () => {
 	return (dispatch) => {
 		dispatch(fetchAllUsersRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/location`)
+			.get(`http://localhost:5000/api/admin/users`)
 			.then((response) => {
 				const allUsers = response.data;
 				console.log(allUsers);

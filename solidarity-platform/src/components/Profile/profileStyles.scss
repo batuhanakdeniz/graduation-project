@@ -213,9 +213,9 @@
 }
 
 .allAidsContainer {
-	margin-bottom: 1rem;
 	.aidItem {
-		height: 25rem;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
 		.key {
 			font-size: 1rem;
 			font-weight: 800;
@@ -223,11 +223,12 @@
 		.value {
 			margin-left: 1rem;
 		}
-		.aidImg {
-			height: 15rem;
+		.cardImage {
+			margin-top: 1rem;
+			min-height: 10rem;
 			display: flex;
-			justify-content: center;
 			align-items: center;
+			justify-content: center;
 		}
 		.property {
 			margin-bottom: 1rem;

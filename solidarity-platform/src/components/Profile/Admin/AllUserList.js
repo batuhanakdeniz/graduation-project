@@ -1,42 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllAids } from "../../redux";
+import { fetchAllUsers } from "../../../redux";
+import UserListItem from "./UserListItem";
 
-import AllAidListItem from "./AllAidListItem";
-import PaginatationComponent from "./PaginatationComponent";
-function AllAidsList() {
-	const allAids = useSelector((state) => state.allAids);
+import PaginatationComponent from "../PaginatationComponent";
+function AllUserList() {
+	const allUsers = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
-		dispatch(fetchAllAids());
+		dispatch(fetchAllUsers());
 		// ! Alt satır kalacak silme
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 4;
+	const itemsPerPage = 6;
 	const indexOfLastPost = currentPage * itemsPerPage;
 	const indexOfFirstPost = indexOfLastPost - itemsPerPage;
 	const [currentPosts, setCurrentPosts] = useState(
-		allAids.allAidsList.slice(indexOfFirstPost, indexOfLastPost)
+		allUsers.allUsersList.slice(indexOfFirstPost, indexOfLastPost)
 	);
 	useEffect(() => {
 		setCurrentPosts(
-			allAids.allAidsList.slice(indexOfFirstPost, indexOfLastPost)
+			allUsers.allUsersList.slice(indexOfFirstPost, indexOfLastPost)
 		);
 		// eslint-disable-next-line
-	}, [allAids, currentPage]);
+	}, [allUsers, currentPage]);
 
-	return allAids.loading ? (
+	return allUsers.loading ? (
 		<h1>Loading!!!</h1>
-	) : allAids.error ? (
-		<h1>{allAids.error}</h1>
+	) : allUsers.error ? (
+		<h1>{allUsers.error}</h1>
 	) : (
-		<>
-			<Row md={2} className="allAidsContainer">
-				{currentPosts.map((aid, idx) => (
-					<AllAidListItem key={idx} aid={aid} />
+		<div className="allUsersContainer">
+			<Row md={1}>
+				{currentPosts.map((user, idx) => (
+					<UserListItem key={idx} user={user} />
 				))}
 			</Row>
 			<Row>
@@ -50,14 +50,14 @@ function AllAidsList() {
 				>
 					<PaginatationComponent
 						itemsPerPage={itemsPerPage}
-						totalFoundings={allAids.allAidsList.length}
+						totalFoundings={allUsers.allUsersList.length}
 						setCurrentPage={setCurrentPage}
 						currentPage={currentPage}
 					/>
 				</Col>
 			</Row>
-		</>
+		</div>
 	);
 }
 
-export default AllAidsList;
+export default AllUserList;

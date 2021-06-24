@@ -42,40 +42,25 @@ function UserInfoColumn({ loggedUserData }) {
 					)}
 				</Col>
 			</Row>
-			{loggedUserData && loggedUserData.userType === "Confirmed" && (
-				<Row className="columnItems">
-					<Col md={12} className="applicationSection">
-						<span>Üyeliğinizi değiştirmek ister misiniz?</span>
-					</Col>
-					<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
-						<Button colorScheme="green" onClick={handleShow} isFullWidth>
-							Başvuru Yap
-						</Button>
-						<ChangeUserTypeModal
-							type={loggedUserData.userType}
-							handleClose={handleClose}
-							show={show}
-						/>
-					</Col>
-				</Row>
-			)}
-			{loggedUserData && loggedUserData.userType === "Unconfirmed" && (
-				<Row className="columnItems">
-					<Col md={12} className="applicationSection">
-						<span>Üyeliğinizi değiştirmek ister misiniz?</span>
-					</Col>
-					<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
-						<Button colorScheme="green" onClick={handleShow} isFullWidth>
-							Başvuru Yap
-						</Button>
-						<ChangeUserTypeModal
-							type={loggedUserData.userType}
-							handleClose={handleClose}
-							show={show}
-						/>
-					</Col>
-				</Row>
-			)}
+			{loggedUserData &&
+				(loggedUserData.userType === "Confirmed" ||
+					loggedUserData.userType === "Unconfirmed") && (
+					<Row className="columnItems">
+						<Col md={12} className="applicationSection">
+							<span>Üyeliğinizi değiştirmek ister misiniz?</span>
+						</Col>
+						<Col md={12} style={{ padding: "0rem", marginTop: "1rem" }}>
+							<Button colorScheme="green" onClick={handleShow} isFullWidth>
+								Başvuru Yap
+							</Button>
+							<ChangeUserTypeModal
+								type={loggedUserData.userType}
+								handleClose={handleClose}
+								show={show}
+							/>
+						</Col>
+					</Row>
+				)}
 		</div>
 	);
 }

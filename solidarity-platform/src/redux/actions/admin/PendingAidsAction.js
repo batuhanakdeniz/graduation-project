@@ -27,7 +27,7 @@ export const fetchPendingAids = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/location`)
+			.get(`http://localhost:5000/map/api/helps/details/pendings`)
 			.then((response) => {
 				const pendingAids = response.data;
 				console.log(pendingAids);

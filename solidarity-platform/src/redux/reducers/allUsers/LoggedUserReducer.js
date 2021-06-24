@@ -2,17 +2,17 @@ import {
 	FETCH_LOGIN_REQUEST,
 	FETCH_LOGIN_SUCCESS,
 	FETCH_LOGIN_FAILURE,
-} from "../../types/user/LoginTypes";
+} from "../../types/allUsers/LoginTypes";
 import {
 	FETCH_LOGGED_USER_DATA_REQUEST,
 	FETCH_LOGGED_USER_DATA_SUCCESS,
 	FETCH_LOGGED_USER_DATA_FAILURE,
-} from "../../types/user/LoggedUserTypes";
+} from "../../types/allUsers/LoggedUserTypes";
 
 const initialState = {
 	loading: false,
 	isLoggedIn: undefined,
-	loggedUserData:[],
+	loggedUserData: [],
 	error: "",
 };
 
@@ -40,21 +40,21 @@ const loggedUserReducer = (state = initialState, action) => {
 		case FETCH_LOGGED_USER_DATA_REQUEST:
 			return {
 				...state,
-				loading: false,				
+				loading: false,
 				error: action.payload,
 			};
 		case FETCH_LOGGED_USER_DATA_SUCCESS:
 			return {
 				...state,
 				loading: false,
-				loggedUserData:action.payload,
+				loggedUserData: action.payload,
 				error: action.payload,
 			};
 		case FETCH_LOGGED_USER_DATA_FAILURE:
 			return {
 				...state,
 				loading: false,
-				loggedUserData:[],
+				loggedUserData: [],
 				error: action.payload,
 			};
 

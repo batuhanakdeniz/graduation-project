@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { fetchPendingComments } from "../../redux";
-import PendingCommentItem from "./PendingCommentItem";
+import { fetchLoggedUsersActiveComments } from "../../redux";
+import CommentItem from "./CommentItem";
 import PaginatationComponent from "./PaginatationComponent";
 
-function PendingComments() {
-	//const pendingComments = useSelector((state) => state.pendingComments);
+function LoggedUsersActiveComments() {
+	//const loggedUsersComments = useSelector((state) => state.loggedUsersComments);
 	const dispatch = useDispatch();
-	const pendingComments = {
+	const loggedUsersComments = {
 		loading: false,
-		pendingCommentsList: [
+		activeCommentsList: [
 			{
 				userName: "auster07",
 				aidID: "1",
@@ -120,7 +120,7 @@ function PendingComments() {
 		error: "",
 	};
 	useEffect(() => {
-		dispatch(fetchPendingComments());
+		//dispatch(fetchLoggedUsersActiveComments());
 		// ! Alt satır kalacak silme
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -129,11 +129,14 @@ function PendingComments() {
 	const indexOfLastPost = currentPage * itemsPerPage;
 	const indexOfFirstPost = indexOfLastPost - itemsPerPage;
 	const [currentPosts, setCurrentPosts] = useState(
-		pendingComments.pendingCommentsList.slice(indexOfFirstPost, indexOfLastPost)
+		loggedUsersComments.activeCommentsList.slice(
+			indexOfFirstPost,
+			indexOfLastPost
+		)
 	);
 	useEffect(() => {
 		setCurrentPosts(
-			pendingComments.pendingCommentsList.slice(
+			loggedUsersComments.activeCommentsList.slice(
 				indexOfFirstPost,
 				indexOfLastPost
 			)
@@ -141,15 +144,15 @@ function PendingComments() {
 		// eslint-disable-next-line
 	}, [/* pendingComments, */ currentPage]);
 
-	return pendingComments.loading ? (
+	return loggedUsersComments.loading ? (
 		<h1>Loaading</h1>
-	) : pendingComments.error ? (
-		<h1>{pendingComments.error}</h1>
+	) : loggedUsersComments.error ? (
+		<h1>{loggedUsersComments.error}</h1>
 	) : (
 		<div className="pendingComments">
 			<Row md={2}>
 				{currentPosts.map((Comment, idx) => (
-					<PendingCommentItem key={idx} Comment={Comment} />
+					<CommentItem key={idx} Comment={Comment} />
 				))}
 			</Row>
 			<Row>
@@ -163,7 +166,7 @@ function PendingComments() {
 				>
 					<PaginatationComponent
 						itemsPerPage={itemsPerPage}
-						totalFoundings={pendingComments.pendingCommentsList.length}
+						totalFoundings={loggedUsersComments.activeCommentsList.length}
 						setCurrentPage={setCurrentPage}
 						currentPage={currentPage}
 					/>
@@ -173,4 +176,4 @@ function PendingComments() {
 	);
 }
 
-export default PendingComments;
+export default LoggedUsersActiveComments;

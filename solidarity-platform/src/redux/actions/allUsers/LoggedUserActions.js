@@ -2,7 +2,7 @@ import {
 	FETCH_LOGGED_USER_DATA_REQUEST,
 	FETCH_LOGGED_USER_DATA_SUCCESS,
 	FETCH_LOGGED_USER_DATA_FAILURE,
-} from "../../types/user/LoggedUserTypes";
+} from "../../types/allUsers/LoggedUserTypes";
 
 import axios from "axios";
 

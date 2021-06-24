@@ -39,8 +39,10 @@ export const postHelpSearch = async (req, res) => {
     };
     const sort = { "$sort" : { "score" : -1 } }
 		let helps = await Help.aggregate([query,project,sort]);
+    console.log(helps);
 		res.status(200).send(helps);
 	} catch (err) {
+    console.log(err);
 		res.status(404).json({
 			message: err.message,
 		});

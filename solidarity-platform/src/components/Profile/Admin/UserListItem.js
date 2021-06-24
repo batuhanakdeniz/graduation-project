@@ -11,7 +11,12 @@ function UserListItem({ user }) {
 		<Col>
 			<Row className="pendingUser">
 				<Col md={2} className="columnItem">
-					<Image src={user.ppImage} alt="" fluid roundedCircle></Image>
+					<Image
+						src={user.ppImage ? user.ppImage : "https://picsum.photos/200"}
+						alt=""
+						fluid
+						roundedCircle
+					></Image>
 				</Col>
 				<Col md={6} className="columnItem">
 					<Row>

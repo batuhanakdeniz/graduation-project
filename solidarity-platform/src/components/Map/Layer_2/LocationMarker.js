@@ -1,26 +1,26 @@
 import { Button, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { setAidLocationLatLng, setAidLocationProperties } from "../../../redux";
 import AddAidModal from "../Layer_3/AddAidModal";
-
+import { Col, Row } from "react-bootstrap";
+import { FaPlusSquare } from "react-icons/fa";
 function LocationMarker(props) {
 	const position = useSelector((state) => state.addAidLocation);
 	const dispatch = useDispatch();
-
+	const popupRef = useRef();
 	const geocoder = L.Control.Geocoder.nominatim();
 	const map = useMapEvents({
 		click(e) {
 			dispatch(setAidLocationLatLng(e.latlng));
-			//console.log("1");
+			popupRef.current.openPopup();
 			geocoder.reverse(
 				e.latlng,
 				map.options.crs.scale(map.getZoom()),
 				(results) => {
 					var r = results[0];
-					console.log("r : ", r.properties);
 					if (results[0]) dispatch(setAidLocationProperties(r.properties));
 				}
 			);
@@ -31,33 +31,36 @@ function LocationMarker(props) {
 	const handleModalClick = () => {
 		onOpen();
 	};
-	const [isSuccesfullySubmitted, setIsSuccesfullySubmitted] = useState(false);
+
 	return position === null ? null : (
 		<>
-			<Marker position={position} icon={props.icon}>
-				<Popup>
-					<span>
-						<h2>Buraya yardım ekleyebilirsin</h2>
-						<br />
-					</span>
-					<Button
-						onClick={() => {
-							handleModalClick();
-							setIsSuccesfullySubmitted(false);
-						}}
-						key={"xl"}
-						m={4}
-					>
-						Buraya Yardım Ekle
-					</Button>
+			<Marker position={position} icon={props.icon} ref={popupRef}>
+				<Popup ref={popupRef}>
+					<Row>
+						<Col md={12}>
+							<span style={{ fontSize: "larger", textAlign: "center" }}>
+								<strong>Buraya yardım ekleyebilirsin</strong>
+							</span>
+						</Col>
+						<Col md={12}>
+							<Button
+								onClick={() => {
+									handleModalClick();
+								}}
+								key={"xl"}
+								colorScheme="telegram"
+								leftIcon={<FaPlusSquare />}
+								isFullWidth
+								size="lg"
+								mt="1rem"
+							>
+								Ekle
+							</Button>
+						</Col>
+					</Row>
 				</Popup>
 			</Marker>
-			<AddAidModal
-				isSuccesfullySubmitted={isSuccesfullySubmitted}
-				setIsSuccesfullySubmitted={setIsSuccesfullySubmitted}
-				onClose={onClose}
-				isOpen={isOpen}
-			/>
+			<AddAidModal onClose={onClose} isOpen={isOpen} />
 		</>
 	);
 }

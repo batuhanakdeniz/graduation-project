@@ -32,7 +32,7 @@ export async function auth (req, res, next){
         }
     } catch (error) {
         res.status(406).json({
-            errorMessage: "Yetkiniz bulunmamaktadır.",
+            message: "Yetkiniz bulunmamaktadır.",
         })
     }
 }

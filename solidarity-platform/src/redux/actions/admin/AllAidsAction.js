@@ -27,7 +27,7 @@ export const fetchAllAids = (aidId) => {
 	return (dispatch) => {
 		dispatch(fetchAllAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/basics`)
+			.get(`http://localhost:5000/map/api/helps/details`)
 			.then((response) => {
 				const allAids = response.data;
 				dispatch(fetchAllAidsSuccess(allAids));
