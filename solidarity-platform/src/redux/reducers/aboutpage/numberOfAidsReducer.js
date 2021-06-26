@@ -2,7 +2,7 @@ import {
 	FETCH_NUMBER_OF_AIDS_REQUEST,
 	FETCH_NUMBER_OF_AIDS_SUCCESS,
 	FETCH_NUMBER_OF_AIDS_FAILURE,
-} from "../../types/homepage/numberOfAidsTypes";
+} from "../../types/aboutpage/numberOfAidsTypes";
 
 const initialState = {
 	loading: false,

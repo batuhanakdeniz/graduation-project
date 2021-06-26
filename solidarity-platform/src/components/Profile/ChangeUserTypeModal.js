@@ -25,7 +25,7 @@ function ChangeUserTypeModal({ type, show, handleClose }) {
 		userType: "",
 	};
 	const validationSchema = Yup.object({
-		userType: Yup.string().required("Required"),
+		userType: Yup.string().required("Gerekli Alan!"),
 	});
 
 	const onSubmit = (values) => {
@@ -62,7 +62,7 @@ function ChangeUserTypeModal({ type, show, handleClose }) {
 							{(formik) => (
 								<Form>
 									<FormikControl
-										placeholder="Select User Type"
+										placeholder="Bir Kullanıcı Türü Seçiniz!"
 										control="chakraselect"
 										name="userType"
 										options={dropdownOptions}

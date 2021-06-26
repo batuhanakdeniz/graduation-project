@@ -124,13 +124,9 @@ function AllAidListItem({ aid }) {
 					</ListGroupItem>
 					<ListGroupItem>
 						<strong>Yardım Kategorileri : </strong>
-						<Row md={2}>
-							<Col>
-								<span>
-									{category} - {subcategory}
-								</span>
-							</Col>
-						</Row>
+						<span>
+							{category} - {subcategory}
+						</span>
 					</ListGroupItem>
 				</ListGroup>
 				<ListGroupItem>

@@ -10,19 +10,12 @@ function RegistrationForm() {
 	const [message, setMessage] = useState("");
 	const [successful, setSuccessful] = useState(false);
 
-	const dropdownOptions = [
-		{ key: "Onaylanmamış Üye", value: "Unconfirmed" },
-		{ key: "Onaylanmış Üye", value: "Confirmed" },
-		{ key: "Yönetici Üye", value: "Admin" },
-		{ key: "Kuruma bağlı Üye", value: "Corporate" },
-	];
-
 	const initialValues = {
 		userName: "",
 		firstName: "",
 		lastName: "",
 		email: "",
-		registrationType: "",
+		registrationType: "Unconfirmed",
 		password: "",
 		confirmPassword: "",
 		phone: "",
@@ -32,25 +25,51 @@ function RegistrationForm() {
 		/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)?[ -]?(\(?\d{2}\)?)?$/;
 
 	const validationSchema = Yup.object({
-		registrationType: Yup.string().required("Required"),
-		userName: Yup.string().required("Required"),
-		email: Yup.string().email("Invalid Email Format").required("Required"),
+		userName: Yup.string()
+			.required("Gerekli Alan!")
+			.min(4, "Kullanıcı adınız en az 4 karakter uzunluğunda olmalıdır!")
+			.max(30, "Kullanıcı adınız en fazla 30 karakter uzunluğunda olmalıdır!"),
+
+		email: Yup.string()
+			.email("Geçersiz Email formatı!")
+			.required("Gerekli Alan"),
 		password: Yup.string()
-			.required("Please Enter your password")
+			.required("Lütfen geçerli bir şifre giriniz!")
 			.matches(
 				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-				"Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+				"Şifreniz minimum 8 karakterden oluşmalı ve şifreniz en az bir küçük harf, bir büyük harf bir sayı ve bir özel karakter içermelidir!"
 			),
-		firstName: Yup.string().required("Required"),
-		lastName: Yup.string().required("Required"),
+		firstName: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(
+				/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/,
+				"Lütfen sadece karakter giriniz!"
+			)
+			.min(2, "Adınız en az 2 karakter uzunluğunda olmalıdır!")
+			.max(30, "Adınız en fazla 30 karakter uzunluğunda olmalıdır!"),
+		lastName: Yup.string()
+			.required("Gerekli Alan!")
+			.matches(
+				/^[^\d@#.!?|$%^&*()_+\-=[\]]+$/,
+				"Lütfen sadece karakter giriniz!"
+			)
+			.min(2, "Soyadınız en az 2 karakter uzunluğunda olmalıdır!")
+			.max(30, "Soyadınız en fazla 30 karakter uzunluğunda olmalıdır!"),
 		confirmPassword: Yup.string()
-			.oneOf([Yup.ref("password"), ""], "Passwords must match")
-			.required("Required"),
-		phone: Yup.string().matches(PhoneRegex, "Phone number is not valid"),
+			.oneOf(
+				[Yup.ref("password"), ""],
+				"Şifreniz eşleşmiyor. Lütfen tekrar deneyiniz!"
+			)
+			.required("Gerekli Alan"),
+		phone: Yup.string().matches(
+			PhoneRegex,
+			"Lütfen geçerli bir telefon numarası giriniz!"
+		),
 	});
 
 	async function onSubmit(values) {
 		setMessage("");
+		console.log("response", values);
 		setSuccessful(false);
 		try {
 			const response = await axios.post(`http://localhost:5000/signup`, values);
@@ -84,15 +103,6 @@ function RegistrationForm() {
 									<span className="registrationHeader">
 										Bize katılmak ister misiniz?
 									</span>
-								</Col>
-								<Col md={12}>
-									<FormikControl
-										placeholder="Birini Seçiniz"
-										control="chakraselect"
-										label="Lütfen Bir Üye Tipi Seçiniz"
-										name="registrationType"
-										options={dropdownOptions}
-									/>
 								</Col>
 							</Row>
 							<Row>

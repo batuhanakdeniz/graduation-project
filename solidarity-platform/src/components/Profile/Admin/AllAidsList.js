@@ -15,7 +15,7 @@ function AllAidsList() {
 	}, []);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 4;
+	const itemsPerPage = 1;
 	const indexOfLastPost = currentPage * itemsPerPage;
 	const indexOfFirstPost = indexOfLastPost - itemsPerPage;
 	const [currentPosts, setCurrentPosts] = useState(

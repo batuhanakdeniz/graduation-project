@@ -13,9 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaRegUser } from "react-icons/fa";
 import { FaHandsHelping } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
-import { fetchNumberOfAids } from "../../redux/actions/homepage/numberOfAidsActions";
-import { fetchNumberOfUsers } from "../../redux/actions/homepage/numberOfUsersActions";
-import { fetchNumberOfHelpedAids } from "../../redux/actions/homepage/numberOfHelpedAidsActions";
+import { fetchNumberOfAids } from "../../redux/actions/aboutpage/numberOfAidsActions";
+import { fetchNumberOfUsers } from "../../redux/actions/aboutpage/numberOfUsersActions";
+import { fetchNumberOfHelpedAids } from "../../redux/actions/aboutpage/numberOfHelpedAidsActions";
 
 function StatsCard(props) {
 	const { title, stat, icon } = props;

@@ -22,9 +22,9 @@ export {
 	fetchLoggedUsersActiveComments,
 } from "./actions/allUsers/LoggedUsersCommentsAction";
 
-export { fetchNumberOfAids } from "./actions/homepage/numberOfAidsActions";
-export { fetchNumberOfHelpedAids } from "./actions/homepage/numberOfHelpedAidsActions";
-export { fetchNumberOfUsers } from "./actions/homepage/numberOfUsersActions";
+export { fetchNumberOfAids } from "./actions/aboutpage/numberOfAidsActions";
+export { fetchNumberOfHelpedAids } from "./actions/aboutpage/numberOfHelpedAidsActions";
+export { fetchNumberOfUsers } from "./actions/aboutpage/numberOfUsersActions";
 
 export { fetchPendingAids } from "./actions/admin/PendingAidsAction";
 export { fetchPendingUsers } from "./actions/admin/PendingUsersToConfirmAction";
