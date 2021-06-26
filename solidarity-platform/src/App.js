@@ -10,7 +10,7 @@ import MapComponent from "./components/Map/Layer_1/MapComponent";
 import DetailPage from "./components/Details/Detail";
 import AboutPage from "./components/About/about";
 import ProfileSelector from "./components/Profile/ProfileSelector";
-import ProfileEditPage from "./components/Profile/ProfileEditPage";
+import ProfileEditPage from "./components/Profile/EditPage/ProfileEditPage";
 import RegistrationTypesPage from "./components/RegistrationForm/RegistrationTypesPage";
 import NasilIsler from "./components/NasilIsler/NasilIsler";
 import styled from "styled-components";

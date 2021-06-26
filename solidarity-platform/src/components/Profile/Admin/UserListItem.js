@@ -21,13 +21,13 @@ function UserListItem({ user }) {
 				<Col md={6} className="columnItem">
 					<Row>
 						<Col md={4} className="key">
-							<span>Name:</span>
+							<span>Ad:</span>
 						</Col>
 						<Col md={8} className="value">
 							<span>{user.userName}</span>
 						</Col>
 						<Col md={4} className="key">
-							<span>Surname:</span>
+							<span>Soyadı:</span>
 						</Col>
 						<Col md={8} className="value">
 							<span>{user.lastName}</span>
@@ -49,7 +49,7 @@ function UserListItem({ user }) {
 					) : (
 						<Row className="selectType">
 							<Col md={12} className="key">
-								<span>User Type </span>
+								<span>Kullanıcı Tipi </span>
 								<Button size="sm" onClick={() => setUserTypeEditMode(true)}>
 									<GrEdit />
 								</Button>

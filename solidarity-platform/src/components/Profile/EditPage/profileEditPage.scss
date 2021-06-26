@@ -1,0 +1,25 @@
+.edit-page {
+	min-height: 80vh;
+	display: flex;
+	align-items: center;
+}
+.edit-page-container {
+	background-color: rgb(245, 245, 245);
+	border: 3px dotted rgb(58, 58, 58);
+	padding: 4rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	.profile-img {
+		position: relative;
+		height: 100%;
+
+		img {
+			height: 100%;
+		}
+		.profile-img-btn {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		}
+	}
+}

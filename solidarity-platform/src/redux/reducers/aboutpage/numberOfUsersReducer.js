@@ -2,7 +2,7 @@ import {
 	FETCH_NUMBER_OF_USERS_REQUEST,
 	FETCH_NUMBER_OF_USERS_SUCCESS,
 	FETCH_NUMBER_OF_USERS_FAILURE,
-} from "../../types/homepage/numberOfUsersTypes";
+} from "../../types/aboutpage/numberOfUsersTypes";
 
 const initialState = {
 	loading: false,

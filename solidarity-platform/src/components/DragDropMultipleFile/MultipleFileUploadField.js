@@ -76,7 +76,13 @@ const deleteButton = {
 	right: "0px",
 };
 
-function MultipleFileUploadField({ files, setFiles, setErrorFiles }) {
+function MultipleFileUploadField({
+	files,
+	setFiles,
+	setErrorFiles,
+	labelName,
+	maxFiles,
+}) {
 	const onDrop = useCallback((accFiles, rejFiles) => {
 		const mappedAcc = accFiles.map((file) =>
 			Object.assign(
@@ -104,6 +110,7 @@ function MultipleFileUploadField({ files, setFiles, setErrorFiles }) {
 		isDragReject,
 	} = useDropzone({
 		onDrop,
+		maxFiles: maxFiles ? maxFiles : 5,
 		accept: ["image/*", "video/*"],
 		maxSize: 8 * 1024 * 1024, // 8MB
 	});
@@ -129,7 +136,9 @@ function MultipleFileUploadField({ files, setFiles, setErrorFiles }) {
 	return (
 		<React.Fragment>
 			<div>
-				<FormLabel htmlFor={"File"}>Fotoğraf Ekleyin*</FormLabel>
+				<FormLabel htmlFor={"File"}>
+					{labelName ? labelName : "Fotoğraf Ekleyin*"}
+				</FormLabel>
 				<div {...getRootProps({ style })}>
 					<input {...getInputProps()} />
 					<p>Drag 'n' drop some files here, or click to select files</p>

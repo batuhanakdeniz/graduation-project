@@ -13,9 +13,9 @@ import mapSearchAidReducer from "./reducers/aids/MapSearchAidReducer";
 import detailContentReducer from "./reducers/aids/DetailContentReducer";
 import popupContentReducer from "./reducers/aids/PopupContentReducer";
 
-import numberOfAidsReducer from "./reducers/homepage/numberOfAidsReducer";
-import numberOfHelpedAidsReducer from "./reducers/homepage/numberOfHelpedAidsReducer";
-import numberOfUsersReducer from "./reducers/homepage/numberOfUsersReducer";
+import numberOfAidsReducer from "./reducers/aboutpage/numberOfAidsReducer";
+import numberOfHelpedAidsReducer from "./reducers/aboutpage/numberOfHelpedAidsReducer";
+import numberOfUsersReducer from "./reducers/aboutpage/numberOfUsersReducer";
 
 import loggedUserReducer from "./reducers/allUsers/LoggedUserReducer";
 import userLocationReducer from "./reducers/allUsers/UserLocationReducer";
@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
 	numberOfHelpedAids: numberOfHelpedAidsReducer,
 	numberOfUsers: numberOfUsersReducer,
 	pendingAids: pendingAidsReducer,
-	pendingUsers: pendingUsersReducer,
+	aboutpage: pendingUsersReducer,
 	loggedUsersAids: loggedUsersAidsReducer,
 	loggedUsersComments: LoggedUsersCommentsReducer,
 	allUsers: allUsersReducer,

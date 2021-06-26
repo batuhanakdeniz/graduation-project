@@ -40,7 +40,7 @@ function UserTypeSelector({ user, setUserTypeEditMode }) {
 					<Row>
 						<Col md={12}>
 							<FormikControl
-								placeholder="Select User Type"
+								placeholder="Kullanıcı Tipi Seç"
 								control="chakraselect"
 								name="userType"
 								options={dropdownOptions}
