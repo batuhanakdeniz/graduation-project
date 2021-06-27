@@ -4,6 +4,7 @@ import { useMap, useMapEvents } from "react-leaflet";
 import { useDispatch } from "react-redux";
 import { setUserLocation } from "../../../redux";
 import { BiCurrentLocation } from "react-icons/bi";
+import { Tooltip } from "@chakra-ui/react";
 export const FlyToLocationButton = () => {
 	const parentMap = useMap();
 	const dispatch = useDispatch();
@@ -19,9 +20,16 @@ export const FlyToLocationButton = () => {
 	});
 	// eslint-disable-next-line
 	const button = useMemo(() => (
-		<Button onClick={locationButton} colorScheme="brand" size="lg">
-			<BiCurrentLocation size="2rem" />
-		</Button> //todo onClick ekle ve yardım eklenir hale gelsin
+		<Tooltip
+			hasArrow
+			label="Konumunuza Götürür"
+			fontSize="sm"
+			placement="right-end"
+		>
+			<Button onClick={locationButton} colorScheme="brand" size="lg">
+				<BiCurrentLocation size="2rem" />
+			</Button>
+		</Tooltip>
 	));
 
 	return (

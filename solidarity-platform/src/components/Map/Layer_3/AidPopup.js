@@ -88,9 +88,15 @@ function AidPopUp({ aidId }) {
 										</Col>
 										<Col
 											md={4}
-											style={labels[popupContent.aidEmercenyLevel.level].style}
+											style={
+												labels[Math.round(popupContent.aidEmercenyLevel.level)]
+													.style
+											}
 										>
-											{labels[popupContent.aidEmercenyLevel.level].value}
+											{
+												labels[Math.round(popupContent.aidEmercenyLevel.level)]
+													.value
+											}
 										</Col>
 									</Row>
 								</div>

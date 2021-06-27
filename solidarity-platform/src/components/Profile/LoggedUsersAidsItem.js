@@ -87,8 +87,11 @@ function LoggedUsersActiveAidsItem({ aid }) {
 									/>
 								</Col>
 								<Col md={2}></Col>
-								<Col md={4} style={labels[aid.emergencyLevel.level].style}>
-									{labels[aid.emergencyLevel.level].value}
+								<Col
+									md={4}
+									style={labels[Math.round(aid.emergencyLevel.level)].style}
+								>
+									{labels[Math.round(aid.emergencyLevel.level)].value}
 								</Col>
 							</Row>
 						</div>

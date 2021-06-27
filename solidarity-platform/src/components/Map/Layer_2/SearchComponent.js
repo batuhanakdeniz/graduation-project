@@ -5,7 +5,6 @@ import { AidCards } from "../Layer_3/AidCards";
 import { Button } from "@chakra-ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMapSearchAid } from "../../../redux/actions/aids/MapSearchAidAction";
-import { Text } from "@chakra-ui/react";
 import { LocationCards } from "../Layer_3/LocationCards";
 import { Tooltip } from "@chakra-ui/react";
 

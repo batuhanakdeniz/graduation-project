@@ -19,11 +19,15 @@ function LoggedUsersPendingAids() {
 	const indexOfLastPost = currentPage * itemsPerPage;
 	const indexOfFirstPost = indexOfLastPost - itemsPerPage;
 	const [currentPosts, setCurrentPosts] = useState(
-		loggedUsersAids.pendingAidsList.slice(indexOfFirstPost, indexOfLastPost)
+		loggedUsersAids &&
+			loggedUsersAids.pendingAidsList &&
+			loggedUsersAids.pendingAidsList.slice(indexOfFirstPost, indexOfLastPost)
 	);
 	useEffect(() => {
 		setCurrentPosts(
-			loggedUsersAids.pendingAidsList.slice(indexOfFirstPost, indexOfLastPost)
+			loggedUsersAids &&
+				loggedUsersAids.pendingAidsList &&
+				loggedUsersAids.pendingAidsList.slice(indexOfFirstPost, indexOfLastPost)
 		);
 		// eslint-disable-next-line
 	}, [loggedUsersAids, currentPage]);
@@ -35,9 +39,10 @@ function LoggedUsersPendingAids() {
 	) : (
 		<>
 			<Row md={2} className="allAidsContainer">
-				{currentPosts.map((aid, idx) => (
-					<LoggedUsersAidsItem key={idx} aid={aid} />
-				))}
+				{currentPosts &&
+					currentPosts.map((aid, idx) => (
+						<LoggedUsersAidsItem key={idx} aid={aid} />
+					))}
 			</Row>
 			<Row>
 				<Col

@@ -27,7 +27,7 @@ export const fetchPendingComments = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingCommentsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details/comment/pending`)
+			.get(`http://localhost:5000/map/api/helps/details/comment/allPending`)
 			.then((response) => {
 				const pendingComments = response.data;
 				console.log("response.data", response.data);
@@ -39,11 +39,11 @@ export const fetchPendingComments = () => {
 			});
 	};
 };
-export const confirmPendingCommentByID = (commentID) => {
+export const confirmPendingCommentByCommentCode = (commentCode) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.put(
-				`http://localhost:5000/map/api/helps/subcategory/${commentID}`
+				`http://localhost:5000/map/api/helps/subcategory/${commentCode}`
 			);
 			return response;
 		} catch (error) {
@@ -51,11 +51,11 @@ export const confirmPendingCommentByID = (commentID) => {
 		}
 	};
 };
-export const deletePendingCommentByID = (commentID) => {
+export const deletePendingCommentByCommentCode = (commentCode) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${commentID}`
+				`http://localhost:5000/map/api/helps/subcategory/${commentCode}`
 			);
 			return response;
 		} catch (error) {

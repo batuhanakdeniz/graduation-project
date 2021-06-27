@@ -4,16 +4,19 @@ import { Col, Image, Row } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { FaTrashAlt } from "react-icons/fa";
 import blank_avatar from "../blank-avatar.svg";
-import { confirmPendingUserByID, deletePendingUserByID } from "../../../redux";
+import {
+	confirmPendingUserByUsername,
+	deletePendingUserByUsername,
+} from "../../../redux";
 import { useDispatch } from "react-redux";
 
 function PendingUser({ user }) {
 	const dispatch = useDispatch();
 	const confirmPendingUserButtonHandler = () => {
-		dispatch(confirmPendingUserByID(user._id));
+		dispatch(confirmPendingUserByUsername(user.userName));
 	};
 	const deletePendingUserButtonHandler = () => {
-		dispatch(deletePendingUserByID(user._id));
+		dispatch(deletePendingUserByUsername(user.userName));
 	};
 	return (
 		<Col className="pendingUser">

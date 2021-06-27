@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./DetailModal.scss";
 import { Row, Col, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import ImageGallery from "react-image-gallery";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	Button,
 	Modal,
@@ -18,18 +18,9 @@ import CommentComponent from "../Layer_5/CommentComponent";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-const labels = {
-	0.5: "Normal",
-	1: "Normal",
-	1.5: "Normal",
-	2: "Normal",
-	2.5: "Normal",
-	3: "Acil",
-	3.5: "Acil",
-	4: "Acil",
-	4.5: "Çok Acil",
-	5: "Çok Acil",
-};
+import { fetchDetailContent } from "../../../redux";
+import labels from "../Layer_3/labels";
+
 const useStyles = makeStyles({
 	root: {
 		display: "flex",
@@ -39,6 +30,7 @@ const useStyles = makeStyles({
 
 function DetailModal({ isOpen, onOpen, onClose }) {
 	const [images, setImages] = useState([]);
+	const dispatch = useDispatch();
 	const detailContent = useSelector((state) => state.detailContent);
 	useEffect(() => {
 		setImages([]);
@@ -66,7 +58,10 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 				`http://localhost:5000/map/api/helps/emergencyLevel/${detailContent.aidId}`,
 				vote
 			)
-			.then((res) => console.log("vote res", res))
+			.then((res) => {
+				dispatch(fetchDetailContent(detailContent.aidId));
+				console.log("vote res", res);
+			})
 			.catch((err) => console.log("vote err", err));
 	};
 	const classes = useStyles();
@@ -157,12 +152,24 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 																				}{" "}
 																				kez oylandı
 																			</Col>
-																			<Col md={3}>
+																			<Col
+																				md={3}
+																				style={
+																					labels[
+																						Math.round(
+																							detailContent.aidEmergencyLevel
+																								.level
+																						)
+																					].style
+																				}
+																			>
 																				{
 																					labels[
-																						detailContent.aidEmergencyLevel
-																							.level
-																					]
+																						Math.round(
+																							detailContent.aidEmergencyLevel
+																								.level
+																						)
+																					].value
 																				}
 																			</Col>
 																			{!voteDisplay && (
@@ -213,9 +220,11 @@ function DetailModal({ isOpen, onOpen, onClose }) {
 																				labels[
 																					hover !== -1
 																						? hover
-																						: detailContent.aidEmergencyLevel
-																								.level
-																				]
+																						: Math.round(
+																								detailContent.aidEmergencyLevel
+																									.level
+																						  )
+																				].value
 																			}
 																		</Col>
 																	)}

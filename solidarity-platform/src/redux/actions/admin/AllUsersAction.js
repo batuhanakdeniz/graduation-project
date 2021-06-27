@@ -38,11 +38,11 @@ export const fetchAllUsers = () => {
 			});
 	};
 };
-export const deleteUserByID = (userID) => {
+export const deleteUserByUsername = (username) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+				`http://localhost:5000/map/api/helps/subcategory/${username}`
 			);
 			return response;
 		} catch (error) {

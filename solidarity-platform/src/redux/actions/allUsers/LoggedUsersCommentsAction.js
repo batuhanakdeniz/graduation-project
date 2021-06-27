@@ -30,9 +30,10 @@ export const fetchLoggedUsersPendingComments = () => {
 	return (dispatch) => {
 		dispatch(fetchLoggedUsersPendingCommentsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details`)
+			.get(`http://localhost:5000/map/api/helps/details/comments/own/pending`)
 			.then((response) => {
 				const pendingComments = response.data;
+				console.log(response.data);
 				dispatch(fetchLoggedUsersPendingCommentsSuccess(pendingComments));
 			})
 			.catch((error) => {
@@ -65,7 +66,7 @@ export const fetchLoggedUsersActiveComments = () => {
 	return (dispatch) => {
 		dispatch(fetchLoggedUsersActiveCommentsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details`)
+			.get(`http://localhost:5000/map/api/helps/details/comments/own/active`)
 			.then((response) => {
 				const activeComments = response.data;
 				console.log(activeComments);

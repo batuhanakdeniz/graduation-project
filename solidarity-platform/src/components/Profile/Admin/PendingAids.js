@@ -35,9 +35,8 @@ function PendingAids() {
 		<div className="pendingAids">
 			<CardDeck>
 				<Row md={2}>
-					{currentPosts.map((aid, idx) => (
-						<PendingAid key={idx} aid={aid} />
-					))}
+					{currentPosts &&
+						currentPosts.map((aid, idx) => <PendingAid key={idx} aid={aid} />)}
 				</Row>
 			</CardDeck>
 			<Row>

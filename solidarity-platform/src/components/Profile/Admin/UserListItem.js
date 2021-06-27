@@ -7,12 +7,12 @@ import { GrEdit } from "react-icons/gr";
 import { CgDetailsMore } from "react-icons/cg";
 import blank_avatar from "../blank-avatar.svg";
 import { useDispatch } from "react-redux";
-import { deleteUserByID } from "../../../redux";
+import { deleteUserByUsername } from "../../../redux";
 function UserListItem({ user }) {
 	const [userTypeEditMode, setUserTypeEditMode] = useState(false);
 	const dispatch = useDispatch();
 	const deleteUserButtonHandler = () => {
-		dispatch(deleteUserByID(user._id));
+		dispatch(deleteUserByUsername(user.userName));
 	};
 	return (
 		<Col>
