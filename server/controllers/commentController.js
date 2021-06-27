@@ -38,7 +38,9 @@ export const putHelpComment = async (req, res) => {
 			if(!err)	return res.status(404).send(err)
 			console.log("Save oldu comment...",savedComment);
 		});
-		await Help.findOneAndUpdate({_id: req.params.id},{$push: {comment: newComment}});
+		if(status === "Active"){
+			 Help.findOneAndUpdate({_id: req.params.id},{$push: {comment: newComment}});
+		}
 		res.status(200).send({message: "Comment eklendi."});
 	} catch (err) {
 		res.status(404).json({
@@ -52,7 +54,13 @@ export const putHelpCommentStatus = async (req, res) => {
 	try {
 		const { status } = req.body;
 		console.log("status: ",status);
-		await Comment.findOneAndUpdate({_id: req.params.id},{$set: {status: status}});
+		Comment.findOneAndUpdate({_id: req.params.id},{$set: {status: status}},(err,comment)=>{
+			if(err)	res.status(404).json({
+				message: err.message,
+			});
+			Help.findOneAndUpdate({_id: comment.help_id},{$push: {comment: newComment}});
+			console.log("status: ",status);
+		});
 		res.status(200).send({message: "Comment statusu değiştirildi."});
 	} catch (err) {
 		res.status(404).json({
