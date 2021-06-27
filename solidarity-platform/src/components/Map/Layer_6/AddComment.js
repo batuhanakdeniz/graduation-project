@@ -35,14 +35,14 @@ function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 			alert("Yorum yapabilmek için giriş yapmalısınız !!");
 		} else {
 			const data = new FormData();
-			data.append("extraText", values.comment);
+			data.append("text", values.comment);
 			data.append("aidID", aidID);
 
 			files.map((file) => data.append("files", file.file));
 
 			try {
 				axios
-					.post(
+					.put(
 						`http://localhost:5000/map/api/helps/details/comment/${aidID}`,
 						data,
 						{
@@ -64,7 +64,11 @@ function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 							},
 						}
 					)
-					.then((res) => console.log(res));
+					.then((res) => {
+						console.log("comment ekleme", res);
+						setDisplayAddComment(!displayAddComment);
+						dispatch(fetchDetailContent(aidID));
+					});
 				//dispatch(getLoggedIn());
 			} catch (values) {
 				alert(values.message);
