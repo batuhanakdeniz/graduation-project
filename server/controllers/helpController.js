@@ -413,8 +413,11 @@ export const getUserOwnHelps = async (req, res) => {
 	}
 };
 
-/**
- * ,
+
+export const getUserOwnPendingHelps = async (req, res) => {
+    try {
+		Help.find(
+			{_creator: req.User, status: 'Pending' },
 			{
 				_id: 1,
 				header: 1,
@@ -425,23 +428,44 @@ export const getUserOwnHelps = async (req, res) => {
 				personLastName: 1,
 				img: 1,
 				createdAt: 1,
-				typeofhelp: 1,
 			},
 			(err, help) => {
 				if (err) throw err;
-				const sendHelp = {
-					_id: help._id,
-					header: help.header,
-					location: help.location,
-					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidNo,
-					personName: help.personName,
-					personLastName: help.personLastName,
-					img: help.img[0].filename,
-					typeofhelp: help.typeofhelp,
-					createdAt: help.createdAt,
-				};
-				console.log(sendHelp);
-				res.send(sendHelp);
-			}
- */
+				console.log(help);
+				res.status(200).send(help);
+			});
+	} catch (err) {
+		res.status(409).json({
+			message: err.message,
+		});
+	}
+};
+
+
+export const getUserOwnActiveHelps = async (req, res) => {
+    try {
+		Help.find(
+			{_creator: req.User, status: 'Active' },
+			{
+				_id: 1,
+				header: 1,
+				location: 1,
+				emergencyLevel: 1,
+				aidNo: 1,
+				personName: 1,
+				personLastName: 1,
+				img: 1,
+				createdAt: 1,
+			},
+			(err, help) => {
+				if (err) throw err;
+				console.log(help);
+				res.status(200).send(help);
+			});
+	} catch (err) {
+		res.status(409).json({
+			message: err.message,
+		});
+	}
+};
+
