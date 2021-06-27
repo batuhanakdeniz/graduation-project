@@ -350,24 +350,27 @@ export const deleteHelp = async (req, res, next) => {
 
 export const getPendingHelpDetails = async (req, res) => {
 	try {
-		Help.find({status: 'Pending'},{
-			_id: 1,
-			header: 1,
-			location:{
-				lat: 1,
-				lng: 1},
-			emergencyLevel: 1,
-			aidCode: 1,
-			personName: 1,
-			personLastName: 1,
-			img: {$slice: 1},
-			createdAt: 1,
-		},
-		(err, helps) => {
-			if (err) throw err;
-			console.log(helps);
-			res.status(200).send(helps);
-		});
+		const Pending = "Pending";
+		Help.find(
+			{status: Pending },
+			{
+				_id: 1,
+				header: 1,
+				aidCode: 1,
+				location: 1,
+				emergencyLevel: 1,
+				aidCode: 1,
+				personName: 1,
+				personLastName: 1,
+				img: 1,
+				typeofhelp: 1,
+				createdAt: 1,
+			},
+			(err, help) => {
+				if (err) throw err;
+				console.log(help);
+				res.status(200).send(help);
+			});
 	} catch (err) {
 		res.status(409).json({
 			message: err.message,

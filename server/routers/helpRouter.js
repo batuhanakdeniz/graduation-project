@@ -22,8 +22,8 @@ router.get('/api/helps/details/:id',auth, getHelpDetail); //+
 router.post('/api/helps/details/create',auth,upload.array('files', 5),postHelp); //+
 router.put('/api/helps/details/update/:id',auth,putHelp); //?
 router.delete('/api/helps/details/delete/:id',auth,deleteHelp); //?
-router.get('/api/helps/details/pendings',auth,getPendingHelpDetails); //?
-router.get('/api/helps/details/own',auth,getUserOwnHelps);//?
+router.get('/api/helps/details/all/pending',auth, getPendingHelpDetails); //?
+router.get('/api/helps/own',auth,getUserOwnHelps);//?
 router.get('/api/helps/details/own/pending',auth,getUserOwnPendingHelps);//?
 router.get('/api/helps/details/own/active',auth,getUserOwnActiveHelps);//?
 
