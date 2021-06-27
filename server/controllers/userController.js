@@ -28,9 +28,9 @@ export const getloggedUser = async (req, res,next) => {
 export const putUser = async (req, res, next) =>{
 	try {
 		User.findByIdAndUpdate(req.User,req.body,
-			(err, help) => {
+			(err, user) => {
 					if (err) return res.status(404).send(err);
-					return res.status(200).send(help);
+					return res.status(200).send(user);
 				});
 	} catch (err) {
 		res.status(404).json({
@@ -63,7 +63,7 @@ export const putUserStatusConfirmation = async (req, res, next) =>{
 					user.statusUserType.isStatusPending = false;
 					user.statusUserType.applyUserType = null;
 					user.save();
-					return res.status(200).send(help);
+					return res.status(200).send(user);
 				});
 	} catch (err) {
 		res.status(404).json({
@@ -81,7 +81,7 @@ export const putUserStatusReject = async (req, res, next) =>{
 					user.statusUserType.isStatusPending = false;
 					user.statusUserType.applyUserType = null;
 					user.save();
-					return res.status(200).send(help);
+					return res.status(200).send(user);
 				});
 	} catch (err) {
 		res.status(404).json({
@@ -96,7 +96,7 @@ export const putUserStatus = async (req, res, next) =>{
 		User.findOneAndUpdate({userName: userName},{userType: req.body.userType},
 			(err, user) => {
 					if (err) return res.status(404).send(err);
-					return res.status(200).send(help);
+					return res.status(200).send(user);
 				});
 	} catch (err) {
 		res.status(404).json({

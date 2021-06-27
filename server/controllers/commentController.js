@@ -8,22 +8,24 @@ export const putHelpComment = async (req, res) => {
 	try {
 		const {text} = req.body;
 		console.log("text: ",text);
-		const status = "Pending";
-		if(req.userType=="Admin"){
-			status = "Active";
+		let tempStatus = "Pending";
+		console.log(" usertype: ",req.userType);
+		if(req.userType=== "Admin"){
+			tempStatus = "Active";
 		}
+		console.log("status: ",tempStatus);
 		const savedImages = [];
-		console.log("req.files: ",req.files);
-		req.files.forEach((newImage) =>{
-			console.log("newImage: ",newImage);
-			const savedImage = new Image(newImage);
-			
-			savedImage.save().then((err)=>{
-				if(!err)	return res.status(404).send(err)
+		console.log("files: ",req.files);
+	 	await req.files.forEach((image) =>{
+			console.log("newImage: ",image);
+			const newImage = new Image(image);
+			newImage.save().then((err) => {
+				if (!err) return res.status(404).send(err);
 				console.log("Save oldu resimler...");
 			});
-			savedImages.push(savedImage);
+			savedImages.push(newImage);
 		});
+		console.log("saved images: ",savedImages);
 		const now = new Date().toLocaleString("tr-TR", {timeZone: "Asia/Istanbul"});
 		const newComment = new Comment({
 			_id: new mongoose.Types.ObjectId(),
@@ -32,16 +34,17 @@ export const putHelpComment = async (req, res) => {
 			text: text,
 			extraImages: savedImages,
 			createdAt: now,
-			status: status
+			status: tempStatus
 		});
-		const savedComment = newComment.save().then((err)=>{
-			if(!err)	return res.status(404).send(err)
-			console.log("Save oldu comment...",savedComment);
-		});
-		if(status === "Active"){
-			 Help.findOneAndUpdate({_id: req.params.id},{$push: {comment: newComment}});
+		console.log("NEW comment: ",newComment);
+		const savedComment = newComment.save();
+		if(tempStatus === "Active"){
+			await Help.findByIdAndUpdate( req.params.id, {$push: {comment: newComment}},(err,help)=>{
+				if(err)	return res.status(409).send({message: "bir türlü yorum ekleyemedim ya..."});
+				return res.status(200).send({message: "Comment eklendi."});
+			});
 		}
-		res.status(200).send({message: "Comment eklendi."});
+		
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
