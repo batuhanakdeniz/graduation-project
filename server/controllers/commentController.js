@@ -61,7 +61,16 @@ export const putHelpCommentStatus = async (req, res) => {
 	}
 };
 
-
+export const getAllActiveComment = async (req, res) => {
+	try {
+		const pendingComments = await Comment.find({status: "Active"});
+		res.status(200).send(pendingComments);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
 
 export const getAllPendingComment = async (req, res) => {
 	try {
