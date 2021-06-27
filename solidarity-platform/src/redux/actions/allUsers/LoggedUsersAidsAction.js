@@ -30,7 +30,7 @@ export const fetchLoggedUsersPendingAids = () => {
 	return (dispatch) => {
 		dispatch(fetchLoggedUsersPendingAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details`)
+			.get(`http://localhost:5000/map/api/helps/details/own/pending`)
 			.then((response) => {
 				const pendingAids = response.data;
 				dispatch(fetchLoggedUsersPendingAidsSuccess(pendingAids));
@@ -65,10 +65,10 @@ export const fetchLoggedUsersActiveAids = () => {
 	return (dispatch) => {
 		dispatch(fetchLoggedUsersActiveAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details`)
+			.get(`http://localhost:5000/map/api/helps/details/own/active`)
 			.then((response) => {
 				const activeAids = response.data;
-				console.log(activeAids);
+				console.log("activeAids", activeAids);
 				dispatch(fetchLoggedUsersActiveAidsSuccess(activeAids));
 			})
 			.catch((error) => {

@@ -27,8 +27,9 @@ export const fetchMapSearchAidFailure = (error) => {
 export const fetchMapSearchAid = (searchContent) => {
 	return (dispatch) => {
 		dispatch(fetchMapSearchAidRequest);
+		let search = { search: searchContent };
 		axios
-			.get(`http://localhost:5000/map/api/helps/search/${searchContent}`)
+			.post(`http://localhost:5000/map/api/helps/search`, search)
 			.then((response) => {
 				const mapSearchAid = response.data;
 				console.log("mapSearchAid", mapSearchAid);

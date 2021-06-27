@@ -52,22 +52,17 @@ function MapComponent({ match }) {
 							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
-						<LayersControl position="topright">
-							<LayersControl.Overlay name="Feature group">
-								<FeatureGroup pathOptions={{ color: "purple" }}>
-									<ZoomControl position="bottomright" />
-									<Search />
-									<AddButton
-										position="bottomleft"
-										eventKey={mapmod}
-										setMapmod={setMapmod}
-										mapmod={mapmod}
-									/>
-									<FlyToLocationButton />
-									{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
-								</FeatureGroup>
-							</LayersControl.Overlay>
-						</LayersControl>
+
+						<ZoomControl position="bottomright" />
+						<Search />
+						<AddButton
+							position="bottomleft"
+							eventKey={mapmod}
+							setMapmod={setMapmod}
+							mapmod={mapmod}
+						/>
+						<FlyToLocationButton />
+						{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
 					</MapContainer>
 				</Col>
 			</Row>
