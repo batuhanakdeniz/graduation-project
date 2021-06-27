@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import Help from "../models/helpModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
@@ -40,7 +41,7 @@ export const putUser = async (req, res, next) =>{
 }
 export const deleteUser = async (req, res, next) =>{
 	try {
-		User.findByIdAndDelete(req.params.id,
+		User.findOneAndDelete({userName: req.params.userName},
 			(err, user) => {
 					if (err) return res.status(404).send(err);
 					const message = {
@@ -57,8 +58,8 @@ export const deleteUser = async (req, res, next) =>{
 
 export const putUserStatus = async (req, res, next) =>{
 	try {
-        const userId = req.params.id;
-		User.findByIdAndUpdate(userId,{userType: req.body.userType},
+        const userName = req.params.userName;
+		User.findOneAndUpdate({userName: userName},{userType: req.body.userType},
 			(err, help) => {
 					if (err) return res.status(404).send(err);
 					return res.status(200).send(help);
@@ -119,6 +120,8 @@ export const getAllPendingUserType = async (req, res) => {
 		});
 	}
 };
+
+
 
 
 

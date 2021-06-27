@@ -8,7 +8,10 @@ export const putHelpComment = async (req, res) => {
 	try {
 		const {text} = req.body;
 		console.log("text: ",text);
-		
+		const status = "Pending";
+		if(req.userType=="Admin"){
+			status = "Active";
+		}
 		const savedImages = [];
 		console.log("req.files: ",req.files);
 		req.files.forEach((newImage) =>{
@@ -29,7 +32,7 @@ export const putHelpComment = async (req, res) => {
 			text: text,
 			extraImages: savedImages,
 			createdAt: now,
-			status: "Active"
+			status: status
 		});
 		const savedComment = newComment.save().then((err)=>{
 			if(!err)	return res.status(404).send(err)
@@ -59,9 +62,10 @@ export const putHelpCommentStatus = async (req, res) => {
 };
 
 
-export const getPendingComment = async (req, res) => {
+
+export const getAllPendingComment = async (req, res) => {
 	try {
-		const pendingComments = await Comment.find({status: 'Pending'});
+		const pendingComments = await Comment.find({status: "Pending"});
 		res.status(200).send(pendingComments);
 	} catch (err) {
 		res.status(404).json({
@@ -69,11 +73,20 @@ export const getPendingComment = async (req, res) => {
 		});
 	}
 };
-
-export const getUserOwnComment = async (req, res) => {
+export const getOwnPendingComment = async (req, res) => {
 	try {
-		const ownComments = await Comment.find({user_id: req.User});
+		const ownComments = await Comment.find({user_id: req.User, status: 'Pending'});
 		res.status(200).send(ownComments);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
+export const getOwnActiveComment = async (req, res) => {
+	try {
+		const activeComments = await Comment.find({user_id: req.User,status: "Active"});
+		res.status(200).send(activeComments);
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
