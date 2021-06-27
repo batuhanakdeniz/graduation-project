@@ -16,11 +16,6 @@ const MyCard = styled.div`
 	height: 100%;
 	padding: 2rem;
 	margin: 0;
-	.cardInfos {
-	}
-	.cardHeader {
-		font-weight: bolder;
-	}
 `;
 
 function AidCard({ aid }) {
@@ -29,7 +24,10 @@ function AidCard({ aid }) {
 		lat = 41.020835883676874,
 		lng = 28.657279014587406
 	) => {
-		parentMap.setView([lat, lng]);
+		parentMap.flyTo([lat, lng], 16, {
+			animate: true,
+			duration: 2, // in seconds
+		});
 	};
 	const dispatch = useDispatch();
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,27 +44,7 @@ function AidCard({ aid }) {
 				height: "97%",
 			}}
 		>
-			<MyCard
-				color={
-					aid.emergencyLevel &&
-					aid.emergencyLevel.level &&
-					aid.emergencyLevel.level >= 5
-						? aid.emergencyLevel &&
-						  aid.emergencyLevel.level &&
-						  aid.emergencyLevel.level > 4
-							? "black"
-							: aid.emergencyLevel &&
-							  aid.emergencyLevel.level &&
-							  aid.emergencyLevel.level <= 3
-							? "purple"
-							: "red"
-						: aid.emergencyLevel &&
-						  aid.emergencyLevel.level &&
-						  aid.emergencyLevel.level <= 1
-						? "green"
-						: "orange"
-				}
-			>
+			<MyCard>
 				<Row
 					style={{
 						display: "flex",
@@ -75,11 +53,36 @@ function AidCard({ aid }) {
 					}}
 				>
 					<Col md={9}>
-						<div className="cardHeader">{aid.header && aid.header}</div>
-						<div className="cardHeader">{aid.detail && aid.detail}</div>
+						<div>
+							<strong>Yardım Başlığı : </strong> {aid.header && aid.header}
+						</div>
+						<hr
+							style={{
+								width: "100%",
+								borderWidth: "2px",
+								textAlign: "left",
+								backgroundColor: "gray",
+								marginTop: "0.2rem",
+								marginBottom: "0.2rem",
+							}}
+						/>
+						<div>
+							<strong>Yardım Detayı : </strong> {aid.detail && aid.detail}
+						</div>
+						<hr
+							style={{
+								width: "100%",
+								borderWidth: "2px",
+								textAlign: "left",
+								backgroundColor: "gray",
+								marginTop: "0.2rem",
+								marginBottom: "0.2rem",
+							}}
+						/>
+
 						{aid.emergencyLevel && (
 							<div className="cardInfos">
-								Emergency Level : aid.emergencyLevel.level
+								<strong>Önem Derecesi : </strong> {aid.emergencyLevel.level}
 							</div>
 						)}
 					</Col>

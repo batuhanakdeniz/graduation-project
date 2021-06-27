@@ -131,7 +131,7 @@ function AddAidModal({ onClose, isOpen }) {
 		{ key: "5", value: 5 },
 	];
 	const category = useSelector((state) => state.aidCategory);
-	const [subCatOpts, setSubCatOpts] = useState([]);
+	const [subCatOpts, setSubCatOpts] = useState([{ key: "", value: "" }]);
 	const [message, setMessage] = useState("");
 	const [successful, setSuccessful] = useState(false);
 	useEffect(() => {

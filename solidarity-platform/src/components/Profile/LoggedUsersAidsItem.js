@@ -48,19 +48,20 @@ function LoggedUsersActiveAidsItem({ aid }) {
 				},
 			])
 		);
-		dispatch(fetchCategoryType(aid.typeofhelp.category))
-			.then((response) => setCategory(response))
-			.catch((err) => console.log(err));
-		dispatch(fetchSubcategoryType(aid.typeofhelp.subcategory))
-			.then((response) => setSubcategory(response))
-			.catch((err) => console.log(err));
+		console.log(aid);
+		// dispatch(fetchCategoryType(aid.typeofhelp.category))
+		// 	.then((response) => setCategory(response))
+		// 	.catch((err) => console.log(err));
+		// dispatch(fetchSubcategoryType(aid.typeofhelp.subcategory))
+		// 	.then((response) => setSubcategory(response))
+		// 	.catch((err) => console.log(err));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [aid]);
 	return (
 		<Col className="aidItem">
 			<Card style={{ height: "100%" }}>
-				<Row>
-					<Col md={12} className="cardImage">
+				<Row className="cardImage">
+					<Col md={12}>
 						<ImageGallery items={images} />
 					</Col>
 				</Row>

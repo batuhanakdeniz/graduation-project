@@ -7,6 +7,7 @@ import { setAidLocationLatLng, setAidLocationProperties } from "../../../redux";
 import AddAidModal from "../Layer_3/AddAidModal";
 import { Col, Row } from "react-bootstrap";
 import { FaPlusSquare } from "react-icons/fa";
+
 function LocationMarker(props) {
 	const position = useSelector((state) => state.addAidLocation);
 	const dispatch = useDispatch();
@@ -15,12 +16,14 @@ function LocationMarker(props) {
 	const map = useMapEvents({
 		click(e) {
 			dispatch(setAidLocationLatLng(e.latlng));
+			console.log(popupRef.current);
 			popupRef.current.openPopup();
 			geocoder.reverse(
 				e.latlng,
 				map.options.crs.scale(map.getZoom()),
 				(results) => {
 					var r = results[0];
+					console.log("r", r);
 					if (results[0]) dispatch(setAidLocationProperties(r.properties));
 				}
 			);
@@ -35,7 +38,7 @@ function LocationMarker(props) {
 	return position === null ? null : (
 		<>
 			<Marker position={position} icon={props.icon} ref={popupRef}>
-				<Popup ref={popupRef}>
+				<Popup>
 					<Row>
 						<Col md={12}>
 							<span style={{ fontSize: "larger", textAlign: "center" }}>
