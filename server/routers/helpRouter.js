@@ -3,7 +3,7 @@ import {getHelp, createHelp,getHelpLocations,getHelpLocation,getHelpBasics,getHe
     getHelpDetail, getHelpDetails, postHelp, putHelp, deleteHelp, putHelpEmergencyLevel,
     getPendingHelpDetails,getUserOwnHelps, getUserOwnPendingHelps, getUserOwnActiveHelps} from '../controllers/helpController.js'
 import {postHelpSearch} from "../controllers/helpSearchController.js";
-import {putHelpComment, putHelpCommentStatus, getUserOwnComment} from "../controllers/commentController.js";
+import {putHelpComment, putHelpCommentStatus, getAllPendingComment,getAllActiveComment,getOwnPendingComment,getOwnActiveComment} from "../controllers/commentController.js";
 import {postCategory, postSubCategory,getCategory,getSubCategory,getCategories,getSubCategories } from "../controllers/categoryController.js";
 import {PostGeoJson} from "../controllers/geoJsonController.js";
 import {auth} from "../middleware/auth.js";
@@ -35,8 +35,15 @@ router.post('/api/helps/search/',postHelpSearch);//?
 //commentlerin hepsi resourrcesa eklendi
 router.put('/api/helps/details/comment/:id',auth,uploadComment.array('files', 2),putHelpComment);    //HELP ID
 router.put('/api/comments/status/:id',auth,putHelpCommentStatus); //COMMENT ID YETKİ İŞİ NASILDI
-router.put('/api/helps/emergencyLevel/:id',auth,putHelpEmergencyLevel); // HELP ID change emergencyLevel
-router.get('/api/helps/details/comment/ownComment',auth,getUserOwnComment);
+router.put('/api/helps/emergencyLevel/:id',putHelpEmergencyLevel); // HELP ID change emergencyLevel
+router.get('/api/helps/details/comments/own/pending',auth,getOwnPendingComment);
+router.get('/api/helps/details/comments/own/active',auth,getOwnActiveComment);
+router.get('/api/helps/details/comments/allPending',auth,getAllPendingComment);
+router.get('/api/helps/details/comments/allActive',auth,getAllActiveComment);
+
+
+
+getOwnActiveComment
 //CATEGORY
 router.post('/api/helps/category',postCategory);
 router.post('/api/helps/subcategory',postSubCategory);

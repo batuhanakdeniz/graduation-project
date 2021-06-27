@@ -39,7 +39,7 @@ export const postHelpSearch = async (req, res) => {
                   };
     const project = {
                     "$project":{
-                      "_id": 0,
+                      "_id": 1,
                       "header": 1,
                       "aidCode": 1,
                       "detail": 1,

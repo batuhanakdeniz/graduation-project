@@ -166,7 +166,7 @@ export const getHelpDetail = async (req, res) => {
 						lat: help.lat,
 						lng: help.lng},
 					emergencyLevel: help.emergencyLevel,
-					aidNo: help.aidCode,
+					aidCode: help.aidCode,
 					personName: help.personName,
 					personLastName: help.personLastName,
 					img: help.img,
@@ -261,11 +261,11 @@ export const postHelp = async (req, res, next) => {
 			phone: phone,
 			addressFull:
 				address +
-				"Apartman no: " +
+				" Apartman no: " +
 				buildingNo +
-				"Kat: " +
+				" Kat: " +
 				floor +
-				"Daire: " +
+				" Daire: " +
 				apartmentNo,
 			emergencyLevel: {
 				level: Number(emergencyLevel),
@@ -309,13 +309,12 @@ export const putHelp = async (req, res, next) => {
 
 export const putHelpEmergencyLevel = async (req, res, next) => {
 	try {
-		Help.findByIdAndUpdate(req.params.id, (err, help) => {
+		Help.findById({_id: req.params.id}, (err, help) => {
 			if (err) return res.status(404).send(err);
 			console.log("object:", help);
 			var helpEmergencyLevel = help.emergencyLevel.level;
 			var helpVoteNumber = help.emergencyLevel.voteNumber;
 			var Total = helpEmergencyLevel * helpVoteNumber;
-
 			Total = Total + req.body.value;
 			help.emergencyLevel.voteNumber = help.emergencyLevel.voteNumber + 1;
 			help.emergencyLevel.level = Total / help.emergencyLevel.voteNumber;
@@ -354,7 +353,7 @@ export const getPendingHelpDetails = async (req, res) => {
 			lat: 1,
 			lng: 1,
 			emergencyLevel: 1,
-			aidNo: 1,
+			aidCode: 1,
 			personName: 1,
 			personLastName: 1,
 			img: 1,
@@ -393,12 +392,14 @@ export const getUserOwnHelps = async (req, res) => {
 			{
 				_id: 1,
 				header: 1,
+				aidCode: 1,
 				location: 1,
 				emergencyLevel: 1,
-				aidNo: 1,
+				aidCode: 1,
 				personName: 1,
 				personLastName: 1,
 				img: 1,
+				typeofhelp: 1,
 				createdAt: 1,
 			},
 			(err, help) => {
@@ -422,12 +423,14 @@ export const getUserOwnPendingHelps = async (req, res) => {
 				_id: 1,
 				header: 1,
 				location: 1,
+				aidCode: 1,
 				emergencyLevel: 1,
 				aidNo: 1,
 				personName: 1,
 				personLastName: 1,
 				img: 1,
 				createdAt: 1,
+				typeofhelp: 1,
 			},
 			(err, help) => {
 				if (err) throw err;
@@ -448,6 +451,7 @@ export const getUserOwnActiveHelps = async (req, res) => {
 			{_creator: req.User, status: 'Active' },
 			{
 				_id: 1,
+				aidCode: 1,
 				header: 1,
 				location: 1,
 				emergencyLevel: 1,
@@ -455,6 +459,7 @@ export const getUserOwnActiveHelps = async (req, res) => {
 				personName: 1,
 				personLastName: 1,
 				img: 1,
+				typeofhelp: 1,
 				createdAt: 1,
 			},
 			(err, help) => {

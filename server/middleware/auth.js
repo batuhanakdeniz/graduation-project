@@ -10,7 +10,8 @@ export async function auth (req, res, next){
         console.log(token);
         if (!token || token==undefined) return res.status(401).send();
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.User = verified.User;                                                      
+        req.User = verified.User; 
+        req.userType = verified.userType;                                                   
         var authorized = false;
         const resource = await Resource.find({api_path: req.route.path},{api_path: 1,api_method: 1,authorized_Roles: 1});
         console.log(resource[0]);
