@@ -1,7 +1,7 @@
 import express from "express";
 import {getHelp, createHelp,getHelpLocations,getHelpLocation,getHelpBasics,getHelpBasic, 
     getHelpDetail, getHelpDetails, postHelp, putHelp, deleteHelp, putHelpEmergencyLevel,
-    getPendingHelpDetails,getUserOwnHelps} from '../controllers/helpController.js'
+    getPendingHelpDetails,getUserOwnHelps, getUserOwnPendingHelps, getUserOwnActiveHelps} from '../controllers/helpController.js'
 import {postHelpSearch} from "../controllers/helpSearchController.js";
 import {putHelpComment, putHelpCommentStatus, getUserOwnComment} from "../controllers/commentController.js";
 import {postCategory, postSubCategory,getCategory,getSubCategory,getCategories,getSubCategories } from "../controllers/categoryController.js";
@@ -23,11 +23,14 @@ router.post('/api/helps/details/create',auth,upload.array('files', 5),postHelp);
 router.put('/api/helps/details/update/:id',auth,putHelp); //?
 router.delete('/api/helps/details/delete/:id',auth,deleteHelp); //?
 router.get('/api/helps/details/pendings',auth,getPendingHelpDetails); //?
-router.get('/api/helps/details/active/own',auth,getUserOwnHelps);//?
+router.get('/api/helps/details/own',auth,getUserOwnHelps);//?
+router.get('/api/helps/details/own/pending',auth,getUserOwnPendingHelps);//?
+router.get('/api/helps/details/own/active',auth,getUserOwnActiveHelps);//?
+
 
 
 //SEARCH
-router.get('/api/helps/search',postHelpSearch);//?
+router.post('/api/helps/search/',postHelpSearch);//?
 //COMMENT 
 //commentlerin hepsi resourrcesa eklendi
 router.put('/api/helps/details/comment/:id',auth,uploadComment.array('files', 2),putHelpComment);    //HELP ID
