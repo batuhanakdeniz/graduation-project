@@ -31,7 +31,6 @@ export const fetchDetailContent = (aidId) => {
 			.get(`http://localhost:5000/map/api/helps/details/${aidId}`)
 			.then((response) => {
 				const detailContent = response.data;
-				console.log("detay", response);
 				dispatch(fetchDetailContentSuccess(detailContent));
 			})
 			.catch((error) => {

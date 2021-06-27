@@ -1,0 +1,26 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+.about-page {
+	min-height: 80vh;
+	display: flex;
+	align-items: center;
+}
+.about-page-container {
+	background-color: rgb(250, 250, 250);
+	border: 2px dashed rgb(58, 58, 58);
+	padding: 5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	.about-page-illustration {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.statictic-buttons {
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
+}

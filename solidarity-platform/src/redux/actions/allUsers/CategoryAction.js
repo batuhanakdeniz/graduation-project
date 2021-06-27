@@ -21,7 +21,6 @@ export const fetchSubcategoryType = (subcategoryCode) => {
 				`http://localhost:5000/map/api/helps/subcategory/${subcategoryCode}`
 			);
 			const subcategoryName = subcategory.data[0].subCategoryName;
-			console.log("subcategoryName", subcategoryName);
 			return subcategoryName;
 		} catch (error) {
 			return error;

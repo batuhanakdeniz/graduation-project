@@ -31,7 +31,6 @@ export const getLoggedUserData = () => {
 			.get("http://localhost:5000/api/loggedUser")
 			.then((response) => {
 				const loggedUserData = response.data;
-				console.log("sefa", loggedUserData);
 				dispatch(fetchLoggedUserDataSuccess(loggedUserData));
 			})
 			.catch((error) => {

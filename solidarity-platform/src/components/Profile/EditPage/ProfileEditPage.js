@@ -4,7 +4,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import { getLoggedUserData } from "../../../redux";
 import "./profileEditPage.scss";
 import MultipleFileUploadField from "../../DragDropMultipleFile/MultipleFileUploadField";
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Progress, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -53,14 +53,17 @@ function ProfileEditPage() {
 		email: Yup.string()
 			.email("Geçersiz Email formatı!")
 			.required("Gerekli Alan"),
-		oldpassword: Yup.string()
-			.required("Lütfen geçerli bir şifre giriniz!")
-			.matches(
-				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-				"Şifreniz minimum 8 karakterden oluşmalı ve şifreniz en az bir küçük harf, bir büyük harf bir sayı ve bir özel karakter içermelidir!"
-			),
+		oldpassword: Yup.string().matches(
+			/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+			"Şifreniz minimum 8 karakterden oluşmalı ve şifreniz en az bir küçük harf, bir büyük harf bir sayı ve bir özel karakter içermelidir!"
+		),
 		password: Yup.string()
-			.required("Lütfen geçerli bir şifre giriniz!")
+			.when("oldpassword", {
+				is: (oldpassword) => oldpassword,
+				then: Yup.string()
+					.required("Lütfen geçerli bir şifre giriniz!")
+					.typeError("Time field is required"),
+			})
 			.matches(
 				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
 				"Şifreniz minimum 8 karakterden oluşmalı ve şifreniz en az bir küçük harf, bir büyük harf bir sayı ve bir özel karakter içermelidir!"
@@ -86,7 +89,12 @@ function ProfileEditPage() {
 				[Yup.ref("password"), ""],
 				"Şifreniz eşleşmiyor. Lütfen tekrar deneyiniz!"
 			)
-			.required("Gerekli Alan"),
+			.when("oldpassword", {
+				is: (oldpassword) => oldpassword,
+				then: Yup.string()
+					.required("Lütfen geçerli bir şifre giriniz!")
+					.typeError("Time field is required"),
+			}),
 		phone: Yup.string().matches(
 			PhoneRegex,
 			"Lütfen geçerli bir telefon numarası giriniz!"
@@ -100,7 +108,25 @@ function ProfileEditPage() {
 		try {
 			const response = await axios.post(
 				`http://localhost:5000/signupp`,
-				values
+				values,
+				{
+					onUploadProgress: (progressEvent) => {
+						const totalLength = progressEvent.lengthComputable
+							? progressEvent.total
+							: progressEvent.target.getResponseHeader("content-length") ||
+							  progressEvent.target.getResponseHeader(
+									"x-decompressed-content-length"
+							  );
+						if (progressEvent.lengthComputable) {
+							// console.log(
+							// 	progressEvent.loaded + " " + progressEvent.total
+							// );
+							setProgress(
+								Math.round((progressEvent.loaded * 100) / totalLength)
+							);
+						}
+					},
+				}
 			);
 			console.log("response", response);
 			setMessage(response.data.message);
@@ -214,18 +240,17 @@ function ProfileEditPage() {
 								<Row>
 									<Col md={12}>
 										<Row>
-											<Col md={6}>
+											<Col md={6} className="mt-3">
 												<FormikControl
 													control="chakrainput"
 													type="text"
 													label="Adınız"
 													name="firstName"
-													mb="1rem"
 													borderWidth="0.2rem"
 													borderColor="#7a7a7a"
 												/>
 											</Col>
-											<Col md={6}>
+											<Col md={6} className="mt-3">
 												<FormikControl
 													control="chakrainput"
 													type="text"
@@ -237,35 +262,32 @@ function ProfileEditPage() {
 											</Col>
 										</Row>
 										<Row>
-											<Col md={6}>
+											<Col md={6} className="mt-3">
 												<FormikControl
 													control="chakrainput"
 													type="text"
 													label="Kullanıcı Adınız"
 													name="userName"
-													mb="1rem"
 													borderWidth="0.2rem"
 													borderColor="#7a7a7a"
 												/>
 											</Col>
-											<Col md={6}>
+											<Col md={6} className="mt-3">
 												<FormikControl
 													control="chakrainput"
 													type="text"
 													label="Telefon Numaranız"
 													name="phone"
-													mb="1rem"
 													borderWidth="0.2rem"
 													borderColor="#7a7a7a"
 												/>
 											</Col>
-											<Col md={12}>
+											<Col md={12} className="mt-3">
 												<FormikControl
 													control="chakrainput"
 													type="email"
 													label=" E-mail"
 													name="email"
-													mb="1rem"
 													borderWidth="0.2rem"
 													borderColor="#7a7a7a"
 												/>
@@ -274,29 +296,27 @@ function ProfileEditPage() {
 										<Row>
 											<Col md={6}>
 												<Row>
-													<Col md={12}>
+													<Col md={12} className="mt-3">
 														<FormikControl
 															control="chakrainput"
 															type="password"
 															label="Lütfen Eski Şifrenizi Giriniz"
 															name="oldpassword"
-															mb="1rem"
 															borderWidth="0.2rem"
 															borderColor="#7a7a7a"
 														/>
 													</Col>
-													<Col md={12}>
+													<Col md={12} className="mt-3">
 														<FormikControl
 															control="chakrainput"
 															type="password"
 															label="Lütfen Yeni Şifrenizi Giriniz"
 															name="password"
-															mb="1rem"
 															borderWidth="0.2rem"
 															borderColor="#7a7a7a"
 														/>
 													</Col>
-													<Col md={12}>
+													<Col md={12} className="mt-3">
 														<FormikControl
 															control="chakrainput"
 															type="password"
@@ -321,7 +341,11 @@ function ProfileEditPage() {
 													isFullWidth
 													mt="2rem"
 													type="submit"
-													disabled={!formik.isValid}
+													disabled={
+														!formik.isValid ||
+														files.length === 0 ||
+														errorFiles.length
+													}
 												>
 													Güncelle
 												</Button>
@@ -338,6 +362,12 @@ function ProfileEditPage() {
 													X
 												</Button>
 											</Col>
+											{progress !== 0 && progress !== 100 ? (
+												<Col md={12}>
+													{" "}
+													<Progress mb="1rem" hasStripe value={progress} />
+												</Col>
+											) : null}
 										</Row>
 										{message && (
 											<Row style={{ marginTop: "1rem" }}>

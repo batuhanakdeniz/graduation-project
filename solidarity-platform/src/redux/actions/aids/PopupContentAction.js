@@ -44,7 +44,6 @@ export const fetchPopupContent = (aidId) => {
 				categoryName: categoryName,
 				subcategoryName: subcategoryName,
 			};
-			console.log("popupContent", popupContent);
 			dispatch(fetchPopupContentSuccess(popupContent));
 		} catch (error) {
 			const errorMsg = error.message;

@@ -63,16 +63,16 @@ export default function BasicStatistics() {
 	const numberOfUsers = useSelector((state) => state.numberOfUsers);
 
 	return (
-		<Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+		<>
 			<chakra.h1
 				textAlign={"center"}
 				fontSize={"4xl"}
 				py={10}
 				fontWeight={"bold"}
 			>
-				Our platform is expanding, do you want to help ?
+				Platformumuza katkıda bulunmak ister misiniz?
 			</chakra.h1>
-			<SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+			<SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 5, lg: 8 }}>
 				<StatsCard
 					title={"Kullanıcı Sayısı"}
 					stat={
@@ -107,6 +107,6 @@ export default function BasicStatistics() {
 					icon={<GoLocation size={"3em"} />}
 				/>
 			</SimpleGrid>
-		</Box>
+		</>
 	);
 }

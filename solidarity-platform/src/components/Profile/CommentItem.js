@@ -9,7 +9,7 @@ import DetailModal from "../Map/Layer_4/DetailModal";
 import { useDispatch } from "react-redux";
 import { fetchDetailContent } from "../../redux";
 import { useDisclosure } from "@chakra-ui/react";
-
+import blank_avatar from "./blank-avatar.svg";
 function LoggedUserCommentItem(props) {
 	const { Comment } = props;
 	const dispatch = useDispatch();
@@ -48,7 +48,11 @@ function LoggedUserCommentItem(props) {
 								<Row>
 									<Col md={6} className="property" style={{ height: "5rem" }}>
 										<Image
-											src={Comment.userProfilPicture}
+											src={
+												Comment.userProfilPicture
+													? Comment.userProfilPicture
+													: blank_avatar
+											}
 											alt=""
 											roundedCircle
 										/>

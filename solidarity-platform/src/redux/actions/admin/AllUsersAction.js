@@ -30,12 +30,23 @@ export const fetchAllUsers = () => {
 			.get(`http://localhost:5000/api/admin/users`)
 			.then((response) => {
 				const allUsers = response.data;
-				console.log(allUsers);
 				dispatch(fetchAllUsersSuccess(allUsers));
 			})
 			.catch((error) => {
 				const errorMsg = error.message;
 				dispatch(fetchAllUsersFailure(errorMsg));
 			});
+	};
+};
+export const deleteUserByID = (userID) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.delete(
+				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+			);
+			return response;
+		} catch (error) {
+			return error;
+		}
 	};
 };

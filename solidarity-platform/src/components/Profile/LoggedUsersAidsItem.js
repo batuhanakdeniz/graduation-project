@@ -54,6 +54,7 @@ function LoggedUsersActiveAidsItem({ aid }) {
 		dispatch(fetchSubcategoryType(aid.typeofhelp.subcategory))
 			.then((response) => setSubcategory(response))
 			.catch((err) => console.log(err));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [aid]);
 	return (
 		<Col className="aidItem">

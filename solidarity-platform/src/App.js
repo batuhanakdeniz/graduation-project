@@ -4,11 +4,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import NavbarComponent from "./components/Navbar/NavbarComponent";
 import Footer from "./components/Footer/footer";
-import HomePage from "./components/Home Page/HomePage";
+import AboutPage from "./components/AboutPage/AboutPage";
 import LoginPage from "./components/LoginForm/LoginForm";
 import MapComponent from "./components/Map/Layer_1/MapComponent";
 import DetailPage from "./components/Details/Detail";
-import AboutPage from "./components/About/about";
 import ProfileSelector from "./components/Profile/ProfileSelector";
 import ProfileEditPage from "./components/Profile/EditPage/ProfileEditPage";
 import RegistrationTypesPage from "./components/RegistrationForm/RegistrationTypesPage";
@@ -62,7 +61,7 @@ function App() {
 					<NavbarComponent />
 					<DIVM>
 						<Switch>
-							<Route path="/" exact component={HomePage} />
+							<Route path="/" exact component={MapComponent} />
 							<Route path="/detail/:id" exact component={DetailPage} />
 							<Route path="/NasilIsler" exact component={NasilIsler} />
 							<Route exact path="/login">

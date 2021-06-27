@@ -30,12 +30,36 @@ export const fetchPendingUsers = () => {
 			.get(`http://localhost:5000/api/admin/users/pending`)
 			.then((response) => {
 				const pendingUsers = response.data;
-				console.log(pendingUsers);
+				console.log("pendingUsers", response.data);
 				dispatch(fetchPendingUsersSuccess(pendingUsers));
 			})
 			.catch((error) => {
 				const errorMsg = error.message;
 				dispatch(fetchPendingUsersFailure(errorMsg));
 			});
+	};
+};
+export const confirmPendingUserByID = (userID) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.put(
+				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+			);
+			return response;
+		} catch (error) {
+			return error;
+		}
+	};
+};
+export const deletePendingUserByID = (userID) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.put(
+				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+			);
+			return response;
+		} catch (error) {
+			return error;
+		}
 	};
 };

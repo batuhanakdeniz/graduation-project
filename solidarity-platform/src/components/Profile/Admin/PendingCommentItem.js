@@ -7,9 +7,13 @@ import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 import DetailModal from "../../Map/Layer_4/DetailModal";
 import { useDispatch } from "react-redux";
-import { fetchDetailContent } from "../../../redux";
+import {
+	confirmPendingCommentByID,
+	deletePendingCommentByID,
+	fetchDetailContent,
+} from "../../../redux";
 import { useDisclosure } from "@chakra-ui/react";
-
+import blank_avatar from "../blank-avatar.svg";
 function PendingCommentItem(props) {
 	const { Comment } = props;
 	const dispatch = useDispatch();
@@ -32,10 +36,10 @@ function PendingCommentItem(props) {
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmCommentHandler = () => {
-		console.log("sefa");
+		dispatch(confirmPendingCommentByID(Comment.commentID));
 	};
 	const deleteCommentHandler = () => {
-		console.log("sefa");
+		dispatch(deletePendingCommentByID(Comment.commentID));
 	};
 	return (
 		<Col className="pendingComment">
@@ -48,7 +52,11 @@ function PendingCommentItem(props) {
 								<Row>
 									<Col md={6} className="property" style={{ height: "5rem" }}>
 										<Image
-											src={Comment.userProfilPicture}
+											src={
+												Comment.userProfilPicture
+													? Comment.userProfilPicture
+													: blank_avatar
+											}
 											alt=""
 											roundedCircle
 										/>

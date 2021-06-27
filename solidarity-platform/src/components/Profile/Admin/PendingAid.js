@@ -6,7 +6,11 @@ import { GiCheckMark } from "react-icons/gi";
 import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 import { useDispatch } from "react-redux";
-import { fetchDetailContent } from "../../../redux";
+import {
+	confirmPendingAidByID,
+	deletePendingAidByID,
+	fetchDetailContent,
+} from "../../../redux";
 import { useDisclosure } from "@chakra-ui/react";
 import DetailModal from "../../Map/Layer_4/DetailModal";
 
@@ -27,10 +31,10 @@ function PendingAid(props) {
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmAidHandler = () => {
-		console.log("sefa");
+		dispatch(confirmPendingAidByID(aid.aidID));
 	};
 	const deleteAidHandler = () => {
-		console.log("sefa");
+		dispatch(deletePendingAidByID(aid.aidID));
 	};
 	return (
 		<Col className="pendingAid">

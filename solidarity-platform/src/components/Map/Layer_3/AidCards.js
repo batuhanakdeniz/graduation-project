@@ -1,17 +1,15 @@
-import React, { useMemo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo } from "react";
 import AidCard from "../Layer_4/AidCard";
 import { FixedSizeList as List } from "react-window";
 
 export const AidCards = ({ seachContent }) => {
-	console.log("seachContent", seachContent);
-
+	// eslint-disable-next-line
 	const memo = useMemo(() => (
 		<List
 			className="List"
-			height={seachContent.length * 200}
+			height={seachContent.length * 150}
 			itemCount={seachContent.length}
-			itemSize={200}
+			itemSize={150}
 			width={400}
 		>
 			{({ index, style }) => (

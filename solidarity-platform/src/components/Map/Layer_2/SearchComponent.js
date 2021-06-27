@@ -31,7 +31,7 @@ export const Search = ({ position, zoom }) => {
 				onChange={handleSearch}
 			/>
 			<Button colorScheme="brand" type="submit">
-				<i class="fas fa-search-location" />
+				<i className="fas fa-search-location" />
 			</Button>
 		</Form>
 	));

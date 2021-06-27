@@ -33,7 +33,6 @@ export const fetchLoggedUsersPendingAids = () => {
 			.get(`http://localhost:5000/map/api/helps/details`)
 			.then((response) => {
 				const pendingAids = response.data;
-				console.log(pendingAids);
 				dispatch(fetchLoggedUsersPendingAidsSuccess(pendingAids));
 			})
 			.catch((error) => {

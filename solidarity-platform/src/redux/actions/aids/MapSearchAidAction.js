@@ -31,7 +31,7 @@ export const fetchMapSearchAid = (searchContent) => {
 			.get(`http://localhost:5000/map/api/helps/search/${searchContent}`)
 			.then((response) => {
 				const mapSearchAid = response.data;
-				console.log("search result", mapSearchAid);
+				console.log("mapSearchAid", mapSearchAid);
 				dispatch(fetchMapSearchAidSuccess(mapSearchAid));
 			})
 			.catch((error) => {
