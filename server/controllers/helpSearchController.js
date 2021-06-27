@@ -75,11 +75,12 @@ export const postHelpSearch = async (req, res) => {
         "score": { "$meta": "searchScore"}
       }
 };
+  const limit = {"$limit": 5};
     const sortHelp = { "$sort" : { "score" : -1,"emergencyLevel.level": -1 },};
     const sort = { "$sort" : { "score" : -1 } }
 
-		let helpResults = await Help.aggregate([query,project,sortHelp]);
-    let locationResults = await GeoJson.aggregate([queryLocation,projectLocation,sort])
+		let helpResults = await Help.aggregate([query,project,sortHelp,limit]);
+    let locationResults = await GeoJson.aggregate([queryLocation,projectLocation,sort,limit])
     console.log("helps: ",helpResults);
     console.log("location: ",locationResults);
     const result = {

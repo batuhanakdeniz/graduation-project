@@ -30,7 +30,7 @@ router.get('/api/helps/details/own/active',auth,getUserOwnActiveHelps);//?
 
 
 //SEARCH
-router.get('/api/helps/search',postHelpSearch);//?
+router.post('/api/helps/search/',postHelpSearch);//?
 //COMMENT 
 //commentlerin hepsi resourrcesa eklendi
 router.put('/api/helps/details/comment/:id',auth,uploadComment.array('files', 2),putHelpComment);    //HELP ID
