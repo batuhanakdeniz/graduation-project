@@ -63,8 +63,9 @@ export const putHelpCommentStatus = async (req, res) => {
 
 export const getAllActiveComment = async (req, res) => {
 	try {
-		const pendingComments = await Comment.find({status: "Active"});
-		res.status(200).send(pendingComments);
+		const activeComments = await Comment.find({status: "Active"});
+		console.log("status: ",activeComments);
+		res.status(200).send(activeComments);
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,
@@ -75,6 +76,7 @@ export const getAllActiveComment = async (req, res) => {
 export const getAllPendingComment = async (req, res) => {
 	try {
 		const pendingComments = await Comment.find({status: "Pending"});
+		console.log("status: ",pendingComments);
 		res.status(200).send(pendingComments);
 	} catch (err) {
 		res.status(404).json({
@@ -96,6 +98,23 @@ export const getOwnActiveComment = async (req, res) => {
 	try {
 		const activeComments = await Comment.find({user_id: req.User,status: "Active"});
 		res.status(200).send(activeComments);
+	} catch (err) {
+		res.status(404).json({
+			message: err.message,
+		});
+	}
+};
+
+export const deleteComment = async (req, res) => {
+	try {
+		Comment.findByIdAndDelete(req.params.id, (err, comment) => {
+			if (err) return res.status(404).send(err);
+			const message = {
+				message: "Basarıyla silindi.",
+				id: comment.id,
+			};
+			return res.status(200).send(message);
+		});
 	} catch (err) {
 		res.status(404).json({
 			message: err.message,

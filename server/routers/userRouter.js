@@ -17,8 +17,8 @@ router.get('/api/admin/users/pending', getAllPendingUserType);
 router.put('/api/admin/users/status/:userName', putUserStatus); //
 router.delete('/api/admin/delete/:username', deleteUser);
 router.get('/api/loggedUser', auth , getloggedUser);
-router.put('/api/admin/users/status/confirmation', auth, putUserStatusConfirmation); 
-router.put('/api/admin/users/status/reject', auth, putUserStatusReject); 
+router.put('/api/admin/users/status/appeal/confirmation', auth, putUserStatusConfirmation); 
+router.put('/api/admin/users/status/appeal/reject', auth, putUserStatusReject); 
 router.put('/api/loggedUser/update', auth, putUser); //statü başvurusunda kullandık
 //router.get('/profile/:id', getUserProfile);
 export default router;

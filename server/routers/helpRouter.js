@@ -3,7 +3,7 @@ import {getHelp, createHelp,getHelpLocations,getHelpLocation,getHelpBasics,getHe
     getHelpDetail, getHelpDetails, postHelp, putHelp, deleteHelp, putHelpEmergencyLevel,
     getPendingHelpDetails,getUserOwnHelps, getUserOwnPendingHelps, getUserOwnActiveHelps} from '../controllers/helpController.js'
 import {postHelpSearch} from "../controllers/helpSearchController.js";
-import {putHelpComment, putHelpCommentStatus, getAllPendingComment,getAllActiveComment,getOwnPendingComment,getOwnActiveComment} from "../controllers/commentController.js";
+import {putHelpComment, putHelpCommentStatus, getAllPendingComment,getAllActiveComment,getOwnPendingComment,getOwnActiveComment,deleteComment} from "../controllers/commentController.js";
 import {postCategory, postSubCategory,getCategory,getSubCategory,getCategories,getSubCategories } from "../controllers/categoryController.js";
 import {PostGeoJson} from "../controllers/geoJsonController.js";
 import {auth} from "../middleware/auth.js";
@@ -22,7 +22,7 @@ router.get('/api/helps/details/:id',auth, getHelpDetail); //+
 router.post('/api/helps/details/create',auth,upload.array('files', 5),postHelp); //+
 router.put('/api/helps/details/update/:id',auth,putHelp); //?
 router.delete('/api/helps/details/delete/:id',auth,deleteHelp); //?
-router.get('/api/helps/details/all/pending',auth, getPendingHelpDetails); //?
+router.get('/api/helps/details/all/pending',auth,getPendingHelpDetails); //?
 router.get('/api/helps/own',auth,getUserOwnHelps);//?
 router.get('/api/helps/details/own/pending',auth,getUserOwnPendingHelps);//?
 router.get('/api/helps/details/own/active',auth,getUserOwnActiveHelps);//?
@@ -38,12 +38,14 @@ router.put('/api/comments/status/:id',auth,putHelpCommentStatus); //COMMENT ID Y
 router.put('/api/helps/emergencyLevel/:id',putHelpEmergencyLevel); // HELP ID change emergencyLevel
 router.get('/api/helps/details/comments/own/pending',auth,getOwnPendingComment);
 router.get('/api/helps/details/comments/own/active',auth,getOwnActiveComment);
-router.get('/api/helps/details/comments/allPending',auth,getAllPendingComment);
-router.get('/api/helps/details/comments/allActive',auth,getAllActiveComment);
+router.get('/api/helps/details/comments/all/Pending',getAllPendingComment);
+router.get('/api/helps/details/comments/all/Active',getAllActiveComment);
+router.delete('/api/helps/details/comments/:id',deleteComment);
 
 
 
-getOwnActiveComment
+
+
 //CATEGORY
 router.post('/api/helps/category',postCategory);
 router.post('/api/helps/subcategory',postSubCategory);
