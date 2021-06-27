@@ -532,9 +532,19 @@ export const sendConfirmationEmail = (name, email, confirmationCode) => {
 
 export const sendHelpInfo = () => {
 
-}
+};
  //If more than 1 people apply to help for the same post send email
 export const sendInfoForSameHelp = () => {
 
-}
-
+};
+export const sendInfoForActivateHelp = (name, email) => {
+	transport
+		.sendMail({
+			from: user,
+			to: email,
+			subject: "Hesap doğrulama",
+			html:`<div>
+			<h1>Teşekkürler,</h1>
+			<h3>Yardımınız aktif hale gelmiştir.</h3></div>`
+		}).catch((err) => console.log("sendInfoForActivateHelp error: ", err));;
+};

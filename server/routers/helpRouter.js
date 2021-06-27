@@ -27,7 +27,7 @@ router.get('/api/helps/details/active/own',auth,getUserOwnHelps);//?
 
 
 //SEARCH
-router.get('/api/helps/search/:search',auth,postHelpSearch);//?
+router.get('/api/helps/search',postHelpSearch);//?
 //COMMENT 
 //commentlerin hepsi resourrcesa eklendi
 router.put('/api/helps/details/comment/:id',auth,uploadComment.array('files', 2),putHelpComment);    //HELP ID
