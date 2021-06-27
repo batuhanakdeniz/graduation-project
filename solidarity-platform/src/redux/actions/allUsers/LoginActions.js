@@ -29,7 +29,6 @@ export const getLoggedIn = () => {
 			.get("http://localhost:5000/api/loggedIn")
 			.then((response) => {
 				const loggedIn = response.data;
-				console.log(loggedIn);
 				dispatch(fetchLoggedInSuccess(loggedIn));
 			})
 			.catch((error) => {

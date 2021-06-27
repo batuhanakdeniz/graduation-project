@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
 	numberOfHelpedAids: numberOfHelpedAidsReducer,
 	numberOfUsers: numberOfUsersReducer,
 	pendingAids: pendingAidsReducer,
-	aboutpage: pendingUsersReducer,
+	pendingUsers: pendingUsersReducer,
 	loggedUsersAids: loggedUsersAidsReducer,
 	loggedUsersComments: LoggedUsersCommentsReducer,
 	allUsers: allUsersReducer,

@@ -4,7 +4,7 @@ import { Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "./Navbar.scss";
 import axios from "axios";
 import { useHistory } from "react-router";
-import batuPP from "./batu.jpeg";
+import blank_avatar from "./blank-avatar.svg";
 import { getLoggedIn } from "../../redux";
 import { getLoggedUserData } from "../../redux";
 import { Button } from "@chakra-ui/button";
@@ -43,16 +43,13 @@ function NavbarComponent() {
 			>
 				<Nav>
 					<Nav.Link id="NavlinksStyle" href="/">
-						Anasayfa
+						Harita
 					</Nav.Link>
 					<Nav.Link id="NavlinksStyle" href="/NasilIsler">
 						Nasıl İşler
 					</Nav.Link>
-					<Nav.Link id="NavlinksStyle" href="/map">
-						Harita
-					</Nav.Link>
 					<Nav.Link id="NavlinksStyle" href="/about">
-						About
+						Hakkımızda
 					</Nav.Link>
 					{!isLoggedIn && (
 						<>
@@ -75,30 +72,34 @@ function NavbarComponent() {
 							<NavDropdown
 								title={
 									<Image
-										src={batuPP}
+										src={
+											loggedUserData.ppImage
+												? loggedUserData.ppImage
+												: blank_avatar
+										}
 										width="35"
 										height="35"
-										className="d-inline-block align-top"
+										className="d-inline-block align-center"
+										color="white"
 										alt=" "
 										fluid
-										roundedCircle
 									/>
 								}
 								id="NavlinksStyle"
 							>
 								<NavDropdown.Item href="/profile" id="NavDropdownStyle">
-									<i className="fa fa-user fa-fw"></i> Profile Page
+									<i className="fa fa-user fa-fw"></i> Profil Sayfası
 								</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item href="/profile/edit" id="NavDropdownStyle">
-									<i className="fas fa-user-cog"></i> Settings
+									<i className="fas fa-user-cog"></i> Ayarlar
 								</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item
 									onClick={handleLoggedOut}
 									id="NavDropdownStyle"
 								>
-									<i className="fas fa-sign-out-alt"></i> Logout
+									<i className="fas fa-sign-out-alt"></i> Çıkış Yap
 								</NavDropdown.Item>
 							</NavDropdown>
 						</>

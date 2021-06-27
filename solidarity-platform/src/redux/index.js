@@ -26,8 +26,20 @@ export { fetchNumberOfAids } from "./actions/aboutpage/numberOfAidsActions";
 export { fetchNumberOfHelpedAids } from "./actions/aboutpage/numberOfHelpedAidsActions";
 export { fetchNumberOfUsers } from "./actions/aboutpage/numberOfUsersActions";
 
-export { fetchPendingAids } from "./actions/admin/PendingAidsAction";
-export { fetchPendingUsers } from "./actions/admin/PendingUsersToConfirmAction";
-export { fetchAllUsers } from "./actions/admin/AllUsersAction";
-export { fetchAllAids } from "./actions/admin/AllAidsAction";
-export { fetchPendingComments } from "./actions/admin/PendingCommentsAction";
+export {
+	fetchPendingAids,
+	deletePendingAidByID,
+	confirmPendingAidByID,
+} from "./actions/admin/PendingAidsAction";
+export {
+	fetchPendingUsers,
+	deletePendingUserByID,
+	confirmPendingUserByID,
+} from "./actions/admin/PendingUsersToConfirmAction";
+export { fetchAllUsers, deleteUserByID } from "./actions/admin/AllUsersAction";
+export { fetchAllAids, deleteAidByID } from "./actions/admin/AllAidsAction";
+export {
+	fetchPendingComments,
+	deletePendingCommentByID,
+	confirmPendingCommentByID,
+} from "./actions/admin/PendingCommentsAction";

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import L from "leaflet";
-import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
+import {
+	FeatureGroup,
+	LayersControl,
+	MapContainer,
+	TileLayer,
+	ZoomControl,
+} from "react-leaflet";
 import "../mapStyle.scss";
 import addAidMarker from "../assets/free-map-marker-icon-blue.png";
 
@@ -46,16 +52,22 @@ function MapComponent({ match }) {
 							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
-						<ZoomControl position="bottomright" />
-						<Search />
-						<AddButton
-							position="bottomleft"
-							eventKey={mapmod}
-							setMapmod={setMapmod}
-							mapmod={mapmod}
-						/>
-						<FlyToLocationButton />
-						{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
+						<LayersControl position="topright">
+							<LayersControl.Overlay name="Feature group">
+								<FeatureGroup pathOptions={{ color: "purple" }}>
+									<ZoomControl position="bottomright" />
+									<Search />
+									<AddButton
+										position="bottomleft"
+										eventKey={mapmod}
+										setMapmod={setMapmod}
+										mapmod={mapmod}
+									/>
+									<FlyToLocationButton />
+									{mapmod ? <LocationMarker icon={addAidIcon} /> : <ShowAids />}
+								</FeatureGroup>
+							</LayersControl.Overlay>
+						</LayersControl>
 					</MapContainer>
 				</Col>
 			</Row>

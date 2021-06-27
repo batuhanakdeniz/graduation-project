@@ -1,13 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import React, { useEffect, useState } from "react";
-import {
-	Col,
-	Row,
-	Container,
-	Card,
-	ListGroup,
-	ListGroupItem,
-} from "react-bootstrap";
+import { Col, Row, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 import Rating from "@material-ui/lab/Rating";
@@ -15,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDisclosure } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import {
+	deleteAidByID,
 	fetchCategoryType,
 	fetchDetailContent,
 	fetchSubcategoryType,
@@ -61,7 +55,11 @@ function AllAidListItem({ aid }) {
 		dispatch(fetchSubcategoryType(aid.typeofhelp.subcategory))
 			.then((response) => setSubcategory(response))
 			.catch((err) => console.log(err));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [aid]);
+	const deleteAidHandler = () => {
+		dispatch(deleteAidByID(aid._id));
+	};
 	return (
 		<Col className="aidItem">
 			<Card style={{ height: "100%" }}>
@@ -147,7 +145,13 @@ function AllAidListItem({ aid }) {
 						<DetailModal onClose={onClose} isOpen={isOpen} />
 					</Card.Link>
 					<Card.Link>
-						<Button colorScheme="warningRed" ml="1rem">
+						<Button
+							onClick={() => {
+								deleteAidHandler();
+							}}
+							colorScheme="warningRed"
+							ml="1rem"
+						>
 							<FaTrashAlt />
 						</Button>
 					</Card.Link>

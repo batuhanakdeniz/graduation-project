@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { Col, Image, Row } from "react-bootstrap";
 import ChangeUserTypeModal from "./ChangeUserTypeModal";
-
+import blank_avatar from "./blank-avatar.svg";
 function UserInfoColumn({ loggedUserData }) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -11,7 +11,11 @@ function UserInfoColumn({ loggedUserData }) {
 		<div className="userInfoColumn">
 			<Row style={{ height: "20rem", marginBottom: "1rem" }}>
 				<Col md={12} className="userProfilPicture">
-					<Image src="https://picsum.photos/200/200" alt="" rounded />
+					<Image
+						src={loggedUserData.ppImage ? loggedUserData.ppImage : blank_avatar}
+						alt=""
+						rounded
+					/>
 				</Col>
 			</Row>
 			<Row className="columnItems">

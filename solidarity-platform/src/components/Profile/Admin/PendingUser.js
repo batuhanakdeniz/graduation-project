@@ -3,12 +3,27 @@ import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { GiCheckMark } from "react-icons/gi";
 import { FaTrashAlt } from "react-icons/fa";
+import blank_avatar from "../blank-avatar.svg";
+import { confirmPendingUserByID, deletePendingUserByID } from "../../../redux";
+import { useDispatch } from "react-redux";
+
 function PendingUser({ user }) {
+	const dispatch = useDispatch();
+	const confirmPendingUserButtonHandler = () => {
+		dispatch(confirmPendingUserByID(user._id));
+	};
+	const deletePendingUserButtonHandler = () => {
+		dispatch(deletePendingUserByID(user._id));
+	};
 	return (
 		<Col className="pendingUser">
 			<Row className="columnItems">
 				<Col md={3} className="columnItem">
-					<Image src={user.ppImage} alt="" roundedCircle></Image>
+					<Image
+						src={user.ppImage ? user.ppImage : blank_avatar}
+						alt=""
+						roundedCircle
+					></Image>
 				</Col>
 				<Col md={7} className="columnItem">
 					<Row>
@@ -35,12 +50,22 @@ function PendingUser({ user }) {
 				<Col md={1} className="columnItem">
 					<Row style={{ height: "100%" }}>
 						<Col md={12} className="buttonSection">
-							<Button colorScheme="teal">
+							<Button
+								onClick={() => {
+									confirmPendingUserButtonHandler();
+								}}
+								colorScheme="teal"
+							>
 								<GiCheckMark />
 							</Button>
 						</Col>
 						<Col md={12} className="buttonSection">
-							<Button colorScheme="warningRed">
+							<Button
+								onClick={() => {
+									deletePendingUserButtonHandler();
+								}}
+								colorScheme="warningRed"
+							>
 								<FaTrashAlt />
 							</Button>
 						</Col>

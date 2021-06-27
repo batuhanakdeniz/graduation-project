@@ -33,7 +33,6 @@ export const fetchLoggedUsersPendingComments = () => {
 			.get(`http://localhost:5000/map/api/helps/details`)
 			.then((response) => {
 				const pendingComments = response.data;
-				console.log(pendingComments);
 				dispatch(fetchLoggedUsersPendingCommentsSuccess(pendingComments));
 			})
 			.catch((error) => {

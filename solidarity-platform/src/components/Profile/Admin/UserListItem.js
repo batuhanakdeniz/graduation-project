@@ -5,14 +5,21 @@ import { Col, Image, Row } from "react-bootstrap";
 import UserTypeSelector from "./UserTypeSelector";
 import { GrEdit } from "react-icons/gr";
 import { CgDetailsMore } from "react-icons/cg";
+import blank_avatar from "../blank-avatar.svg";
+import { useDispatch } from "react-redux";
+import { deleteUserByID } from "../../../redux";
 function UserListItem({ user }) {
 	const [userTypeEditMode, setUserTypeEditMode] = useState(false);
+	const dispatch = useDispatch();
+	const deleteUserButtonHandler = () => {
+		dispatch(deleteUserByID(user._id));
+	};
 	return (
 		<Col>
 			<Row className="pendingUser">
 				<Col md={2} className="columnItem">
 					<Image
-						src={user.ppImage ? user.ppImage : "https://picsum.photos/200"}
+						src={user.ppImage ? user.ppImage : blank_avatar}
 						alt=""
 						fluid
 						roundedCircle
@@ -68,7 +75,12 @@ function UserListItem({ user }) {
 							</Button>
 						</Col>
 						<Col md={12} className="buttonSection">
-							<Button colorScheme="warningRed">
+							<Button
+								onClick={() => {
+									deleteUserButtonHandler();
+								}}
+								colorScheme="warningRed"
+							>
 								<FaTrashAlt />
 							</Button>
 						</Col>

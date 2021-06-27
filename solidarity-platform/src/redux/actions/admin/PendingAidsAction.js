@@ -30,12 +30,36 @@ export const fetchPendingAids = () => {
 			.get(`http://localhost:5000/map/api/helps/details/pendings`)
 			.then((response) => {
 				const pendingAids = response.data;
-				console.log(pendingAids);
 				dispatch(fetchPendingAidsSuccess(pendingAids));
 			})
 			.catch((error) => {
 				const errorMsg = error.message;
 				dispatch(fetchPendingAidsFailure(errorMsg));
 			});
+	};
+};
+
+export const confirmPendingAidByID = (aidID) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.put(
+				`http://localhost:5000/map/api/helps/subcategory/${aidID}`
+			);
+			return response;
+		} catch (error) {
+			return error;
+		}
+	};
+};
+export const deletePendingAidByID = (aidID) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.delete(
+				`http://localhost:5000/map/api/helps/subcategory/${aidID}`
+			);
+			return response;
+		} catch (error) {
+			return error;
+		}
 	};
 };

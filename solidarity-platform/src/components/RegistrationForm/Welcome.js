@@ -27,6 +27,7 @@ const Welcome = (props) => {
 					setSuccessful(false);
 				});
 		}
+		// eslint-disable-next-line
 	}, []);
 
 	return (
