@@ -27,7 +27,7 @@ export const fetchPendingComments = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingCommentsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details/comment/allPending`)
+			.get(`http://localhost:5000/map/api/helps/details/comments/all/Pending`)
 			.then((response) => {
 				const pendingComments = response.data;
 				console.log("response.data", response.data);
@@ -39,24 +39,32 @@ export const fetchPendingComments = () => {
 			});
 	};
 };
-export const confirmPendingCommentByCommentCode = (commentCode) => {
+export const confirmPendingCommentByID = (commentID) => {
 	return async (dispatch) => {
 		try {
+			const value = {
+				status: "Active",
+			};
 			const response = await axios.put(
-				`http://localhost:5000/map/api/helps/subcategory/${commentCode}`
+				`http://localhost:5000/map/api/comments/status/${commentID}`,
+				value
 			);
+			await dispatch(fetchPendingComments());
+			console.log("yorum onay res", response);
 			return response;
 		} catch (error) {
 			return error;
 		}
 	};
 };
-export const deletePendingCommentByCommentCode = (commentCode) => {
+export const deletePendingCommentByID = (commentID) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${commentCode}`
+				`http://localhost:5000/map/api/helps/details/comments/${commentID}`
 			);
+			await dispatch(fetchPendingComments());
+			console.log("yorum silme res", response);
 			return response;
 		} catch (error) {
 			return error;

@@ -42,8 +42,9 @@ export const deleteUserByUsername = (username) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${username}`
+				`http://localhost:5000/api/loggedUser/delete/${username}`
 			);
+			console.log("response", response);
 			return response;
 		} catch (error) {
 			return error;

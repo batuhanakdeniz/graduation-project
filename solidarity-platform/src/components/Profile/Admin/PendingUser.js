@@ -21,32 +21,44 @@ function PendingUser({ user }) {
 	return (
 		<Col className="pendingUser">
 			<Row className="columnItems">
-				<Col md={3} className="columnItem">
+				<Col md={2} className="columnItem">
 					<Image
 						src={user.ppImage ? user.ppImage : blank_avatar}
 						alt=""
 						roundedCircle
 					></Image>
 				</Col>
-				<Col md={7} className="columnItem">
+				<Col md={8} className="columnItem">
 					<Row>
-						<Col md={4} className="key">
-							<span>Name:</span>
+						<Col md={5} className="key">
+							<span>Ad:</span>
 						</Col>
-						<Col md={8} className="value">
+						<Col md={7} className="value">
 							<span>{user.userName}</span>
 						</Col>
-						<Col md={4} className="key">
-							<span>Surname:</span>
+						<Col md={5} className="key">
+							<span>Soyad:</span>
 						</Col>
-						<Col md={8} className="value">
+						<Col md={7} className="value">
 							<span>{user.lastName}</span>
 						</Col>
-						<Col md={4} className="key">
+						<Col md={5} className="key">
 							<span>Email:</span>
 						</Col>
-						<Col md={8} className="value">
+						<Col md={7} className="value">
 							<span>{user.email}</span>
+						</Col>
+						<Col md={5} className="key">
+							<span>Eski Kullanıcı Tipi:</span>
+						</Col>
+						<Col md={7} className="value">
+							<span>{user.userType}</span>
+						</Col>
+						<Col md={5} className="key">
+							<span>Yeni Kullanıcı Tipi:</span>
+						</Col>
+						<Col md={7} className="value">
+							<span>{user.statusUserType.applyUserType}</span>
 						</Col>
 					</Row>
 				</Col>
