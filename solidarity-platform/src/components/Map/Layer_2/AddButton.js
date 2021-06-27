@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/button";
+import { Tooltip } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useMap } from "react-leaflet";
 import { POSITION_CLASSES } from "../PositionClass";
@@ -8,13 +9,19 @@ export const AddButton = ({ position, zoom, setMapmod, mapmod }) => {
 	const parentMap = useMap();
 	// eslint-disable-next-line
 	const button = useMemo(() => (
-		<Button
-			onClick={() => setMapmod((prev) => !prev)}
-			colorScheme={mapmod ? "addAidWarning" : "brand"}
+		<Tooltip
+			hasArrow
+			label="Yardım eklemek için bu butona tıklayın. Buton turuncu hale geldiğinde harita üzerinde herhangi bir noktaya tıklayıp yardım ekleyebilirsiniz"
+			fontSize="sm"
+			placement="right-end"
 		>
-			{" "}
-			Yardım Ekle
-		</Button> //todo onClick ekle ve yardım eklenir hale gelsin
+			<Button
+				onClick={() => setMapmod((prev) => !prev)}
+				colorScheme={mapmod ? "addAidWarning" : "brand"}
+			>
+				Yardım Ekle
+			</Button>
+		</Tooltip>
 	));
 	const positionClass =
 		(position && POSITION_CLASSES[position]) || POSITION_CLASSES.bottomleft;

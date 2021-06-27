@@ -8,7 +8,9 @@ import { CgDetailsMore } from "react-icons/cg";
 import DetailModal from "../../Map/Layer_4/DetailModal";
 import { useDispatch } from "react-redux";
 import {
+	confirmPendingCommentByCommentCode,
 	confirmPendingCommentByID,
+	deletePendingCommentByCommentCode,
 	deletePendingCommentByID,
 	fetchDetailContent,
 } from "../../../redux";
@@ -36,10 +38,10 @@ function PendingCommentItem(props) {
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmCommentHandler = () => {
-		dispatch(confirmPendingCommentByID(Comment.commentID));
+		dispatch(confirmPendingCommentByCommentCode(Comment.commentCode));
 	};
 	const deleteCommentHandler = () => {
-		dispatch(deletePendingCommentByID(Comment.commentID));
+		dispatch(deletePendingCommentByCommentCode(Comment.commentCode));
 	};
 	return (
 		<Col className="pendingComment">

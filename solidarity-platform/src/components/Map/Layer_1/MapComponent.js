@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import L from "leaflet";
-import {
-	FeatureGroup,
-	LayersControl,
-	MapContainer,
-	TileLayer,
-	ZoomControl,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import "../mapStyle.scss";
 import addAidMarker from "../assets/free-map-marker-icon-blue.png";
 

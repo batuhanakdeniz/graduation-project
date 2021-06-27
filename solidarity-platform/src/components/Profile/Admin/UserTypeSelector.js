@@ -23,9 +23,11 @@ function UserTypeSelector({ user, setUserTypeEditMode }) {
 
 	const onSubmit = (values) => {
 		console.log("Saved Data", JSON.parse(JSON.stringify(values)));
-
 		axios
-			.put(`http://localhost:5000//api/admin/users/status/${user._id}`, values)
+			.put(
+				`http://localhost:5000/api/admin/users/status/${user.userName}`,
+				values
+			)
 			.then((res) => console.log("res", res));
 		setUserTypeEditMode(false);
 	};

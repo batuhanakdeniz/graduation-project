@@ -39,11 +39,11 @@ export const fetchPendingUsers = () => {
 			});
 	};
 };
-export const confirmPendingUserByID = (userID) => {
+export const confirmPendingUserByUsername = (username) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.put(
-				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+				`http://localhost:5000/map/api/helps/subcategory/${username}`
 			);
 			return response;
 		} catch (error) {
@@ -51,11 +51,11 @@ export const confirmPendingUserByID = (userID) => {
 		}
 	};
 };
-export const deletePendingUserByID = (userID) => {
+export const deletePendingUserByUsername = (username) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.put(
-				`http://localhost:5000/map/api/helps/subcategory/${userID}`
+				`http://localhost:5000/map/api/helps/subcategory/${username}`
 			);
 			return response;
 		} catch (error) {

@@ -20,7 +20,7 @@ import numberOfUsersReducer from "./reducers/aboutpage/numberOfUsersReducer";
 import loggedUserReducer from "./reducers/allUsers/LoggedUserReducer";
 import userLocationReducer from "./reducers/allUsers/UserLocationReducer";
 import loggedUsersAidsReducer from "./reducers/allUsers/LoggedUsersAidsReducer";
-import LoggedUsersCommentsReducer from "./reducers/allUsers/LoggedUsersCommentsReducer";
+import loggedUsersCommentsReducer from "./reducers/allUsers/LoggedUsersCommentsReducer";
 
 const rootReducer = combineReducers({
 	aidLocations: AidLocationReducer,
@@ -36,7 +36,7 @@ const rootReducer = combineReducers({
 	pendingAids: pendingAidsReducer,
 	pendingUsers: pendingUsersReducer,
 	loggedUsersAids: loggedUsersAidsReducer,
-	loggedUsersComments: LoggedUsersCommentsReducer,
+	loggedUsersComments: loggedUsersCommentsReducer,
 	allUsers: allUsersReducer,
 	allAids: allAidsReducer,
 	pendingComments: pendingCommentsReducer,

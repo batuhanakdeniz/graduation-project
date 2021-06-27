@@ -7,8 +7,8 @@ import { FaTrashAlt } from "react-icons/fa";
 import { CgDetailsMore } from "react-icons/cg";
 import { useDispatch } from "react-redux";
 import {
-	confirmPendingAidByID,
-	deletePendingAidByID,
+	confirmPendingAidByAidCode,
+	deletePendingAidByAidCode,
 	fetchDetailContent,
 } from "../../../redux";
 import { useDisclosure } from "@chakra-ui/react";
@@ -31,10 +31,10 @@ function PendingAid(props) {
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmAidHandler = () => {
-		dispatch(confirmPendingAidByID(aid.aidID));
+		dispatch(confirmPendingAidByAidCode(aid.aidCode));
 	};
 	const deleteAidHandler = () => {
-		dispatch(deletePendingAidByID(aid.aidID));
+		dispatch(deletePendingAidByAidCode(aid.aidCode));
 	};
 	return (
 		<Col className="pendingAid">

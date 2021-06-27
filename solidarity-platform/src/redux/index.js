@@ -28,18 +28,24 @@ export { fetchNumberOfUsers } from "./actions/aboutpage/numberOfUsersActions";
 
 export {
 	fetchPendingAids,
-	deletePendingAidByID,
-	confirmPendingAidByID,
+	deletePendingAidByAidCode,
+	confirmPendingAidByAidCode,
 } from "./actions/admin/PendingAidsAction";
 export {
 	fetchPendingUsers,
-	deletePendingUserByID,
-	confirmPendingUserByID,
+	deletePendingUserByUsername,
+	confirmPendingUserByUsername,
 } from "./actions/admin/PendingUsersToConfirmAction";
-export { fetchAllUsers, deleteUserByID } from "./actions/admin/AllUsersAction";
-export { fetchAllAids, deleteAidByID } from "./actions/admin/AllAidsAction";
+export {
+	fetchAllUsers,
+	deleteUserByUsername,
+} from "./actions/admin/AllUsersAction";
+export {
+	fetchAllAids,
+	deleteAidByAidCode,
+} from "./actions/admin/AllAidsAction";
 export {
 	fetchPendingComments,
-	deletePendingCommentByID,
-	confirmPendingCommentByID,
+	deletePendingCommentByCommentCode,
+	confirmPendingCommentByCommentCode,
 } from "./actions/admin/PendingCommentsAction";

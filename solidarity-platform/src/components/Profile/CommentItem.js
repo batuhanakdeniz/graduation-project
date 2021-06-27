@@ -11,24 +11,26 @@ import { fetchDetailContent } from "../../redux";
 import { useDisclosure } from "@chakra-ui/react";
 import blank_avatar from "./blank-avatar.svg";
 function LoggedUserCommentItem(props) {
-	const { Comment } = props;
+	const { Comment, userName } = props;
+
 	const dispatch = useDispatch();
 	const [images, setImages] = useState([]);
 	useEffect(() => {
 		setImages([]);
-		Comment.images.map((img) =>
-			setImages((curr) => [
-				...curr,
-				{
-					original: img.src,
-					thumbnail: img.src,
-				},
-			])
-		);
+		Comment.extraImages &&
+			Comment.extraImages.map((img) =>
+				setImages((curr) => [
+					...curr,
+					{
+						original: img.src,
+						thumbnail: img.src,
+					},
+				])
+			);
 	}, [Comment]);
 	const commentDetailButtonHandler = () => {
 		onOpen();
-		dispatch(fetchDetailContent(Comment.aidID));
+		dispatch(fetchDetailContent(Comment.help_id));
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmCommentHandler = () => {
@@ -40,7 +42,9 @@ function LoggedUserCommentItem(props) {
 	return (
 		<Col className="pendingComment">
 			<Card border="black">
-				<Card.Header className="text-center">{Comment.aidNo}</Card.Header>
+				<Card.Header className="text-center">
+					{Comment.createdAt} Tarihinde Eklendi
+				</Card.Header>
 				<Row style={{ marginLeft: "0rem", marginRight: "0rem" }}>
 					<Col md={5} className="aidImg">
 						<Row>
@@ -57,23 +61,27 @@ function LoggedUserCommentItem(props) {
 											roundedCircle
 										/>
 									</Col>
-									<Col md={6} className="property">
-										<span className="key">Username </span>
-										<span className="value">{Comment.userName}</span>
-									</Col>
+									{userName && (
+										<Col md={6} className="property">
+											<span className="key">Username </span>
+											<span className="value">{userName}</span>
+										</Col>
+									)}
 								</Row>
 							</Col>
-							<Col md={12}>
-								<ImageGallery items={images} thumbnail />
-							</Col>
+							{images.length > 0 && (
+								<Col md={12}>
+									<ImageGallery items={images} thumbnail />
+								</Col>
+							)}
 						</Row>
 					</Col>
 					<Col md={7} style={{ paddingLeft: "2rem" }}>
 						<Card.Body>
 							<Row>
 								<Col md={12} className="property">
-									<span className="key">Comment </span>
-									<span className="value">{Comment.comment}</span>
+									<span className="key">Yorum </span>
+									<span className="value">{Comment.text}</span>
 								</Col>
 							</Row>
 						</Card.Body>

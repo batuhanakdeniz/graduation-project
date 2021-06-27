@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDisclosure } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import {
-	deleteAidByID,
+	deleteAidByAidCode,
 	fetchCategoryType,
 	fetchDetailContent,
 	fetchSubcategoryType,
@@ -58,7 +58,7 @@ function AllAidListItem({ aid }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [aid]);
 	const deleteAidHandler = () => {
-		dispatch(deleteAidByID(aid._id));
+		dispatch(deleteAidByAidCode(aid.aidCode));
 	};
 	return (
 		<Col className="aidItem">

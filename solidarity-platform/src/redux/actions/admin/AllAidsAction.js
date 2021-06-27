@@ -38,11 +38,11 @@ export const fetchAllAids = (aidId) => {
 			});
 	};
 };
-export const deleteAidByID = (aidID) => {
+export const deleteAidByAidCode = (aidCode) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${aidID}`
+				`http://localhost:5000/map/api/helps/subcategory/${aidCode}`
 			);
 			return response;
 		} catch (error) {
