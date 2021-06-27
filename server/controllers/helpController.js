@@ -147,7 +147,7 @@ export const getHelpDetails = async (req, res) => {
 
 export const getHelpDetail = async (req, res) => {
 	try {
-		console.log("req.User: ", req.User);
+		//console.log("req.User: ", req.User);
 
 		Help.findById(req.params.id)
 			.populate("comment").populate("_creator")
@@ -177,7 +177,7 @@ export const getHelpDetail = async (req, res) => {
 					comment: activeComments,
 					createrUserType: help._creator.userType
 				};
-				console.log(sendHelp);
+				//console.log(sendHelp);
 				return res.status(200).send(sendHelp);
 			});
 	} catch (err) {
