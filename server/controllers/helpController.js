@@ -149,7 +149,7 @@ export const getHelpDetail = async (req, res) => {
 		console.log("req.User: ", req.User);
 
 		Help.findById(req.params.id)
-			.populate("comment").populate("user")
+			.populate("comment").populate("user").populate("_creator")
 			.exec((err, help) => {
 				if (err) throw err;
 				let activeComments = [];
@@ -171,6 +171,7 @@ export const getHelpDetail = async (req, res) => {
 					personLastName: help.personLastName,
 					img: help.img,
 					detail: help.detail,
+					creatorUserName: help._creator.firstName,
 					comment: activeComments,
 				};
 				console.log(sendHelp);

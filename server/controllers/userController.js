@@ -13,6 +13,7 @@ export const getloggedUser = async (req, res,next) => {
         const sendInfos = {
             userName: user.userName,
             firstName: user.firstName,
+			email: user.email,
             lastName: user.lastName,
             phone: user.phone,
             userType: user.userType

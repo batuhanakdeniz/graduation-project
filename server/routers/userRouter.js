@@ -16,7 +16,7 @@ router.get('/api/admin/users', getAllUser);
 router.get('/api/admin/users/pending', getAllPendingUserType);
 router.put('/api/admin/users/status/:id', putUserStatus);
 router.get('/api/loggedUser', auth , getloggedUser);
-router.get('/api/loggedUser/update/:id', putUser);
+router.put('/api/loggedUser/update', putUser);
 router.get('/api/loggedUser/delete/:id', deleteUser);
 //router.get('/profile/:id', getUserProfile);
 export default router;
