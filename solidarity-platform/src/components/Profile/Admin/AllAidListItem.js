@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDisclosure } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import {
-	deleteAidByAidCode,
+	deleteAidByAidID,
 	fetchCategoryType,
 	fetchDetailContent,
 	fetchSubcategoryType,
@@ -58,7 +58,7 @@ function AllAidListItem({ aid }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [aid]);
 	const deleteAidHandler = () => {
-		dispatch(deleteAidByAidCode(aid.aidCode));
+		dispatch(deleteAidByAidID(aid._id));
 	};
 	return (
 		<Col className="aidItem">
@@ -90,8 +90,11 @@ function AllAidListItem({ aid }) {
 									/>
 								</Col>
 								<Col md={2}></Col>
-								<Col md={4} style={labels[aid.emergencyLevel.level].style}>
-									{labels[aid.emergencyLevel.level].value}
+								<Col
+									md={4}
+									style={labels[Math.round(aid.emergencyLevel.level)].style}
+								>
+									{labels[Math.round(aid.emergencyLevel.level)].value}
 								</Col>
 							</Row>
 						</div>

@@ -35,7 +35,7 @@ function PendingUsers() {
 		<h1>{pendingUsers.error}</h1>
 	) : (
 		<div className="pendingUsers">
-			<Row md={2}>
+			<Row md={1}>
 				{pendingUsers.pendingUsersList.length > 0 ? (
 					currentPosts.map((user, idx) => <PendingUser key={idx} user={user} />)
 				) : (

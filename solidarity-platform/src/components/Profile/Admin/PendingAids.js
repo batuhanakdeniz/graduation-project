@@ -9,7 +9,7 @@ function PendingAids() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		//dispatch(fetchPendingAids());
+		dispatch(fetchPendingAids());
 		// ! Alt satır kalacak silme
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -25,7 +25,7 @@ function PendingAids() {
 			pendingAids.pendingAidsList.slice(indexOfFirstPost, indexOfLastPost)
 		);
 		// eslint-disable-next-line
-	}, [/* pendingAids, */ currentPage]);
+	}, [pendingAids, currentPage]);
 
 	return pendingAids.loading ? (
 		<h1>Loaading</h1>

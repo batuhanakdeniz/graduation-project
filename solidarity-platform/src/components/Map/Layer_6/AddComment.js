@@ -42,24 +42,28 @@ function AddComment({ setDisplayAddComment, displayAddComment, aidID }) {
 
 			try {
 				axios
-					.post("https://httpbin.org/anything", data, {
-						onUploadProgress: (progressEvent) => {
-							const totalLength = progressEvent.lengthComputable
-								? progressEvent.total
-								: progressEvent.target.getResponseHeader("content-length") ||
-								  progressEvent.target.getResponseHeader(
-										"x-decompressed-content-length"
-								  );
-							if (progressEvent.lengthComputable) {
-								// console.log(
-								// 	progressEvent.loaded + " " + progressEvent.total
-								// );
-								setProgress(
-									Math.round((progressEvent.loaded * 100) / totalLength)
-								);
-							}
-						},
-					})
+					.post(
+						`http://localhost:5000/map/api/helps/details/comment/${aidID}`,
+						data,
+						{
+							onUploadProgress: (progressEvent) => {
+								const totalLength = progressEvent.lengthComputable
+									? progressEvent.total
+									: progressEvent.target.getResponseHeader("content-length") ||
+									  progressEvent.target.getResponseHeader(
+											"x-decompressed-content-length"
+									  );
+								if (progressEvent.lengthComputable) {
+									// console.log(
+									// 	progressEvent.loaded + " " + progressEvent.total
+									// );
+									setProgress(
+										Math.round((progressEvent.loaded * 100) / totalLength)
+									);
+								}
+							},
+						}
+					)
 					.then((res) => console.log(res));
 				//dispatch(getLoggedIn());
 			} catch (values) {

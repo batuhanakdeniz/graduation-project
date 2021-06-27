@@ -8,21 +8,20 @@ import { CgDetailsMore } from "react-icons/cg";
 import DetailModal from "../../Map/Layer_4/DetailModal";
 import { useDispatch } from "react-redux";
 import {
-	confirmPendingCommentByCommentCode,
 	confirmPendingCommentByID,
-	deletePendingCommentByCommentCode,
 	deletePendingCommentByID,
 	fetchDetailContent,
+	fetchPendingComments,
 } from "../../../redux";
 import { useDisclosure } from "@chakra-ui/react";
 import blank_avatar from "../blank-avatar.svg";
 function PendingCommentItem(props) {
-	const { Comment } = props;
+	const { Comment, userName } = props;
 	const dispatch = useDispatch();
 	const [images, setImages] = useState([]);
 	useEffect(() => {
 		setImages([]);
-		Comment.images.map((img) =>
+		Comment.extraImages.map((img) =>
 			setImages((curr) => [
 				...curr,
 				{
@@ -32,21 +31,31 @@ function PendingCommentItem(props) {
 			])
 		);
 	}, [Comment]);
-	const commentDetailButtonHandler = () => {
+	const commentDetailButtonHandler = async () => {
+		await dispatch(fetchDetailContent(Comment.help_id));
 		onOpen();
-		dispatch(fetchDetailContent(Comment.aidID));
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const confirmCommentHandler = () => {
-		dispatch(confirmPendingCommentByCommentCode(Comment.commentCode));
+		dispatch(confirmPendingCommentByID(Comment._id))
+			.then((res) => {
+				console.log("response bekleyen comment onaylama", res);
+				dispatch(fetchPendingComments());
+			})
+			.catch((err) => console.log(err));
 	};
 	const deleteCommentHandler = () => {
-		dispatch(deletePendingCommentByCommentCode(Comment.commentCode));
+		dispatch(deletePendingCommentByID(Comment._id))
+			.then((res) => {
+				console.log("response bekleyen comment silme", res);
+				dispatch(fetchPendingComments());
+			})
+			.catch((err) => console.log(err));
 	};
 	return (
 		<Col className="pendingComment">
 			<Card border="black">
-				<Card.Header className="text-center">{Comment.aidNo}</Card.Header>
+				<Card.Header className="text-center">{Comment.createdAt}</Card.Header>
 				<Row style={{ marginLeft: "0rem", marginRight: "0rem" }}>
 					<Col md={5} className="aidImg">
 						<Row>
@@ -65,13 +74,15 @@ function PendingCommentItem(props) {
 									</Col>
 									<Col md={6} className="property">
 										<span className="key">Username </span>
-										<span className="value">{Comment.userName}</span>
+										<span className="value">{userName}</span>
 									</Col>
 								</Row>
 							</Col>
-							<Col md={12}>
-								<ImageGallery items={images} thumbnail />
-							</Col>
+							{images.length > 0 && (
+								<Col md={12}>
+									<ImageGallery items={images} thumbnail />
+								</Col>
+							)}
 						</Row>
 					</Col>
 					<Col md={7} style={{ paddingLeft: "2rem" }}>
@@ -79,7 +90,7 @@ function PendingCommentItem(props) {
 							<Row>
 								<Col md={12} className="property">
 									<span className="key">Comment </span>
-									<span className="value">{Comment.comment}</span>
+									<span className="value">{Comment.text}</span>
 								</Col>
 							</Row>
 						</Card.Body>

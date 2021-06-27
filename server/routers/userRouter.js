@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllUser, getloggedUser, putUser, deleteUser, getAllPendingUserType,putUserStatus  } from "../controllers/userController.js";
+import { getAllUser, getloggedUser, putUser, deleteUser, getAllPendingUserType,putUserStatus, putUserStatusConfirmation, putUserStatusReject  } from "../controllers/userController.js";
 import { auth } from "../middleware/auth.js";
 import {createUser,loginUser, getloggedIn, getloggedOut,verifyUser} from "../controllers/authController.js";
 const router = express.Router();
@@ -14,9 +14,11 @@ router.get('/api/loggedOut', getloggedOut);
 //USER INFOS
 router.get('/api/admin/users', getAllUser);
 router.get('/api/admin/users/pending', getAllPendingUserType);
-router.put('/api/admin/users/status/:userName', putUserStatus);
+router.put('/api/admin/users/status/:userName', putUserStatus); //
+router.delete('/api/admin/delete/:username', deleteUser);
 router.get('/api/loggedUser', auth , getloggedUser);
-router.put('/api/loggedUser/update', auth, putUser); 
-router.delete('/api/loggedUser/delete/:username', deleteUser);
+router.put('/api/admin/users/status/appeal/confirmation', auth, putUserStatusConfirmation); 
+router.put('/api/admin/users/status/appeal/reject', auth, putUserStatusReject); 
+router.put('/api/loggedUser/update', auth, putUser); //statü başvurusunda kullandık
 //router.get('/profile/:id', getUserProfile);
 export default router;

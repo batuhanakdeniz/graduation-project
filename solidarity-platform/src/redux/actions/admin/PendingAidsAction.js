@@ -27,9 +27,10 @@ export const fetchPendingAids = () => {
 	return (dispatch) => {
 		dispatch(fetchPendingAidsRequest);
 		axios
-			.get(`http://localhost:5000/map/api/helps/details/pendings`)
+			.get(`http://localhost:5000/map/api/helps/details/all/pending`)
 			.then((response) => {
 				const pendingAids = response.data;
+				console.log("pending aids", response.data);
 				dispatch(fetchPendingAidsSuccess(pendingAids));
 			})
 			.catch((error) => {
@@ -39,24 +40,32 @@ export const fetchPendingAids = () => {
 	};
 };
 
-export const confirmPendingAidByAidCode = (aidCode) => {
+export const confirmPendingAidByID = (aidID) => {
 	return async (dispatch) => {
 		try {
+			const value = {
+				status: "Active",
+			};
 			const response = await axios.put(
-				`http://localhost:5000/map/api/helps/subcategory/${aidCode}`
+				`http://localhost:5000/map/api/helps/details/update/${aidID}`,
+				value
 			);
+			console.log("confirm aid by id", response);
+			await dispatch(fetchPendingAids());
 			return response;
 		} catch (error) {
 			return error;
 		}
 	};
 };
-export const deletePendingAidByAidCode = (aidCode) => {
+export const deletePendingAidByID = (aidID) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:5000/map/api/helps/subcategory/${aidCode}`
+				`http://localhost:5000/map/api/helps/details/delete/${aidID}`
 			);
+			console.log("delete aid by id", response);
+			await dispatch(fetchPendingAids());
 			return response;
 		} catch (error) {
 			return error;
